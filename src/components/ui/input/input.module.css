@@ -1,0 +1,76 @@
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+}
+
+.input,
+.select,
+.textarea {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  min-height: 56px;
+  padding: 0 18px;
+  border-radius: 16px;
+  border: 2px solid #4f8a6c;
+  background: var(--card);
+  color: var(--fg);
+  width: 100%;
+  box-shadow: 0 2px 0 rgba(8, 117, 72, 0.18);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #5b6f65;
+  opacity: 0.8;
+}
+
+.input:hover,
+.select:hover,
+.textarea:hover {
+  border-color: #0a8a56;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(242, 184, 74, 0.3);
+}
+
+.textarea {
+  padding: 16px 18px;
+  min-height: 130px;
+  resize: vertical;
+}
+
+.hasError {
+  border-color: var(--coral) !important;
+}
+
+.errorText {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--coral);
+  margin-top: 2px;
+}
+
+.helperText {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+}
+

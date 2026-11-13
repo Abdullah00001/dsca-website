@@ -1,0 +1,95 @@
+.eyebrow {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gt, var(--forest));
+  margin: 0;
+  display: inline-block;
+}
+
+:global([data-theme="dark"]) .eyebrow,
+:global(.dk) .eyebrow {
+  color: var(--gold);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.tagMint {
+  background: var(--mint);
+  color: var(--fg);
+}
+
+.tagGold {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.tagCoral {
+  background: var(--coral);
+  color: #fff;
+}
+
+.tagForest {
+  background: var(--forest);
+  color: #fff;
+}
+
+.tagGhost {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.chip {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 9999px;
+  border: 1.5px solid var(--fg);
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  user-select: none;
+}
+
+.chip:hover {
+  transform: translateY(-2px);
+  background: var(--gold);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.chip[aria-pressed="true"],
+.chipActive {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
