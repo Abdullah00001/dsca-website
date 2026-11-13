@@ -6,7 +6,9 @@
 export interface EnrollmentEnquiry {
   fullName: string;
   phone: string;
+  email?: string;
   courseId: string;
+  notes?: string;
   preferredBatchMonth?: string;
   questions?: string;
 }

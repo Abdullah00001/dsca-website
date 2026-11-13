@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Instrument_Serif, Figtree } from "next/font/google";
+import { SiteShell } from "@/components/layout";
 import "./globals.css";
 
 const bricolageGrotesque = Bricolage_Grotesque({
@@ -30,13 +32,19 @@ export const metadata: Metadata = {
     "ISO 9001:2015 certified barista training institute in Dhaka. Real machines, small batches, job-ready skills.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <html
       lang="en"
       className={`${bricolageGrotesque.variable} ${instrumentSerif.variable} ${figtree.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-bg text-fg">
+        <SiteShell>{children}</SiteShell>
+      </body>
     </html>
   );
 }

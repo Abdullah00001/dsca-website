@@ -1,42 +1,55 @@
-/**
- * @fileoverview Legal View Component
- * @module features/legal/components/legal-view
- */
-
 "use client";
 
+import { PhotoHero } from "@/components/layout/photo-hero";
 import { useLegal } from "../hooks";
 import styles from "../styles/legal-view.module.css";
 
-interface LegalViewProps {
-  type?: "privacy" | "terms";
-}
+export type LegalViewProps = {
+  documentType: "privacy" | "terms";
+};
 
-export function LegalView({ type = "privacy" }: LegalViewProps) {
-  const { document, isLoading, error } = useLegal(type);
+export function LegalView({ documentType }: LegalViewProps) {
+  const { document, isLoading } = useLegal(documentType);
+
+  if (isLoading || !document) {
+    return (
+      <div className="p-20 text-center font-display text-2xl font-bold">
+        Loading document...
+      </div>
+    );
+  }
 
   return (
-    <div className={styles.container}>
-      {isLoading ? (
-        <p>Loading document...</p>
-      ) : error ? (
-        <p style={{ color: "var(--color-coral, #ef8a68)" }}>{error}</p>
-      ) : document ? (
-        <>
-          <header className={styles.header}>
-            <h1 className={styles.title}>{document.title}</h1>
-            <p className={styles.subtitle}>{document.subtitle}</p>
-          </header>
-          <section className={styles.card}>
-            {document.sections.map((sec, idx) => (
-              <div key={idx} style={{ marginBottom: "20px" }}>
-                <h3>{sec.title}</h3>
-                <p>{sec.body}</p>
+    <div>
+      <PhotoHero
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: document.title },
+        ]}
+        title={document.title}
+        subtitle={`Last updated: ${document.lastUpdated}`}
+      />
+
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <article className={styles.prose}>
+            {document.subtitle && (
+              <p className="text-xl text-muted leading-relaxed mb-8">
+                {document.subtitle}
+              </p>
+            )}
+
+            {document.sections.map((section, idx) => (
+              <div key={idx} className="mb-10">
+                <h2>{section.title}</h2>
+                <p className="whitespace-pre-line leading-relaxed">
+                  {section.body}
+                </p>
               </div>
             ))}
-          </section>
-        </>
-      ) : null}
+          </article>
+        </div>
+      </section>
     </div>
   );
 }

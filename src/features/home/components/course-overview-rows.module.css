@@ -1,0 +1,157 @@
+.section {
+  padding-block: clamp(72px, 10vw, 150px);
+  background: radial-gradient(
+      800px 420px at 100% 0%,
+      rgba(255, 214, 102, 0.3),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 420px at 0% 100%,
+      rgba(120, 255, 190, 0.2),
+      transparent 62%
+    ),
+    linear-gradient(150deg, #066b44, #07784a 60%, #066a43);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding-left: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px), calc((100% - 1360px) / 2));
+  padding-right: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px), calc((100% - 1360px) / 2));
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.16) 46%,
+    rgba(255, 255, 255, 0.04) 54%,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.heading {
+  margin: 18px 0 64px;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(52px, 11vw, 190px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.heading em {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.rowsList {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.rowLink {
+  display: grid;
+  grid-template-columns: 70px 1fr auto auto;
+  gap: 24px;
+  align-items: center;
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  transition: padding 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.3s, color 0.3s;
+}
+
+.rowNumber {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  transition: color 0.3s;
+}
+
+.rowTitle {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(30px, 5.2vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.3s;
+}
+
+.rowSub {
+  display: block;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 14px;
+  color: #dff5e8;
+  margin-top: 6px;
+  transition: color 0.3s;
+}
+
+.rowDuration {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #dff5e8;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+
+.rowPrice {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(20px, 2.4vw, 34px);
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+
+.rowLink:hover {
+  padding-left: 28px;
+  padding-right: 28px;
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.rowLink:hover .rowTitle {
+  transform: translateX(10px);
+  color: var(--ink);
+}
+
+.rowLink:hover .rowNumber,
+.rowLink:hover .rowSub,
+.rowLink:hover .rowDuration,
+.rowLink:hover .rowPrice {
+  color: var(--ink);
+}
+
+.buttonWrapper {
+  margin-top: 48px;
+}
+
+@media (max-width: 900px) {
+  .rowLink {
+    grid-template-columns: 40px 1fr auto;
+    gap: 12px;
+  }
+
+  .rowDuration {
+    display: none;
+  }
+}
+

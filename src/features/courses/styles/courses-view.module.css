@@ -1,45 +1,223 @@
-/**
- * @fileoverview Courses CSS Module
- * @module features/courses/styles/courses-view.module.css
- */
+.section {
+  padding-block: clamp(72px, 10vw, 150px);
+  padding-left: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px), calc((100% - 1360px) / 2));
+  padding-right: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px), calc((100% - 1360px) / 2));
+}
 
-.container {
+.inner {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 36px);
+}
+
+.courseCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.coursePhoto {
+  aspect-ratio: 4 / 3;
+}
+
+.courseTitle {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.courseSummary {
+  display: block;
+  color: var(--muted);
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.priceWrapper {
+  margin-top: 18px;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.originalPrice {
+  font-size: 15px;
+  color: var(--muted);
+  font-weight: 500;
+  text-decoration: line-through;
+}
+
+/* Compare Table Section */
+.compareSection {
+  background: radial-gradient(
+      800px 420px at 100% 0%,
+      rgba(255, 214, 102, 0.3),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 420px at 0% 100%,
+      rgba(120, 255, 190, 0.2),
+      transparent 62%
+    ),
+    linear-gradient(150deg, #066b44, #07784a 60%, #066a43);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(72px, 10vw, 150px);
+  padding-left: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px), calc((100% - 1360px) / 2));
+  padding-right: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px), calc((100% - 1360px) / 2));
+}
+
+.compareHeading {
+  margin: 18px 0 48px;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(44px, 7vw, 110px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.compareHeading em {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
   width: 100%;
-  box-sizing: border-box;
-  padding: clamp(20px, 3vw, 36px);
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.table th {
+  text-align: left;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e8f8ee;
+  padding: 14px 12px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.table td {
+  padding: 22px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 17px;
+}
+
+.table tr:hover td {
+  background: rgba(242, 184, 74, 0.22);
+}
+
+/* FAQ Section */
+.faqSection {
+  padding-block: clamp(72px, 10vw, 150px);
+  padding-left: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px), calc((100% - 1360px) / 2));
+  padding-right: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px), calc((100% - 1360px) / 2));
+}
+
+.faqGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+}
+
+.faqHeading {
+  margin-top: 18px;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(40px, 6vw, 92px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.faqHeading em {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--forest);
+}
+
+[data-theme="dark"] .faqHeading em {
+  color: var(--gold);
+}
+
+.faqDetails {
+  border-bottom: 1px solid var(--line);
+  padding: 24px 0;
+}
+
+.faqSummary {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  cursor: pointer;
+  list-style: none;
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-  font-family: var(--ams-font-family-sans, Inter, sans-serif);
+  justify-content: space-between;
+  align-items: center;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.faqSummary::-webkit-details-marker {
+  display: none;
 }
 
-.title {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--ams-color-grayscale-400, #071437);
-  line-height: 1.3;
+.faqIcon {
+  font-size: 28px;
+  color: var(--forest);
+  transition: transform 0.3s;
+  line-height: 1;
 }
 
-.subtitle {
-  margin: 0;
-  font-size: 13px;
-  color: var(--ams-color-text-muted, #99a1b7);
+[data-theme="dark"] .faqIcon {
+  color: var(--gold);
 }
 
-.card {
-  background-color: var(--ams-color-surface-card, #ffffff);
-  border: 1px solid var(--ams-color-border-subtle, #eff1f4);
-  border-radius: var(--ams-radius-8, 8px);
-  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.03);
-  padding: 24px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.faqDetails[open] .faqIcon {
+  transform: rotate(45deg);
+}
+
+.faqAnswer {
+  margin: 16px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 720px;
+  font-size: 17px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faqGrid {
+    grid-template-columns: 1fr;
+  }
 }

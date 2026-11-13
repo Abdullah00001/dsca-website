@@ -1,0 +1,90 @@
+.section {
+  padding-block: clamp(72px, 10vw, 150px);
+  overflow: hidden;
+  padding-left: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px), calc((100% - 1360px) / 2));
+  padding-right: max(clamp(20px, 4vw, 48px), env(safe-area-inset-right, 0px), calc((100% - 1360px) / 2));
+}
+
+.inner {
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+.heading {
+  margin-top: 18px;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(44px, 8vw, 130px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.heading em {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--forest);
+}
+
+[data-theme="dark"] .heading em {
+  color: var(--gold);
+}
+
+.track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 28px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.trainerCard {
+  width: min(78vw, 380px);
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.trainerName {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.trainerRole {
+  display: block;
+  color: var(--muted);
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (min-width: 901px) {
+  .track {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible;
+    padding-bottom: 0;
+  }
+
+  .trainerCard {
+    width: auto;
+  }
+}

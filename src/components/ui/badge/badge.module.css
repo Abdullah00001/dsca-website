@@ -10,8 +10,8 @@
   display: inline-block;
 }
 
-:global([data-theme="dark"]) .eyebrow,
-:global(.dk) .eyebrow {
+[data-theme="dark"] .eyebrow,
+.dk .eyebrow {
   color: var(--gold);
 }
 
