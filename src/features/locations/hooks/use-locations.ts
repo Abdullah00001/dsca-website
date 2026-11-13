@@ -6,11 +6,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { LocationsItem } from "../types";
-import { getLocationsItems } from "../services";
+import type { LocationArea, LocationHub } from "../types";
+import { getAllLocationAreas, getLocationHub } from "../services";
 
 export function useLocations() {
-  const [items, setItems] = useState<LocationsItem[]>([]);
+  const [hub, setHub] = useState<LocationHub | null>(null);
+  const [areas, setAreas] = useState<LocationArea[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +21,18 @@ export function useLocations() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getLocationsItems();
+        const [hubData, areasData] = await Promise.all([
+          getLocationHub(),
+          getAllLocationAreas(),
+        ]);
         if (mounted) {
-          setItems(data);
+          setHub(hubData);
+          setAreas(areasData);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load locations data");
+          setError(err instanceof Error ? err.message : "Failed to load locations");
         }
       } finally {
         if (mounted) {
@@ -36,16 +41,12 @@ export function useLocations() {
       }
     }
 
-    void loadData();
+    loadData();
 
     return () => {
       mounted = false;
     };
   }, []);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { hub, areas, isLoading, error };
 }

@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { CoursesItem } from "../types";
-import { getCoursesItems } from "../services";
+import type { Course } from "../types";
+import { getCourses } from "../services";
 
 export function useCourses() {
-  const [items, setItems] = useState<CoursesItem[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +20,14 @@ export function useCourses() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getCoursesItems();
+        const data = await getCourses();
         if (mounted) {
-          setItems(data);
+          setCourses(data);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load courses data");
+          setError(err instanceof Error ? err.message : "Failed to load courses");
         }
       } finally {
         if (mounted) {
@@ -36,16 +36,12 @@ export function useCourses() {
       }
     }
 
-    void loadData();
+    loadData();
 
     return () => {
       mounted = false;
     };
   }, []);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { courses, isLoading, error };
 }

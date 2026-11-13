@@ -5,47 +5,29 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
-import type { CertificateItem } from "../types";
-import { getCertificateItems } from "../services";
+import { useState } from "react";
+import type { VerificationResult } from "../types";
+import { verifyCertificate } from "../services";
 
 export function useCertificate() {
-  const [items, setItems] = useState<CertificateItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<VerificationResult | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    let mounted = true;
-
-    async function loadData() {
-      try {
-        setIsLoading(true);
-        const data = await getCertificateItems();
-        if (mounted) {
-          setItems(data);
-          setError(null);
-        }
-      } catch (err) {
-        if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load certificate data");
-        }
-      } finally {
-        if (mounted) {
-          setIsLoading(false);
-        }
-      }
+  async function checkCertificate(serial: string) {
+    if (!serial.trim()) return;
+    setIsLoading(true);
+    try {
+      const data = await verifyCertificate(serial);
+      setResult(data);
+    } catch {
+      setResult({
+        success: false,
+        error: "Verification service temporarily unavailable. Please try again.",
+      });
+    } finally {
+      setIsLoading(false);
     }
+  }
 
-    void loadData();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { result, isLoading, checkCertificate };
 }

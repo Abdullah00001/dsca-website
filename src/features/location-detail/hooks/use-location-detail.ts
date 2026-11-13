@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { LocationDetailItem } from "../types";
-import { getLocationDetailItems } from "../services";
+import type { LocationArea } from "@/features/locations/types";
+import { getLocationDetail } from "../services";
 
-export function useLocationDetail() {
-  const [items, setItems] = useState<LocationDetailItem[]>([]);
+export function useLocationDetail(areaId: string) {
+  const [area, setArea] = useState<LocationArea | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +20,14 @@ export function useLocationDetail() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getLocationDetailItems();
+        const data = await getLocationDetail(areaId);
         if (mounted) {
-          setItems(data);
+          setArea(data);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load locationDetail data");
+          setError(err instanceof Error ? err.message : "Failed to load area transit details");
         }
       } finally {
         if (mounted) {
@@ -36,16 +36,14 @@ export function useLocationDetail() {
       }
     }
 
-    void loadData();
+    if (areaId) {
+      loadData();
+    }
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [areaId]);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { area, isLoading, error };
 }

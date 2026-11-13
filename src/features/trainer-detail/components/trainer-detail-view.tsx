@@ -8,34 +8,32 @@
 import { useTrainerDetail } from "../hooks";
 import styles from "../styles/trainer-detail-view.module.css";
 
-export function TrainerDetailView() {
-  const { items, isLoading, error } = useTrainerDetail();
+interface TrainerDetailViewProps {
+  id?: string;
+}
+
+export function TrainerDetailView({ id = "zobayer" }: TrainerDetailViewProps) {
+  const { trainer, isLoading, error } = useTrainerDetail(id);
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Trainer Detail</h1>
-        <p className={styles.subtitle}>
-          Manage and configure your academy trainer detail settings and records.
-        </p>
-      </header>
-
-      <section className={styles.card}>
-        {isLoading ? (
-          <p>Loading trainer detail data...</p>
-        ) : error ? (
-          <p style={{ color: "var(--ams-color-status-error, #f8285a)" }}>{error}</p>
-        ) : (
-          <div>
-            <p>Ready to build atomic components for <strong>Trainer Detail</strong>.</p>
-            <ul>
-              {items.map((item) => (
-                <li key={item.id}>{item.name} ({item.status})</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </section>
+      {isLoading ? (
+        <p>Loading trainer...</p>
+      ) : error ? (
+        <p style={{ color: "var(--color-coral, #ef8a68)" }}>{error}</p>
+      ) : trainer ? (
+        <>
+          <header className={styles.header}>
+            <h1 className={styles.title}>{trainer.name}</h1>
+            <p className={styles.subtitle}>{trainer.role}</p>
+          </header>
+          <section className={styles.card}>
+            <p>{trainer.bio}</p>
+          </section>
+        </>
+      ) : (
+        <p>Trainer not found.</p>
+      )}
     </div>
   );
 }

@@ -1,17 +1,27 @@
 /**
- * @fileoverview Contact Domain Types
+ * @fileoverview Contact & Enrollment Domain Types
  * @module features/contact/types
  */
 
-export interface ContactItem {
-  id: string;
-  name: string;
-  status: "active" | "inactive";
-  createdAt: string;
+export interface EnrollmentEnquiry {
+  fullName: string;
+  phone: string;
+  courseId: string;
+  preferredBatchMonth?: string;
+  questions?: string;
 }
 
-export interface ContactState {
-  items: ContactItem[];
-  isLoading: boolean;
-  error: string | null;
+export interface EnquiryResponse {
+  success: boolean;
+  message: string;
+  referenceId?: string;
+}
+
+export interface AcademyContactInfo {
+  address: string;
+  phone: string;
+  whatsappNumber: string;
+  hours: string;
+  email: string;
+  mapEmbedUrl: string;
 }

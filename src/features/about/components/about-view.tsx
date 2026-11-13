@@ -9,32 +9,34 @@ import { useAbout } from "../hooks";
 import styles from "../styles/about-view.module.css";
 
 export function AboutView() {
-  const { items, isLoading, error } = useAbout();
+  const { data, isLoading, error } = useAbout();
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>About</h1>
+        <h1 className={styles.title}>About Dhaka Specialty Coffee Academy</h1>
         <p className={styles.subtitle}>
-          Manage and configure your academy about settings and records.
+          Bangladesh&apos;s first ISO 9001:2015 certified barista academy.
         </p>
       </header>
 
       <section className={styles.card}>
         {isLoading ? (
-          <p>Loading about data...</p>
+          <p>Loading about story...</p>
         ) : error ? (
-          <p style={{ color: "var(--ams-color-status-error, #f8285a)" }}>{error}</p>
-        ) : (
+          <p style={{ color: "var(--color-coral, #ef8a68)" }}>{error}</p>
+        ) : data ? (
           <div>
-            <p>Ready to build atomic components for <strong>About</strong>.</p>
+            <h2>{data.storyHeading} {data.storySubheading}</h2>
             <ul>
-              {items.map((item) => (
-                <li key={item.id}>{item.name} ({item.status})</li>
+              {data.milestones.map((m) => (
+                <li key={m.number}>
+                  <strong>{m.number} · {m.title}:</strong> {m.description}
+                </li>
               ))}
             </ul>
           </div>
-        )}
+        ) : null}
       </section>
     </div>
   );

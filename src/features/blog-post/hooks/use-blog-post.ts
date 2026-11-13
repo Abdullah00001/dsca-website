@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { BlogPostItem } from "../types";
-import { getBlogPostItems } from "../services";
+import type { BlogPost } from "@/features/blog/types";
+import { getBlogPostDetail } from "../services";
 
-export function useBlogPost() {
-  const [items, setItems] = useState<BlogPostItem[]>([]);
+export function useBlogPost(postId: string) {
+  const [post, setPost] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +20,14 @@ export function useBlogPost() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getBlogPostItems();
+        const data = await getBlogPostDetail(postId);
         if (mounted) {
-          setItems(data);
+          setPost(data);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load blogPost data");
+          setError(err instanceof Error ? err.message : "Failed to load post");
         }
       } finally {
         if (mounted) {
@@ -36,16 +36,14 @@ export function useBlogPost() {
       }
     }
 
-    void loadData();
+    if (postId) {
+      loadData();
+    }
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [postId]);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { post, isLoading, error };
 }

@@ -3,20 +3,11 @@
  * @module features/trainer-detail/services
  */
 
-import type { TrainerDetailItem } from "../types";
+import { getTrainerById } from "@/features/trainers/services";
+import type { Trainer } from "@/features/trainers/types";
 
-/**
- * Fetches Trainer Detail data items with simulated latency.
- */
-export async function getTrainerDetailItems(): Promise<TrainerDetailItem[]> {
-  await new Promise((resolve) => setTimeout(resolve, 300));
+export { getTrainerById };
 
-  return [
-    {
-      id: "1",
-      name: "Sample Trainer Detail Item",
-      status: "active",
-      createdAt: new Date().toISOString(),
-    },
-  ];
+export async function getTrainerDetail(id: string): Promise<Trainer | null> {
+  return getTrainerById(id);
 }

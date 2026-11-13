@@ -1,17 +1,12 @@
 /**
- * @fileoverview Course Detail Domain Types
+ * @fileoverview Course Detail Types
  * @module features/course-detail/types
  */
 
-export interface CourseDetailItem {
-  id: string;
-  name: string;
-  status: "active" | "inactive";
-  createdAt: string;
-}
+export type { Course, CurriculumDay } from "@/features/courses/types";
 
 export interface CourseDetailState {
-  items: CourseDetailItem[];
+  course: import("@/features/courses/types").Course | null;
   isLoading: boolean;
   error: string | null;
 }

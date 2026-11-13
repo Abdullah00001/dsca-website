@@ -3,15 +3,31 @@
  * @module features/locations/types
  */
 
-export interface LocationsItem {
+export interface AreaContentBlock {
+  type: "p" | "h2" | "h3" | "ul" | "callout" | "close";
+  content: string;
+}
+
+export interface LocationArea {
   id: string;
   name: string;
-  status: "active" | "inactive";
-  createdAt: string;
+  h1: string;
+  blocks: [type: string, content: string][];
+  metaTitle: string;
+  metaDescription: string;
+  transitSummary?: string;
+  distanceKm?: string;
+  estimatedMinutes?: string;
+}
+
+export interface LocationHub {
+  h1: string;
+  blocks: [type: string, content: string][];
 }
 
 export interface LocationsState {
-  items: LocationsItem[];
+  hub: LocationHub;
+  areas: LocationArea[];
   isLoading: boolean;
   error: string | null;
 }

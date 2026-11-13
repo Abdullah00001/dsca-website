@@ -3,20 +3,11 @@
  * @module features/location-detail/services
  */
 
-import type { LocationDetailItem } from "../types";
+import { getLocationAreaById } from "@/features/locations/services";
+import type { LocationArea } from "@/features/locations/types";
 
-/**
- * Fetches Location Detail data items with simulated latency.
- */
-export async function getLocationDetailItems(): Promise<LocationDetailItem[]> {
-  await new Promise((resolve) => setTimeout(resolve, 300));
+export { getLocationAreaById };
 
-  return [
-    {
-      id: "1",
-      name: "Sample Location Detail Item",
-      status: "active",
-      createdAt: new Date().toISOString(),
-    },
-  ];
+export async function getLocationDetail(id: string): Promise<LocationArea | null> {
+  return getLocationAreaById(id);
 }

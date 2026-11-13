@@ -3,15 +3,20 @@
  * @module features/gallery/types
  */
 
+export type GalleryCategory = "All" | "Hands-on" | "Events" | "Certificate";
+
 export interface GalleryItem {
   id: string;
-  name: string;
-  status: "active" | "inactive";
-  createdAt: string;
+  title: string;
+  category: "Hands-on" | "Events" | "Certificate";
+  formatClass: string;
+  gradientClass: string;
+  imagePath?: string;
 }
 
 export interface GalleryState {
   items: GalleryItem[];
+  selectedCategory: GalleryCategory;
   isLoading: boolean;
   error: string | null;
 }

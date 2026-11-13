@@ -9,28 +9,29 @@ import { useLocations } from "../hooks";
 import styles from "../styles/locations-view.module.css";
 
 export function LocationsView() {
-  const { items, isLoading, error } = useLocations();
+  const { areas, isLoading, error } = useLocations();
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Locations</h1>
+        <h1 className={styles.title}>Barista Course in Dhaka: Areas We Serve</h1>
         <p className={styles.subtitle}>
-          Manage and configure your academy locations settings and records.
+          One purpose-built café academy in Farmgate, easily accessible from across Dhaka.
         </p>
       </header>
 
       <section className={styles.card}>
         {isLoading ? (
-          <p>Loading locations data...</p>
+          <p>Loading areas...</p>
         ) : error ? (
-          <p style={{ color: "var(--ams-color-status-error, #f8285a)" }}>{error}</p>
+          <p style={{ color: "var(--color-coral, #ef8a68)" }}>{error}</p>
         ) : (
           <div>
-            <p>Ready to build atomic components for <strong>Locations</strong>.</p>
             <ul>
-              {items.map((item) => (
-                <li key={item.id}>{item.name} ({item.status})</li>
+              {areas.map((area) => (
+                <li key={area.id}>
+                  <strong>{area.name}</strong>
+                </li>
               ))}
             </ul>
           </div>

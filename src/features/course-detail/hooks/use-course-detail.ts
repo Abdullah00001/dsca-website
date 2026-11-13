@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { CourseDetailItem } from "../types";
-import { getCourseDetailItems } from "../services";
+import type { Course } from "@/features/courses/types";
+import { getCourseDetail } from "../services";
 
-export function useCourseDetail() {
-  const [items, setItems] = useState<CourseDetailItem[]>([]);
+export function useCourseDetail(courseId: string) {
+  const [course, setCourse] = useState<Course | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +20,14 @@ export function useCourseDetail() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getCourseDetailItems();
+        const data = await getCourseDetail(courseId);
         if (mounted) {
-          setItems(data);
+          setCourse(data);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load courseDetail data");
+          setError(err instanceof Error ? err.message : "Failed to load course details");
         }
       } finally {
         if (mounted) {
@@ -36,16 +36,14 @@ export function useCourseDetail() {
       }
     }
 
-    void loadData();
+    if (courseId) {
+      loadData();
+    }
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [courseId]);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { course, isLoading, error };
 }

@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { TrainerDetailItem } from "../types";
-import { getTrainerDetailItems } from "../services";
+import type { Trainer } from "@/features/trainers/types";
+import { getTrainerDetail } from "../services";
 
-export function useTrainerDetail() {
-  const [items, setItems] = useState<TrainerDetailItem[]>([]);
+export function useTrainerDetail(trainerId: string) {
+  const [trainer, setTrainer] = useState<Trainer | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +20,14 @@ export function useTrainerDetail() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getTrainerDetailItems();
+        const data = await getTrainerDetail(trainerId);
         if (mounted) {
-          setItems(data);
+          setTrainer(data);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load trainerDetail data");
+          setError(err instanceof Error ? err.message : "Failed to load trainer details");
         }
       } finally {
         if (mounted) {
@@ -36,16 +36,14 @@ export function useTrainerDetail() {
       }
     }
 
-    void loadData();
+    if (trainerId) {
+      loadData();
+    }
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [trainerId]);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { trainer, isLoading, error };
 }

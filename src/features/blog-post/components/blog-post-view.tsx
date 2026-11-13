@@ -8,34 +8,34 @@
 import { useBlogPost } from "../hooks";
 import styles from "../styles/blog-post-view.module.css";
 
-export function BlogPostView() {
-  const { items, isLoading, error } = useBlogPost();
+interface BlogPostViewProps {
+  id?: string;
+}
+
+export function BlogPostView({ id = "choose" }: BlogPostViewProps) {
+  const { post, isLoading, error } = useBlogPost(id);
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Blog Post</h1>
-        <p className={styles.subtitle}>
-          Manage and configure your academy blog post settings and records.
-        </p>
-      </header>
-
-      <section className={styles.card}>
-        {isLoading ? (
-          <p>Loading blog post data...</p>
-        ) : error ? (
-          <p style={{ color: "var(--ams-color-status-error, #f8285a)" }}>{error}</p>
-        ) : (
-          <div>
-            <p>Ready to build atomic components for <strong>Blog Post</strong>.</p>
-            <ul>
-              {items.map((item) => (
-                <li key={item.id}>{item.name} ({item.status})</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </section>
+      {isLoading ? (
+        <p>Loading article...</p>
+      ) : error ? (
+        <p style={{ color: "var(--color-coral, #ef8a68)" }}>{error}</p>
+      ) : post ? (
+        <>
+          <header className={styles.header}>
+            <h1 className={styles.title}>{post.title}</h1>
+            <p className={styles.subtitle}>
+              {post.author} · {post.date} · {post.readTime}
+            </p>
+          </header>
+          <section className={styles.card}>
+            <p>{post.excerpt}</p>
+          </section>
+        </>
+      ) : (
+        <p>Post not found.</p>
+      )}
     </div>
   );
 }

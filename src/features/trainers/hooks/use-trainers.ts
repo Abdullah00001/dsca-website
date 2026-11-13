@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { TrainersItem } from "../types";
-import { getTrainersItems } from "../services";
+import type { Trainer } from "../types";
+import { getTrainers } from "../services";
 
 export function useTrainers() {
-  const [items, setItems] = useState<TrainersItem[]>([]);
+  const [trainers, setTrainers] = useState<Trainer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +20,14 @@ export function useTrainers() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getTrainersItems();
+        const data = await getTrainers();
         if (mounted) {
-          setItems(data);
+          setTrainers(data);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load trainers data");
+          setError(err instanceof Error ? err.message : "Failed to load trainers");
         }
       } finally {
         if (mounted) {
@@ -36,16 +36,12 @@ export function useTrainers() {
       }
     }
 
-    void loadData();
+    loadData();
 
     return () => {
       mounted = false;
     };
   }, []);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { trainers, isLoading, error };
 }

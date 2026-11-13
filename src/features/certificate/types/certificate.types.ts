@@ -3,15 +3,24 @@
  * @module features/certificate/types
  */
 
-export interface CertificateItem {
-  id: string;
-  name: string;
-  status: "active" | "inactive";
-  createdAt: string;
+export interface CertificateRecord {
+  certificateNumber: string;
+  studentName: string;
+  courseName: string;
+  duration: string;
+  issueDate: string;
+  accreditation: string;
+  status: "verified" | "revoked";
+}
+
+export interface VerificationResult {
+  success: boolean;
+  certificate?: CertificateRecord;
+  error?: string;
 }
 
 export interface CertificateState {
-  items: CertificateItem[];
+  searchQuery: string;
+  result: VerificationResult | null;
   isLoading: boolean;
-  error: string | null;
 }

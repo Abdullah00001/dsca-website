@@ -9,28 +9,29 @@ import { useCourses } from "../hooks";
 import styles from "../styles/courses-view.module.css";
 
 export function CoursesView() {
-  const { items, isLoading, error } = useCourses();
+  const { courses, isLoading, error } = useCourses();
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Courses</h1>
+        <h1 className={styles.title}>Barista Courses in Dhaka</h1>
         <p className={styles.subtitle}>
-          Manage and configure your academy courses settings and records.
+          Five programs from a 3-day start to a 22-day advanced track.
         </p>
       </header>
 
       <section className={styles.card}>
         {isLoading ? (
-          <p>Loading courses data...</p>
+          <p>Loading courses...</p>
         ) : error ? (
-          <p style={{ color: "var(--ams-color-status-error, #f8285a)" }}>{error}</p>
+          <p style={{ color: "var(--color-coral, #ef8a68)" }}>{error}</p>
         ) : (
           <div>
-            <p>Ready to build atomic components for <strong>Courses</strong>.</p>
             <ul>
-              {items.map((item) => (
-                <li key={item.id}>{item.name} ({item.status})</li>
+              {courses.map((course) => (
+                <li key={course.id}>
+                  <strong>{course.name}</strong> — {course.duration} ({course.price})
+                </li>
               ))}
             </ul>
           </div>

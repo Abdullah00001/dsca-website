@@ -8,34 +8,35 @@
 import { useLegal } from "../hooks";
 import styles from "../styles/legal-view.module.css";
 
-export function LegalView() {
-  const { items, isLoading, error } = useLegal();
+interface LegalViewProps {
+  type?: "privacy" | "terms";
+}
+
+export function LegalView({ type = "privacy" }: LegalViewProps) {
+  const { document, isLoading, error } = useLegal(type);
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Legal</h1>
-        <p className={styles.subtitle}>
-          Manage and configure your academy legal settings and records.
-        </p>
-      </header>
-
-      <section className={styles.card}>
-        {isLoading ? (
-          <p>Loading legal data...</p>
-        ) : error ? (
-          <p style={{ color: "var(--ams-color-status-error, #f8285a)" }}>{error}</p>
-        ) : (
-          <div>
-            <p>Ready to build atomic components for <strong>Legal</strong>.</p>
-            <ul>
-              {items.map((item) => (
-                <li key={item.id}>{item.name} ({item.status})</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </section>
+      {isLoading ? (
+        <p>Loading document...</p>
+      ) : error ? (
+        <p style={{ color: "var(--color-coral, #ef8a68)" }}>{error}</p>
+      ) : document ? (
+        <>
+          <header className={styles.header}>
+            <h1 className={styles.title}>{document.title}</h1>
+            <p className={styles.subtitle}>{document.subtitle}</p>
+          </header>
+          <section className={styles.card}>
+            {document.sections.map((sec, idx) => (
+              <div key={idx} style={{ marginBottom: "20px" }}>
+                <h3>{sec.title}</h3>
+                <p>{sec.body}</p>
+              </div>
+            ))}
+          </section>
+        </>
+      ) : null}
     </div>
   );
 }

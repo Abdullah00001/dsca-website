@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { AboutItem } from "../types";
-import { getAboutItems } from "../services";
+import type { AboutData } from "../types";
+import { getAboutData } from "../services";
 
 export function useAbout() {
-  const [items, setItems] = useState<AboutItem[]>([]);
+  const [data, setData] = useState<AboutData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,9 +20,9 @@ export function useAbout() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getAboutItems();
+        const aboutData = await getAboutData();
         if (mounted) {
-          setItems(data);
+          setData(aboutData);
           setError(null);
         }
       } catch (err) {
@@ -36,16 +36,12 @@ export function useAbout() {
       }
     }
 
-    void loadData();
+    loadData();
 
     return () => {
       mounted = false;
     };
   }, []);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { data, isLoading, error };
 }

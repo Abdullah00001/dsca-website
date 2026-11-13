@@ -8,34 +8,32 @@
 import { useLocationDetail } from "../hooks";
 import styles from "../styles/location-detail-view.module.css";
 
-export function LocationDetailView() {
-  const { items, isLoading, error } = useLocationDetail();
+interface LocationDetailViewProps {
+  id?: string;
+}
+
+export function LocationDetailView({ id = "dhanmondi" }: LocationDetailViewProps) {
+  const { area, isLoading, error } = useLocationDetail(id);
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Location Detail</h1>
-        <p className={styles.subtitle}>
-          Manage and configure your academy location detail settings and records.
-        </p>
-      </header>
-
-      <section className={styles.card}>
-        {isLoading ? (
-          <p>Loading location detail data...</p>
-        ) : error ? (
-          <p style={{ color: "var(--ams-color-status-error, #f8285a)" }}>{error}</p>
-        ) : (
-          <div>
-            <p>Ready to build atomic components for <strong>Location Detail</strong>.</p>
-            <ul>
-              {items.map((item) => (
-                <li key={item.id}>{item.name} ({item.status})</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </section>
+      {isLoading ? (
+        <p>Loading location details...</p>
+      ) : error ? (
+        <p style={{ color: "var(--color-coral, #ef8a68)" }}>{error}</p>
+      ) : area ? (
+        <>
+          <header className={styles.header}>
+            <h1 className={styles.title}>{area.h1}</h1>
+            <p className={styles.subtitle}>Transit guide to DSCA Farmgate Campus from {area.name}</p>
+          </header>
+          <section className={styles.card}>
+            <p>{area.metaDescription}</p>
+          </section>
+        </>
+      ) : (
+        <p>Location not found.</p>
+      )}
     </div>
   );
 }

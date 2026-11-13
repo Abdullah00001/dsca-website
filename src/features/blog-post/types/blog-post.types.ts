@@ -1,17 +1,12 @@
 /**
- * @fileoverview Blog Post Domain Types
+ * @fileoverview Blog Post Detail Types
  * @module features/blog-post/types
  */
 
-export interface BlogPostItem {
-  id: string;
-  name: string;
-  status: "active" | "inactive";
-  createdAt: string;
-}
+export type { BlogPost, ArticleBlock } from "@/features/blog/types";
 
 export interface BlogPostState {
-  items: BlogPostItem[];
+  post: import("@/features/blog/types").BlogPost | null;
   isLoading: boolean;
   error: string | null;
 }

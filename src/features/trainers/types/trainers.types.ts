@@ -3,15 +3,18 @@
  * @module features/trainers/types
  */
 
-export interface TrainersItem {
+export interface Trainer {
   id: string;
   name: string;
-  status: "active" | "inactive";
-  createdAt: string;
+  role: string;
+  gradientClass: "c1" | "c2" | "c3" | "c4" | "c5" | "c6";
+  bio: string;
+  focusAreas: string[];
+  image: string;
 }
 
 export interface TrainersState {
-  items: TrainersItem[];
+  trainers: Trainer[];
   isLoading: boolean;
   error: string | null;
 }

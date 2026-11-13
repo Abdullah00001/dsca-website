@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { HomeItem } from "../types";
-import { getHomeItems } from "../services";
+import type { HomeData } from "../types";
+import { getHomeData } from "../services";
 
 export function useHome() {
-  const [items, setItems] = useState<HomeItem[]>([]);
+  const [data, setData] = useState<HomeData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,9 +20,9 @@ export function useHome() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getHomeItems();
+        const homeData = await getHomeData();
         if (mounted) {
-          setItems(data);
+          setData(homeData);
           setError(null);
         }
       } catch (err) {
@@ -36,16 +36,12 @@ export function useHome() {
       }
     }
 
-    void loadData();
+    loadData();
 
     return () => {
       mounted = false;
     };
   }, []);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { data, isLoading, error };
 }

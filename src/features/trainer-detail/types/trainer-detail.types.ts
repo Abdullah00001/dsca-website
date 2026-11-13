@@ -1,17 +1,12 @@
 /**
- * @fileoverview Trainer Detail Domain Types
+ * @fileoverview Trainer Detail Types
  * @module features/trainer-detail/types
  */
 
-export interface TrainerDetailItem {
-  id: string;
-  name: string;
-  status: "active" | "inactive";
-  createdAt: string;
-}
+export type { Trainer } from "@/features/trainers/types";
 
 export interface TrainerDetailState {
-  items: TrainerDetailItem[];
+  trainer: import("@/features/trainers/types").Trainer | null;
   isLoading: boolean;
   error: string | null;
 }

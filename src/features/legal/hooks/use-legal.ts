@@ -6,11 +6,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { LegalItem } from "../types";
-import { getLegalItems } from "../services";
+import type { LegalDocument } from "../types";
+import { getLegalDocument } from "../services";
 
-export function useLegal() {
-  const [items, setItems] = useState<LegalItem[]>([]);
+export function useLegal(documentType: "privacy" | "terms") {
+  const [document, setDocument] = useState<LegalDocument | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +20,14 @@ export function useLegal() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getLegalItems();
+        const data = await getLegalDocument(documentType);
         if (mounted) {
-          setItems(data);
+          setDocument(data);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load legal data");
+          setError(err instanceof Error ? err.message : "Failed to load document");
         }
       } finally {
         if (mounted) {
@@ -36,16 +36,12 @@ export function useLegal() {
       }
     }
 
-    void loadData();
+    loadData();
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [documentType]);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { document, isLoading, error };
 }

@@ -3,20 +3,11 @@
  * @module features/blog-post/services
  */
 
-import type { BlogPostItem } from "../types";
+import { getBlogPostById } from "@/features/blog/services";
+import type { BlogPost } from "@/features/blog/types";
 
-/**
- * Fetches Blog Post data items with simulated latency.
- */
-export async function getBlogPostItems(): Promise<BlogPostItem[]> {
-  await new Promise((resolve) => setTimeout(resolve, 300));
+export { getBlogPostById };
 
-  return [
-    {
-      id: "1",
-      name: "Sample Blog Post Item",
-      status: "active",
-      createdAt: new Date().toISOString(),
-    },
-  ];
+export async function getBlogPostDetail(id: string): Promise<BlogPost | null> {
+  return getBlogPostById(id);
 }

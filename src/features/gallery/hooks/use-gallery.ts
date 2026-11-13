@@ -6,11 +6,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { GalleryItem } from "../types";
+import type { GalleryItem, GalleryCategory } from "../types";
 import { getGalleryItems } from "../services";
 
-export function useGallery() {
+export function useGallery(initialCategory: GalleryCategory = "All") {
   const [items, setItems] = useState<GalleryItem[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<GalleryCategory>(initialCategory);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,14 +21,14 @@ export function useGallery() {
     async function loadData() {
       try {
         setIsLoading(true);
-        const data = await getGalleryItems();
+        const data = await getGalleryItems(selectedCategory);
         if (mounted) {
           setItems(data);
           setError(null);
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err.message : "Failed to load gallery data");
+          setError(err instanceof Error ? err.message : "Failed to load gallery items");
         }
       } finally {
         if (mounted) {
@@ -36,16 +37,12 @@ export function useGallery() {
       }
     }
 
-    void loadData();
+    loadData();
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [selectedCategory]);
 
-  return {
-    items,
-    isLoading,
-    error,
-  };
+  return { items, selectedCategory, setSelectedCategory, isLoading, error };
 }
