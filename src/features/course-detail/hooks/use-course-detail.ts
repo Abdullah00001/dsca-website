@@ -1,0 +1,51 @@
+/**
+ * @fileoverview Course Detail Custom Hook
+ * @module features/course-detail/hooks/use-course-detail
+ */
+
+"use client";
+
+import { useEffect, useState } from "react";
+import type { CourseDetailItem } from "../types";
+import { getCourseDetailItems } from "../services";
+
+export function useCourseDetail() {
+  const [items, setItems] = useState<CourseDetailItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadData() {
+      try {
+        setIsLoading(true);
+        const data = await getCourseDetailItems();
+        if (mounted) {
+          setItems(data);
+          setError(null);
+        }
+      } catch (err) {
+        if (mounted) {
+          setError(err instanceof Error ? err.message : "Failed to load courseDetail data");
+        }
+      } finally {
+        if (mounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    void loadData();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  return {
+    items,
+    isLoading,
+    error,
+  };
+}
