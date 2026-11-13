@@ -1,0 +1,10 @@
+{
+  "semantic": {
+    "elevation": {
+      "card": { "$value": "{shadow.sm}", "$type": "shadow" },
+      "dropdown": { "$value": "{shadow.md}", "$type": "shadow" },
+      "modal": { "$value": "{shadow.xl}", "$type": "shadow" }
+    }
+  }
+}
+

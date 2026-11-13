@@ -1,0 +1,45 @@
+{
+  "semantic": {
+    "surface": {
+      "canvas": { "$value": "{color.neutral.950}", "$type": "color", "$description": "Dark page background" },
+      "default": { "$value": "{color.neutral.900}", "$type": "color", "$description": "Dark container background" },
+      "muted": { "$value": "{color.neutral.800}", "$type": "color", "$description": "Dark subdued background" },
+      "subtle": { "$value": "{color.neutral.700}", "$type": "color", "$description": "Dark subtle interactive background" },
+      "raised": { "$value": "{color.neutral.900}", "$type": "color", "$description": "Dark card surface background" }
+    },
+    "text": {
+      "primary": { "$value": "{color.neutral.50}", "$type": "color", "$description": "High contrast dark primary text" },
+      "secondary": { "$value": "{color.neutral.300}", "$type": "color", "$description": "Medium contrast dark secondary text" },
+      "muted": { "$value": "{color.neutral.500}", "$type": "color", "$description": "Low contrast dark muted text" },
+      "inverse": { "$value": "{color.neutral.950}", "$type": "color", "$description": "Inverted contrast dark text" },
+      "brand": { "$value": "{color.brand.400}", "$type": "color", "$description": "Brand dark colored text" }
+    },
+    "border": {
+      "subtle": { "$value": "{color.neutral.800}", "$type": "color", "$description": "Dark subtle card or divider border" },
+      "default": { "$value": "{color.neutral.700}", "$type": "color", "$description": "Dark standard border" },
+      "strong": { "$value": "{color.neutral.600}", "$type": "color", "$description": "Dark high-emphasis border" },
+      "focus": { "$value": "{color.brand.400}", "$type": "color", "$description": "Dark focus ring outline" }
+    },
+    "interactive": {
+      "primary": { "$value": "{color.brand.500}", "$type": "color", "$description": "Dark primary action background" },
+      "primaryHover": { "$value": "{color.brand.600}", "$type": "color", "$description": "Dark primary action hover" },
+      "primaryActive": { "$value": "{color.brand.700}", "$type": "color", "$description": "Dark primary action active" },
+      "primaryContrast": { "$value": "{color.neutral.1000}", "$type": "color", "$description": "Dark primary action text" }
+    },
+    "feedback": {
+      "success": {
+        "bg": { "$value": "{color.neutral.900}", "$type": "color" },
+        "text": { "$value": "{color.success.500}", "$type": "color" }
+      },
+      "warning": {
+        "bg": { "$value": "{color.neutral.900}", "$type": "color" },
+        "text": { "$value": "{color.warning.500}", "$type": "color" }
+      },
+      "danger": {
+        "bg": { "$value": "{color.neutral.900}", "$type": "color" },
+        "text": { "$value": "{color.danger.500}", "$type": "color" }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,45 @@
+{
+  "semantic": {
+    "surface": {
+      "canvas": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Page background" },
+      "default": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Standard container background" },
+      "muted": { "$value": "{color.neutral.50}", "$type": "color", "$description": "Subdued background" },
+      "subtle": { "$value": "{color.neutral.100}", "$type": "color", "$description": "Subtle interactive background" },
+      "raised": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Card and elevated surface background" }
+    },
+    "text": {
+      "primary": { "$value": "{color.neutral.900}", "$type": "color", "$description": "High contrast primary text" },
+      "secondary": { "$value": "{color.neutral.600}", "$type": "color", "$description": "Medium contrast secondary text" },
+      "muted": { "$value": "{color.neutral.400}", "$type": "color", "$description": "Low contrast muted text" },
+      "inverse": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Inverted contrast text" },
+      "brand": { "$value": "{color.brand.600}", "$type": "color", "$description": "Brand colored text" }
+    },
+    "border": {
+      "subtle": { "$value": "{color.neutral.200}", "$type": "color", "$description": "Subtle card or divider border" },
+      "default": { "$value": "{color.neutral.300}", "$type": "color", "$description": "Standard border" },
+      "strong": { "$value": "{color.neutral.400}", "$type": "color", "$description": "High-emphasis border" },
+      "focus": { "$value": "{color.brand.500}", "$type": "color", "$description": "Focus ring outline" }
+    },
+    "interactive": {
+      "primary": { "$value": "{color.brand.600}", "$type": "color", "$description": "Primary action background" },
+      "primaryHover": { "$value": "{color.brand.700}", "$type": "color", "$description": "Primary action hover" },
+      "primaryActive": { "$value": "{color.brand.800}", "$type": "color", "$description": "Primary action active" },
+      "primaryContrast": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Primary action text/icon" }
+    },
+    "feedback": {
+      "success": {
+        "bg": { "$value": "{color.success.50}", "$type": "color" },
+        "text": { "$value": "{color.success.700}", "$type": "color" }
+      },
+      "warning": {
+        "bg": { "$value": "{color.warning.50}", "$type": "color" },
+        "text": { "$value": "{color.warning.700}", "$type": "color" }
+      },
+      "danger": {
+        "bg": { "$value": "{color.danger.50}", "$type": "color" },
+        "text": { "$value": "{color.danger.700}", "$type": "color" }
+      }
+    }
+  }
+}
+

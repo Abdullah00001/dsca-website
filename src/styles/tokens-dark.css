@@ -1,0 +1,30 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root[data-theme="dark"], .dark {
+  --semantic-surface-canvas: var(--color-neutral-950); /** Dark page background */
+  --semantic-surface-default: var(--color-neutral-900); /** Dark container background */
+  --semantic-surface-muted: var(--color-neutral-800); /** Dark subdued background */
+  --semantic-surface-subtle: var(--color-neutral-700); /** Dark subtle interactive background */
+  --semantic-surface-raised: var(--color-neutral-900); /** Dark card surface background */
+  --semantic-text-primary: var(--color-neutral-50); /** High contrast dark primary text */
+  --semantic-text-secondary: var(--color-neutral-300); /** Medium contrast dark secondary text */
+  --semantic-text-muted: var(--color-neutral-500); /** Low contrast dark muted text */
+  --semantic-text-inverse: var(--color-neutral-950); /** Inverted contrast dark text */
+  --semantic-text-brand: var(--color-brand-400); /** Brand dark colored text */
+  --semantic-border-subtle: var(--color-neutral-800); /** Dark subtle card or divider border */
+  --semantic-border-default: var(--color-neutral-700); /** Dark standard border */
+  --semantic-border-strong: var(--color-neutral-600); /** Dark high-emphasis border */
+  --semantic-border-focus: var(--color-brand-400); /** Dark focus ring outline */
+  --semantic-interactive-primary: var(--color-brand-500); /** Dark primary action background */
+  --semantic-interactive-primary-hover: var(--color-brand-600); /** Dark primary action hover */
+  --semantic-interactive-primary-active: var(--color-brand-700); /** Dark primary action active */
+  --semantic-interactive-primary-contrast: var(--color-neutral-1000); /** Dark primary action text */
+  --semantic-feedback-success-bg: var(--color-neutral-900);
+  --semantic-feedback-success-text: var(--color-success-500);
+  --semantic-feedback-warning-bg: var(--color-neutral-900);
+  --semantic-feedback-warning-text: var(--color-warning-500);
+  --semantic-feedback-danger-bg: var(--color-neutral-900);
+  --semantic-feedback-danger-text: var(--color-danger-500);
+}

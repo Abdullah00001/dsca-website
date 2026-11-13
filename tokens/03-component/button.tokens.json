@@ -1,0 +1,20 @@
+{
+  "component": {
+    "button": {
+      "primary": {
+        "bg": { "$value": "{semantic.interactive.primary}", "$type": "color" },
+        "hover": { "$value": "{semantic.interactive.primaryHover}", "$type": "color" },
+        "active": { "$value": "{semantic.interactive.primaryActive}", "$type": "color" },
+        "text": { "$value": "{semantic.interactive.primaryContrast}", "$type": "color" }
+      },
+      "padding": {
+        "x": { "$value": "{space.4}", "$type": "dimension" },
+        "y": { "$value": "{space.2}", "$type": "dimension" }
+      },
+      "radius": { "$value": "{radius.md}", "$type": "dimension" },
+      "fontSize": { "$value": "{font.size.sm}", "$type": "dimension" },
+      "fontWeight": { "$value": "{font.weight.medium}", "$type": "fontWeight" }
+    }
+  }
+}
+

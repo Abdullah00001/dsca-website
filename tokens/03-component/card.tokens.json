@@ -1,0 +1,12 @@
+{
+  "component": {
+    "card": {
+      "bg": { "$value": "{semantic.surface.raised}", "$type": "color" },
+      "border": { "$value": "{semantic.border.subtle}", "$type": "color" },
+      "radius": { "$value": "{radius.xl}", "$type": "dimension" },
+      "padding": { "$value": "{space.6}", "$type": "dimension" },
+      "shadow": { "$value": "{semantic.elevation.card}", "$type": "shadow" }
+    }
+  }
+}
+

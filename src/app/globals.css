@@ -1,26 +1,60 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/tokens-dark.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--semantic-surface-canvas);
+  --foreground: var(--semantic-text-primary);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Semantic Color Aliases for Tailwind CSS */
+  --color-canvas: var(--semantic-surface-canvas);
+  --color-surface: var(--semantic-surface-default);
+  --color-surface-muted: var(--semantic-surface-muted);
+  --color-surface-subtle: var(--semantic-surface-subtle);
+  --color-surface-raised: var(--semantic-surface-raised);
+
+  --color-text-primary: var(--semantic-text-primary);
+  --color-text-secondary: var(--semantic-text-secondary);
+  --color-text-muted: var(--semantic-text-muted);
+  --color-text-inverse: var(--semantic-text-inverse);
+  --color-text-brand: var(--semantic-text-brand);
+
+  --color-border-subtle: var(--semantic-border-subtle);
+  --color-border-default: var(--semantic-border-default);
+  --color-border-strong: var(--semantic-border-strong);
+  --color-border-focus: var(--semantic-border-focus);
+
+  --color-primary: var(--semantic-interactive-primary);
+  --color-primary-hover: var(--semantic-interactive-primary-hover);
+  --color-primary-active: var(--semantic-interactive-primary-active);
+  --color-primary-contrast: var(--semantic-interactive-primary-contrast);
+
+  --color-success-bg: var(--semantic-feedback-success-bg);
+  --color-success-text: var(--semantic-feedback-success-text);
+  --color-warning-bg: var(--semantic-feedback-warning-bg);
+  --color-warning-text: var(--semantic-feedback-warning-text);
+  --color-danger-bg: var(--semantic-feedback-danger-bg);
+  --color-danger-text: var(--semantic-feedback-danger-text);
+
+  /* Typography */
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #0a0a0a;
+  :root:not([data-theme="light"]) {
+    --background: var(--semantic-surface-canvas);
+    --foreground: var(--semantic-text-primary);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
