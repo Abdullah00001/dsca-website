@@ -10,7 +10,8 @@
     "tokens:build": "node scripts/build-tokens.mjs",
     "tokens:watch": "node scripts/build-tokens.mjs --watch",
     "predev": "pnpm run tokens:build",
-    "prebuild": "pnpm run tokens:build"
+    "prebuild": "pnpm run tokens:build",
+    "create:feature": "node scripts/create-feature.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

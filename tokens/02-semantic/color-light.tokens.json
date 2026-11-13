@@ -1,45 +1,23 @@
 {
   "semantic": {
-    "surface": {
-      "canvas": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Page background" },
-      "default": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Standard container background" },
-      "muted": { "$value": "{color.neutral.50}", "$type": "color", "$description": "Subdued background" },
-      "subtle": { "$value": "{color.neutral.100}", "$type": "color", "$description": "Subtle interactive background" },
-      "raised": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Card and elevated surface background" }
-    },
-    "text": {
-      "primary": { "$value": "{color.neutral.900}", "$type": "color", "$description": "High contrast primary text" },
-      "secondary": { "$value": "{color.neutral.600}", "$type": "color", "$description": "Medium contrast secondary text" },
-      "muted": { "$value": "{color.neutral.400}", "$type": "color", "$description": "Low contrast muted text" },
-      "inverse": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Inverted contrast text" },
-      "brand": { "$value": "{color.brand.600}", "$type": "color", "$description": "Brand colored text" }
-    },
-    "border": {
-      "subtle": { "$value": "{color.neutral.200}", "$type": "color", "$description": "Subtle card or divider border" },
-      "default": { "$value": "{color.neutral.300}", "$type": "color", "$description": "Standard border" },
-      "strong": { "$value": "{color.neutral.400}", "$type": "color", "$description": "High-emphasis border" },
-      "focus": { "$value": "{color.brand.500}", "$type": "color", "$description": "Focus ring outline" }
-    },
-    "interactive": {
-      "primary": { "$value": "{color.brand.600}", "$type": "color", "$description": "Primary action background" },
-      "primaryHover": { "$value": "{color.brand.700}", "$type": "color", "$description": "Primary action hover" },
-      "primaryActive": { "$value": "{color.brand.800}", "$type": "color", "$description": "Primary action active" },
-      "primaryContrast": { "$value": "{color.neutral.0}", "$type": "color", "$description": "Primary action text/icon" }
-    },
-    "feedback": {
-      "success": {
-        "bg": { "$value": "{color.success.50}", "$type": "color" },
-        "text": { "$value": "{color.success.700}", "$type": "color" }
-      },
-      "warning": {
-        "bg": { "$value": "{color.warning.50}", "$type": "color" },
-        "text": { "$value": "{color.warning.700}", "$type": "color" }
-      },
-      "danger": {
-        "bg": { "$value": "{color.danger.50}", "$type": "color" },
-        "text": { "$value": "{color.danger.700}", "$type": "color" }
-      }
+    "color": {
+      "bg": { "$value": "{color.neutral.canvasLight}", "$type": "color", "$description": "Light mode page background" },
+      "fg": { "$value": "{color.neutral.ink}", "$type": "color", "$description": "Light mode primary text color" },
+      "muted": { "$value": "{color.neutral.mutedLight}", "$type": "color", "$description": "Light mode muted text" },
+      "card": { "$value": "{color.neutral.white}", "$type": "color", "$description": "Light mode card container background" },
+      "line": { "$value": "{color.neutral.lineLight}", "$type": "color", "$description": "Light mode border line" },
+      "green": { "$value": "{color.forest.600}", "$type": "color", "$description": "DSCA emerald green accent" },
+      "forest": { "$value": "{color.forest.700}", "$type": "color", "$description": "DSCA main forest hero band background" },
+      "forest2": { "$value": "{color.forest.550}", "$type": "color", "$description": "DSCA secondary forest accent" },
+      "gold": { "$value": "{color.gold.500}", "$type": "color", "$description": "DSCA gold button and highlight accent" },
+      "coral": { "$value": "{color.coral.500}", "$type": "color", "$description": "DSCA coral punctuation and tags" },
+      "mint": { "$value": "{color.forest.100}", "$type": "color", "$description": "DSCA mint background for pills and tags" },
+      "ink": { "$value": "{color.forest.900}", "$type": "color", "$description": "Deep espresso forest ink" },
+      "gt": { "$value": "{color.forest.600}", "$type": "color", "$description": "Eyebrow and accent text color" },
+      "ait": { "$value": "{color.coral.800}", "$type": "color", "$description": "Terracotta editorial italic text accent" },
+      "highlight": { "$value": "{color.gold.200}", "$type": "color", "$description": "Yellow highlight text on dark backgrounds" },
+      "onDarkText": { "$value": "{color.neutral.white}", "$type": "color" },
+      "onDarkMuted": { "$value": "{color.neutral.creamSubtle}", "$type": "color" }
     }
   }
 }
-

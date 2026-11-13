@@ -1,16 +1,16 @@
 {
   "component": {
     "input": {
-      "bg": { "$value": "{semantic.surface.default}", "$type": "color" },
-      "border": { "$value": "{semantic.border.default}", "$type": "color" },
-      "borderFocus": { "$value": "{semantic.border.focus}", "$type": "color" },
+      "minHeight": { "$value": "56px", "$type": "dimension" },
       "radius": { "$value": "{radius.md}", "$type": "dimension" },
-      "padding": {
-        "x": { "$value": "{space.3}", "$type": "dimension" },
-        "y": { "$value": "{space.2}", "$type": "dimension" }
-      },
-      "fontSize": { "$value": "{font.size.sm}", "$type": "dimension" }
+      "bg": { "$value": "{semantic.color.card}", "$type": "color" },
+      "border": { "$value": "#4f8a6c", "$type": "color" },
+      "borderHover": { "$value": "#0a8a56", "$type": "color" },
+      "borderFocus": { "$value": "{semantic.color.gold}", "$type": "color" },
+      "shadowFocus": { "$value": "{semantic.elevation.focus}", "$type": "shadow" },
+      "paddingX": { "$value": "18px", "$type": "dimension" },
+      "fontSize": { "$value": "{font.size.body}", "$type": "dimension" },
+      "fontWeight": { "$value": "{font.weight.medium}", "$type": "fontWeight" }
     }
   }
 }
-

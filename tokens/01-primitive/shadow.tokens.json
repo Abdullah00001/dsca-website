@@ -1,10 +1,45 @@
 {
   "shadow": {
     "none": { "$value": "none", "$type": "shadow" },
-    "sm": { "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "$type": "shadow" },
-    "md": { "$value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)", "$type": "shadow" },
-    "lg": { "$value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)", "$type": "shadow" },
-    "xl": { "$value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)", "$type": "shadow" }
+    "btn": {
+      "$value": "0 18px 36px -14px rgba(242, 184, 74, 0.6)",
+      "$type": "shadow",
+      "$description": "Signature gold button glow"
+    },
+    "btnDark": {
+      "$value": "0 22px 44px -18px #000000",
+      "$type": "shadow",
+      "$description": "Dark button deep shadow"
+    },
+    "card": {
+      "$value": "0 24px 50px -30px rgba(6, 37, 26, 0.5)",
+      "$type": "shadow",
+      "$description": "Standard card shadow"
+    },
+    "cardHover": {
+      "$value": "0 40px 70px -30px rgba(6, 37, 26, 0.6)",
+      "$type": "shadow",
+      "$description": "Card hover elevated shadow"
+    },
+    "reco": {
+      "$value": "0 30px 60px -28px rgba(6, 37, 26, 0.6)",
+      "$type": "shadow",
+      "$description": "Recommendation box shadow"
+    },
+    "vid": {
+      "$value": "0 40px 80px -36px rgba(0, 0, 0, 0.6)",
+      "$type": "shadow",
+      "$description": "Video frame deep shadow"
+    },
+    "play": {
+      "$value": "0 20px 50px -10px rgba(0, 0, 0, 0.6)",
+      "$type": "shadow",
+      "$description": "Play button floating shadow"
+    },
+    "focus": {
+      "$value": "0 0 0 4px rgba(242, 184, 74, 0.3)",
+      "$type": "shadow",
+      "$description": "Gold focus ring"
+    }
   }
 }
-

@@ -1,51 +1,66 @@
 {
   "color": {
-    "brand": {
-      "50": { "$value": "#eff6ff", "$type": "color", "$description": "Brand lightest tint" },
-      "100": { "$value": "#dbeafe", "$type": "color", "$description": "Brand light tint" },
-      "200": { "$value": "#bfdbfe", "$type": "color" },
-      "300": { "$value": "#93c5fd", "$type": "color" },
-      "400": { "$value": "#60a5fa", "$type": "color" },
-      "500": { "$value": "#3b82f6", "$type": "color", "$description": "Brand primary standard" },
-      "600": { "$value": "#2563eb", "$type": "color", "$description": "Brand accent interactive" },
-      "700": { "$value": "#1d4ed8", "$type": "color" },
-      "800": { "$value": "#1e40af", "$type": "color" },
-      "900": { "$value": "#1e3a8a", "$type": "color" },
-      "950": { "$value": "#172554", "$type": "color", "$description": "Brand darkest shade" }
+    "forest": {
+      "50": { "$value": "#eefaf3", "$type": "color", "$description": "Lightest mint background" },
+      "100": { "$value": "#c9efd9", "$type": "color", "$description": "DSCA mint pill and badge background" },
+      "200": { "$value": "#a3e8c7", "$type": "color" },
+      "300": { "$value": "#58d39a", "$type": "color", "$description": "Dark mode green accent (gt)" },
+      "400": { "$value": "#3fae7c", "$type": "color" },
+      "500": { "$value": "#10b573", "$type": "color" },
+      "550": { "$value": "#0a8a56", "$type": "color", "$description": "DSCA forest2 highlight" },
+      "600": { "$value": "#0a7a4b", "$type": "color", "$description": "DSCA emerald green (green & gt)" },
+      "650": { "$value": "#08925a", "$type": "color" },
+      "700": { "$value": "#087548", "$type": "color", "$description": "DSCA main forest green (forest)" },
+      "750": { "$value": "#07784a", "$type": "color" },
+      "800": { "$value": "#0a6a43", "$type": "color", "$description": "Dark mode forest surface" },
+      "850": { "$value": "#065034", "$type": "color" },
+      "900": { "$value": "#073b2b", "$type": "color", "$description": "DSCA ink - deep espresso forest" },
+      "950": { "$value": "#06251a", "$type": "color", "$description": "Deepest dark forest shade" }
+    },
+    "gold": {
+      "50": { "$value": "#fffbeb", "$type": "color" },
+      "100": { "$value": "#fff2cf", "$type": "color" },
+      "200": { "$value": "#ffe08a", "$type": "color", "$description": "Light yellow text highlight and eyebrow in dark bands" },
+      "300": { "$value": "#ffd666", "$type": "color", "$description": "Warm bright gold italic accent in dark mode" },
+      "400": { "$value": "#f7cb6d", "$type": "color" },
+      "500": { "$value": "#f2b84a", "$type": "color", "$description": "DSCA signature amber gold" },
+      "600": { "$value": "#d99b26", "$type": "color" },
+      "700": { "$value": "#c98516", "$type": "color" },
+      "800": { "$value": "#a86d10", "$type": "color" },
+      "900": { "$value": "#784e0b", "$type": "color" }
+    },
+    "coral": {
+      "50": { "$value": "#fef2ee", "$type": "color" },
+      "100": { "$value": "#fde3da", "$type": "color" },
+      "200": { "$value": "#fac5b2", "$type": "color" },
+      "300": { "$value": "#f4a88a", "$type": "color" },
+      "400": { "$value": "#f39a78", "$type": "color" },
+      "500": { "$value": "#ef8a68", "$type": "color", "$description": "DSCA warm coral punctuation" },
+      "600": { "$value": "#dc6d46", "$type": "color" },
+      "700": { "$value": "#c4623b", "$type": "color" },
+      "800": { "$value": "#a23f16", "$type": "color", "$description": "DSCA terracotta italic accent (ait)" },
+      "900": { "$value": "#7a2410", "$type": "color" }
     },
     "neutral": {
-      "0": { "$value": "#ffffff", "$type": "color", "$description": "Pure white" },
-      "50": { "$value": "#f8fafc", "$type": "color" },
-      "100": { "$value": "#f1f5f9", "$type": "color" },
-      "200": { "$value": "#e2e8f0", "$type": "color" },
-      "300": { "$value": "#cbd5e1", "$type": "color" },
-      "400": { "$value": "#94a3b8", "$type": "color" },
-      "500": { "$value": "#64748b", "$type": "color" },
-      "600": { "$value": "#475569", "$type": "color" },
-      "700": { "$value": "#334155", "$type": "color" },
-      "800": { "$value": "#1e293b", "$type": "color" },
-      "900": { "$value": "#0f172a", "$type": "color" },
-      "950": { "$value": "#020617", "$type": "color" },
-      "1000": { "$value": "#000000", "$type": "color", "$description": "Pure black" }
+      "white": { "$value": "#ffffff", "$type": "color", "$description": "Pure white" },
+      "black": { "$value": "#000000", "$type": "color", "$description": "Pure black" },
+      "canvasLight": { "$value": "#f3f9ee", "$type": "color", "$description": "Light mode matcha/cream canvas background" },
+      "canvasDark": { "$value": "#0a1f16", "$type": "color", "$description": "Dark mode deep forest canvas background" },
+      "cardDark": { "$value": "#123423", "$type": "color", "$description": "Dark mode card background" },
+      "ink": { "$value": "#0b2a1e", "$type": "color", "$description": "Light mode deep forest body text" },
+      "cream": { "$value": "#eef5ef", "$type": "color", "$description": "Dark mode cream body text" },
+      "creamLight": { "$value": "#e8f8ee", "$type": "color" },
+      "creamSubtle": { "$value": "#dff5e8", "$type": "color" },
+      "mutedLight": { "$value": "#4d5f55", "$type": "color", "$description": "Light mode muted body/lead text" },
+      "mutedDark": { "$value": "#9db3a6", "$type": "color", "$description": "Dark mode muted text" },
+      "lineLight": { "$value": "#d4d8c8", "$type": "color", "$description": "Light mode border line" },
+      "lineDark": { "$value": "#1d3a2b", "$type": "color", "$description": "Dark mode border line" }
     },
-    "success": {
-      "50": { "$value": "#f0fdf4", "$type": "color" },
-      "500": { "$value": "#22c55e", "$type": "color" },
-      "600": { "$value": "#16a34a", "$type": "color" },
-      "700": { "$value": "#15803d", "$type": "color" }
-    },
-    "warning": {
-      "50": { "$value": "#fffbeb", "$type": "color" },
-      "500": { "$value": "#f59e0b", "$type": "color" },
-      "600": { "$value": "#d97706", "$type": "color" },
-      "700": { "$value": "#b45309", "$type": "color" }
-    },
-    "danger": {
-      "50": { "$value": "#fef2f2", "$type": "color" },
-      "500": { "$value": "#ef4444", "$type": "color" },
-      "600": { "$value": "#dc2626", "$type": "color" },
-      "700": { "$value": "#b91c1c", "$type": "color" }
+    "coffee": {
+      "foam": { "$value": "#f3dcb8", "$type": "color", "$description": "Latte art foam light tone" },
+      "crema": { "$value": "#8a5a35", "$type": "color", "$description": "Espresso crema mid tone" },
+      "roast": { "$value": "#4b2a14", "$type": "color", "$description": "Dark roast coffee tone" },
+      "espresso": { "$value": "#2b1509", "$type": "color", "$description": "Deep espresso base tone" }
     }
   }
 }
-

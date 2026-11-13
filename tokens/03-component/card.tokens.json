@@ -1,12 +1,11 @@
 {
   "component": {
     "card": {
-      "bg": { "$value": "{semantic.surface.raised}", "$type": "color" },
-      "border": { "$value": "{semantic.border.subtle}", "$type": "color" },
-      "radius": { "$value": "{radius.xl}", "$type": "dimension" },
-      "padding": { "$value": "{space.6}", "$type": "dimension" },
-      "shadow": { "$value": "{semantic.elevation.card}", "$type": "shadow" }
+      "bg": { "$value": "{semantic.color.card}", "$type": "color" },
+      "radius": { "$value": "{radius.3xl}", "$type": "dimension" },
+      "shadow": { "$value": "{semantic.elevation.card}", "$type": "shadow" },
+      "shadowHover": { "$value": "{semantic.elevation.cardHover}", "$type": "shadow" },
+      "text": { "$value": "{semantic.color.fg}", "$type": "color" }
     }
   }
 }
-

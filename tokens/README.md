@@ -1,90 +1,63 @@
-# Design Tokens (Style Dictionary v5 & DTCG Standard)
+# DSCA Barista Academy Design Tokens (Style Dictionary v5 & DTCG)
 
-This project uses **Style Dictionary v5** configured according to **W3C Design Tokens Community Group (DTCG)** industry best practices and integrated with **Tailwind CSS v4** and **Next.js**.
+Design system and tokens for **Dhaka Specialty Coffee Academy (DSCA)**, structured following **W3C Design Tokens Community Group (DTCG)** standards and integrated with **Tailwind CSS v4** & **Next.js**.
 
 ---
 
-## 🏗️ 3-Tier Token Architecture
+## 🎨 DSCA Signature Design System
 
-Tokens are organized into three clear abstraction tiers:
+### 1. Color Foundations
+* **Forest Greens:**
+  * Main Brand: `#087548` (`--forest` / `bg-forest`)
+  * Emerald: `#0a7a4b` (`--green` / `--gt`)
+  * Ink Espresso: `#073b2b` (`--ink` / `text-ink`)
+  * Mint Pill/Badge: `#c9efd9` (`--mint` / `bg-mint`)
+* **Signature Accents:**
+  * Warm Amber Gold: `#f2b84a` (`--gold` / `bg-gold` / signature button CTA)
+  * Terracotta Coral: `#ef8a68` (`--coral` / punctuation)
+  * Italic Text Accent: `#a23f16` (`--ait` light) / `#ffd666` (`--ait` dark)
+  * Highlight Yellow: `#ffe08a` (`--highlight` text on dark bands)
+* **Canvases:**
+  * Light Mode: `#f3f9ee` (soft matcha/cream)
+  * Dark Mode: `#0a1f16` (deep dark forest)
+  * Dark Mode Card: `#123423`
+
+### 2. Typography
+* **Display (`--font-display`):** `Bricolage Grotesque` (800 weight, uppercase, line-height `0.82`–`0.9`, negative letter-spacing).
+* **Serif Accent (`--font-serif`):** `Instrument Serif` (italic, editorial callout words via `.font-serif-italic`).
+* **Body (`--font-body`):** `Figtree` (clean, highly legible UI and editorial body text).
+
+### 3. Radiuses & Elevations
+* **Pill:** `99px` (buttons, chips, tags, pills).
+* **Cards:** `32px` with shadow `0 24px 50px -30px rgba(6, 37, 26, 0.5)`.
+* **Gold Glow:** `0 18px 36px -14px rgba(242, 184, 74, 0.6)` on primary CTA buttons.
+
+---
+
+## 🏗️ 3-Tier DTCG Architecture
 
 ```
 tokens/
-├── 01-primitive/              # Tier 1: Raw foundation scales (un-opinionated values)
-│   ├── color.tokens.json      # Base palette (brand, neutral, success, warning, danger)
-│   ├── dimension.tokens.json  # Spacing scale, border radiuses, border widths
-│   ├── font.tokens.json       # Font families, font sizes, font weights, line heights
-│   └── shadow.tokens.json     # Box shadow elevation scales
-├── 02-semantic/               # Tier 2: Intent & context (theme-aware aliases)
-│   ├── color-light.tokens.json# Default light theme mappings (surfaces, text, borders, actions)
-│   ├── color-dark.tokens.json # Dark theme mappings (overriding surfaces, text, borders)
-│   └── elevation.tokens.json  # Semantic elevations (card, dropdown, modal)
-└── 03-component/              # Tier 3: Component-scoped bindings
-    ├── button.tokens.json     # Button variant colors, padding, and radiuses
-    ├── card.tokens.json       # Card padding, background, border, and shadow
-    └── input.tokens.json      # Input form controls sizing, padding, and states
+├── 01-primitive/              # Raw foundation scales
+│   ├── color.tokens.json      # Forest, Gold, Coral, Neutral, and Coffee palettes
+│   ├── dimension.tokens.json  # Spacing, border radiuses, border widths
+│   ├── font.tokens.json       # Bricolage Grotesque, Instrument Serif, Figtree
+│   └── shadow.tokens.json     # Card, button glow, video, and focus shadows
+├── 02-semantic/               # Theme-aware semantic bindings
+│   ├── color-light.tokens.json# Default light theme mappings
+│   ├── color-dark.tokens.json # Dark theme mappings (:root[data-theme="dark"], .dark)
+│   └── elevation.tokens.json  # Contextual elevations
+└── 03-component/              # Component-specific bindings
+    ├── button.tokens.json     # Primary, dark, line, and ghost button tokens
+    ├── card.tokens.json       # Card container tokens
+    ├── badge.tokens.json      # Tag, chip, and eyebrow badge tokens
+    └── input.tokens.json      # Form control tokens
 ```
 
 ---
 
-## 📐 DTCG Standard Format
+## ⚙️ Commands
 
-All token files adhere to the official W3C Design Tokens specification:
-- **`$value`**: The raw value or token alias reference (e.g. `"{color.brand.500}"`).
-- **`$type`**: The token data type (`"color"`, `"dimension"`, `"fontFamily"`, `"fontWeight"`, `"shadow"`, etc.).
-- **`$description`**: Optional documentation string displayed in JSDoc tooltips and design tools.
-
-```json
-{
-  "semantic": {
-    "interactive": {
-      "primary": {
-        "$value": "{color.brand.600}",
-        "$type": "color",
-        "$description": "Primary action background"
-      }
-    }
-  }
-}
-```
-
----
-
-## ⚙️ Available Scripts
-
-| Command | Purpose |
-| :--- | :--- |
-| `pnpm run tokens:build` | Compiles tokens into CSS variables and pure TypeScript definitions. |
-| `pnpm run tokens:watch` | Watches the `tokens/` directory and hot-recompiles on change. |
-| `pnpm run dev` | Automatically builds tokens (`predev`) before starting Next.js dev server. |
-| `pnpm run build` | Automatically builds tokens (`prebuild`) before production Next.js build. |
-
----
-
-## 🚀 How to Consume Tokens
-
-### 1. In CSS / Tailwind CSS v4
-Generated CSS variables are imported in `src/app/globals.css`:
-- Root & Light theme: `src/styles/tokens.css`
-- Dark theme: `src/styles/tokens-dark.css` (scoped to `[data-theme="dark"]` and `.dark`)
-
-Tailwind classes mapped in `@theme inline`:
-```tsx
-// Using semantic tokens as Tailwind utility classes
-<div className="bg-canvas text-text-primary border border-border-subtle p-6 rounded-xl shadow-sm">
-  <button className="bg-primary hover:bg-primary-hover text-primary-contrast px-4 py-2 rounded-md font-medium">
-    Action Button
-  </button>
-</div>
-```
-
-### 2. In TypeScript / JavaScript Components
-Import strongly typed constants or the nested JSON tree directly from `@/tokens`:
-```tsx
-import { tokens, ColorBrand500 } from "@/tokens";
-
-console.log(ColorBrand500); // "#3b82f6"
-console.log(tokens.space[4]); // "1rem"
-console.log(tokens.font.family.sans); // Font stack
-```
-
+* `pnpm run tokens:build`: Recompiles all tokens to CSS variables and `src/tokens/index.ts`.
+* `pnpm run tokens:watch`: Recompiles tokens on the fly during development.
+* `pnpm run dev`: Automatically builds tokens before starting Next.js.

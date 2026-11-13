@@ -3,28 +3,19 @@
  */
 
 :root[data-theme="dark"], .dark {
-  --semantic-surface-canvas: var(--color-neutral-950); /** Dark page background */
-  --semantic-surface-default: var(--color-neutral-900); /** Dark container background */
-  --semantic-surface-muted: var(--color-neutral-800); /** Dark subdued background */
-  --semantic-surface-subtle: var(--color-neutral-700); /** Dark subtle interactive background */
-  --semantic-surface-raised: var(--color-neutral-900); /** Dark card surface background */
-  --semantic-text-primary: var(--color-neutral-50); /** High contrast dark primary text */
-  --semantic-text-secondary: var(--color-neutral-300); /** Medium contrast dark secondary text */
-  --semantic-text-muted: var(--color-neutral-500); /** Low contrast dark muted text */
-  --semantic-text-inverse: var(--color-neutral-950); /** Inverted contrast dark text */
-  --semantic-text-brand: var(--color-brand-400); /** Brand dark colored text */
-  --semantic-border-subtle: var(--color-neutral-800); /** Dark subtle card or divider border */
-  --semantic-border-default: var(--color-neutral-700); /** Dark standard border */
-  --semantic-border-strong: var(--color-neutral-600); /** Dark high-emphasis border */
-  --semantic-border-focus: var(--color-brand-400); /** Dark focus ring outline */
-  --semantic-interactive-primary: var(--color-brand-500); /** Dark primary action background */
-  --semantic-interactive-primary-hover: var(--color-brand-600); /** Dark primary action hover */
-  --semantic-interactive-primary-active: var(--color-brand-700); /** Dark primary action active */
-  --semantic-interactive-primary-contrast: var(--color-neutral-1000); /** Dark primary action text */
-  --semantic-feedback-success-bg: var(--color-neutral-900);
-  --semantic-feedback-success-text: var(--color-success-500);
-  --semantic-feedback-warning-bg: var(--color-neutral-900);
-  --semantic-feedback-warning-text: var(--color-warning-500);
-  --semantic-feedback-danger-bg: var(--color-neutral-900);
-  --semantic-feedback-danger-text: var(--color-danger-500);
+  --semantic-color-bg: var(--color-neutral-canvas-dark); /** Dark mode page background */
+  --semantic-color-fg: var(--color-neutral-cream); /** Dark mode primary text color */
+  --semantic-color-muted: var(--color-neutral-muted-dark); /** Dark mode muted text */
+  --semantic-color-card: var(--color-neutral-card-dark); /** Dark mode card container background */
+  --semantic-color-line: var(--color-neutral-line-dark); /** Dark mode border line */
+  --semantic-color-forest: var(--color-forest-800); /** Dark mode forest hero background */
+  --semantic-color-forest2: var(--color-forest-750); /** Dark mode secondary forest accent */
+  --semantic-color-green: var(--color-forest-600); /** DSCA emerald green accent */
+  --semantic-color-gold: var(--color-gold-500); /** DSCA gold button and highlight accent */
+  --semantic-color-coral: var(--color-coral-500); /** DSCA coral punctuation and tags */
+  --semantic-color-mint: var(--color-forest-950); /** Dark mode deep forest mint pill background */
+  --semantic-color-ink: var(--color-forest-900); /** Deep espresso forest ink */
+  --semantic-color-gt: var(--color-forest-300); /** Dark mode bright green eyebrow and accent (gt) */
+  --semantic-color-ait: var(--color-gold-300); /** Dark mode warm gold italic accent */
+  --semantic-color-highlight: var(--color-gold-300); /** Dark mode gold highlight */
 }

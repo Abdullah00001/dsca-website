@@ -1,38 +1,60 @@
 {
   "font": {
     "family": {
-      "sans": {
-        "$value": "var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        "$type": "fontFamily"
+      "display": {
+        "$value": "var(--font-display), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif",
+        "$type": "fontFamily",
+        "$description": "Oversized bold display typography"
       },
-      "mono": {
-        "$value": "var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-        "$type": "fontFamily"
+      "serif": {
+        "$value": "var(--font-serif), 'Instrument Serif', Georgia, serif",
+        "$type": "fontFamily",
+        "$description": "Editorial cursive italic accent words (.it)"
+      },
+      "body": {
+        "$value": "var(--font-body), 'Figtree', system-ui, sans-serif",
+        "$type": "fontFamily",
+        "$description": "Modern readable body typography"
       }
     },
     "size": {
-      "xs": { "$value": "0.75rem", "$type": "dimension", "$description": "12px" },
-      "sm": { "$value": "0.875rem", "$type": "dimension", "$description": "14px" },
-      "base": { "$value": "1rem", "$type": "dimension", "$description": "16px" },
-      "lg": { "$value": "1.125rem", "$type": "dimension", "$description": "18px" },
-      "xl": { "$value": "1.25rem", "$type": "dimension", "$description": "20px" },
-      "2xl": { "$value": "1.5rem", "$type": "dimension", "$description": "24px" },
-      "3xl": { "$value": "1.875rem", "$type": "dimension", "$description": "30px" },
-      "4xl": { "$value": "2.25rem", "$type": "dimension", "$description": "36px" }
+      "hero": { "$value": "clamp(56px, 11vw, 190px)", "$type": "string" },
+      "h1": { "$value": "clamp(52px, 11.5vw, 190px)", "$type": "string" },
+      "h2": { "$value": "clamp(38px, 8.6vw, 150px)", "$type": "string" },
+      "h3": { "$value": "clamp(30px, 5.2vw, 84px)", "$type": "string" },
+      "title": { "$value": "clamp(22px, 3vw, 40px)", "$type": "string" },
+      "lead": { "$value": "clamp(17px, 1.5vw, 21px)", "$type": "string" },
+      "body": { "$value": "17px", "$type": "dimension" },
+      "bodySm": { "$value": "15px", "$type": "dimension" },
+      "caption": { "$value": "14px", "$type": "dimension" },
+      "button": { "$value": "13px", "$type": "dimension" },
+      "eyebrow": { "$value": "12px", "$type": "dimension" },
+      "tag": { "$value": "11px", "$type": "dimension" }
     },
     "weight": {
-      "normal": { "$value": "400", "$type": "fontWeight" },
+      "regular": { "$value": "400", "$type": "fontWeight" },
       "medium": { "$value": "500", "$type": "fontWeight" },
       "semibold": { "$value": "600", "$type": "fontWeight" },
-      "bold": { "$value": "700", "$type": "fontWeight" }
+      "bold": { "$value": "700", "$type": "fontWeight" },
+      "black": { "$value": "800", "$type": "fontWeight" }
     },
     "lineHeight": {
-      "none": { "$value": "1", "$type": "lineHeight" },
-      "tight": { "$value": "1.25", "$type": "lineHeight" },
-      "snug": { "$value": "1.375", "$type": "lineHeight" },
+      "hero": { "$value": "0.82", "$type": "lineHeight" },
+      "tight": { "$value": "0.84", "$type": "lineHeight" },
+      "heading": { "$value": "0.9", "$type": "lineHeight" },
+      "snug": { "$value": "1.15", "$type": "lineHeight" },
       "normal": { "$value": "1.5", "$type": "lineHeight" },
-      "relaxed": { "$value": "1.625", "$type": "lineHeight" }
+      "lead": { "$value": "1.65", "$type": "lineHeight" },
+      "prose": { "$value": "1.8", "$type": "lineHeight" }
+    },
+    "letterSpacing": {
+      "tightest": { "$value": "-0.05em", "$type": "string" },
+      "tighter": { "$value": "-0.035em", "$type": "string" },
+      "tight": { "$value": "-0.02em", "$type": "string" },
+      "normal": { "$value": "0em", "$type": "string" },
+      "wide": { "$value": "0.1em", "$type": "string" },
+      "wider": { "$value": "0.14em", "$type": "string" },
+      "widest": { "$value": "0.2em", "$type": "string" }
     }
   }
 }
-

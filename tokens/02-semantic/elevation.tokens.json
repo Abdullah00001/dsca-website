@@ -1,10 +1,14 @@
 {
   "semantic": {
     "elevation": {
-      "card": { "$value": "{shadow.sm}", "$type": "shadow" },
-      "dropdown": { "$value": "{shadow.md}", "$type": "shadow" },
-      "modal": { "$value": "{shadow.xl}", "$type": "shadow" }
+      "card": { "$value": "{shadow.card}", "$type": "shadow" },
+      "cardHover": { "$value": "{shadow.cardHover}", "$type": "shadow" },
+      "reco": { "$value": "{shadow.reco}", "$type": "shadow" },
+      "button": { "$value": "{shadow.btn}", "$type": "shadow" },
+      "buttonDark": { "$value": "{shadow.btnDark}", "$type": "shadow" },
+      "video": { "$value": "{shadow.vid}", "$type": "shadow" },
+      "play": { "$value": "{shadow.play}", "$type": "shadow" },
+      "focus": { "$value": "{shadow.focus}", "$type": "shadow" }
     }
   }
 }
-

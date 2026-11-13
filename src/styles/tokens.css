@@ -3,42 +3,58 @@
  */
 
 :root {
-  --color-brand-50: #eff6ff; /** Brand lightest tint */
-  --color-brand-100: #dbeafe; /** Brand light tint */
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6; /** Brand primary standard */
-  --color-brand-600: #2563eb; /** Brand accent interactive */
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
-  --color-brand-900: #1e3a8a;
-  --color-brand-950: #172554; /** Brand darkest shade */
-  --color-neutral-0: #ffffff; /** Pure white */
-  --color-neutral-50: #f8fafc;
-  --color-neutral-100: #f1f5f9;
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-400: #94a3b8;
-  --color-neutral-500: #64748b;
-  --color-neutral-600: #475569;
-  --color-neutral-700: #334155;
-  --color-neutral-800: #1e293b;
-  --color-neutral-900: #0f172a;
-  --color-neutral-950: #020617;
-  --color-neutral-1000: #000000; /** Pure black */
-  --color-success-50: #f0fdf4;
-  --color-success-500: #22c55e;
-  --color-success-600: #16a34a;
-  --color-success-700: #15803d;
-  --color-warning-50: #fffbeb;
-  --color-warning-500: #f59e0b;
-  --color-warning-600: #d97706;
-  --color-warning-700: #b45309;
-  --color-danger-50: #fef2f2;
-  --color-danger-500: #ef4444;
-  --color-danger-600: #dc2626;
-  --color-danger-700: #b91c1c;
+  --color-forest-50: #eefaf3; /** Lightest mint background */
+  --color-forest-100: #c9efd9; /** DSCA mint pill and badge background */
+  --color-forest-200: #a3e8c7;
+  --color-forest-300: #58d39a; /** Dark mode green accent (gt) */
+  --color-forest-400: #3fae7c;
+  --color-forest-500: #10b573;
+  --color-forest-550: #0a8a56; /** DSCA forest2 highlight */
+  --color-forest-600: #0a7a4b; /** DSCA emerald green (green & gt) */
+  --color-forest-650: #08925a;
+  --color-forest-700: #087548; /** DSCA main forest green (forest) */
+  --color-forest-750: #07784a;
+  --color-forest-800: #0a6a43; /** Dark mode forest surface */
+  --color-forest-850: #065034;
+  --color-forest-900: #073b2b; /** DSCA ink - deep espresso forest */
+  --color-forest-950: #06251a; /** Deepest dark forest shade */
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fff2cf;
+  --color-gold-200: #ffe08a; /** Light yellow text highlight and eyebrow in dark bands */
+  --color-gold-300: #ffd666; /** Warm bright gold italic accent in dark mode */
+  --color-gold-400: #f7cb6d;
+  --color-gold-500: #f2b84a; /** DSCA signature amber gold */
+  --color-gold-600: #d99b26;
+  --color-gold-700: #c98516;
+  --color-gold-800: #a86d10;
+  --color-gold-900: #784e0b;
+  --color-coral-50: #fef2ee;
+  --color-coral-100: #fde3da;
+  --color-coral-200: #fac5b2;
+  --color-coral-300: #f4a88a;
+  --color-coral-400: #f39a78;
+  --color-coral-500: #ef8a68; /** DSCA warm coral punctuation */
+  --color-coral-600: #dc6d46;
+  --color-coral-700: #c4623b;
+  --color-coral-800: #a23f16; /** DSCA terracotta italic accent (ait) */
+  --color-coral-900: #7a2410;
+  --color-neutral-white: #ffffff; /** Pure white */
+  --color-neutral-black: #000000; /** Pure black */
+  --color-neutral-canvas-light: #f3f9ee; /** Light mode matcha/cream canvas background */
+  --color-neutral-canvas-dark: #0a1f16; /** Dark mode deep forest canvas background */
+  --color-neutral-card-dark: #123423; /** Dark mode card background */
+  --color-neutral-ink: #0b2a1e; /** Light mode deep forest body text */
+  --color-neutral-cream: #eef5ef; /** Dark mode cream body text */
+  --color-neutral-cream-light: #e8f8ee;
+  --color-neutral-cream-subtle: #dff5e8;
+  --color-neutral-muted-light: #4d5f55; /** Light mode muted body/lead text */
+  --color-neutral-muted-dark: #9db3a6; /** Dark mode muted text */
+  --color-neutral-line-light: #d4d8c8; /** Light mode border line */
+  --color-neutral-line-dark: #1d3a2b; /** Dark mode border line */
+  --color-coffee-foam: #f3dcb8; /** Latte art foam light tone */
+  --color-coffee-crema: #8a5a35; /** Espresso crema mid tone */
+  --color-coffee-roast: #4b2a14; /** Dark roast coffee tone */
+  --color-coffee-espresso: #2b1509; /** Deep espresso base tone */
   --space-0: 0px;
   --space-1: 0.25rem; /** 4px */
   --space-2: 0.5rem; /** 8px */
@@ -50,88 +66,142 @@
   --space-10: 2.5rem; /** 40px */
   --space-12: 3rem; /** 48px */
   --space-16: 4rem; /** 64px */
+  --space-20: 5rem; /** 80px */
+  --space-gutter: max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px));
+  --space-container: 1360px;
+  --space-section-y: clamp(72px, 10vw, 150px);
   --radius-none: 0px;
-  --radius-xs: 0.125rem; /** 2px */
-  --radius-sm: 0.25rem; /** 4px */
-  --radius-md: 0.375rem; /** 6px */
-  --radius-lg: 0.5rem; /** 8px */
-  --radius-xl: 0.75rem; /** 12px */
-  --radius-2xl: 1rem; /** 16px */
-  --radius-full: 9999px;
+  --radius-sm: 8px;
+  --radius-md: 16px; /** Form fields and inputs */
+  --radius-lg: 20px; /** Certificate container */
+  --radius-xl: 24px; /** Location badges */
+  --radius-2xl: 28px; /** Photo containers, recommendation boxes */
+  --radius-3xl: 32px; /** Cards and map containers */
+  --radius-4xl: 36px; /** Video player wrapper */
+  --radius-pill: 99px; /** Full rounded buttons and chips */
+  --radius-circle: 50%; /** Circular icons and avatars */
   --border-width-none: 0px;
   --border-width-thin: 1px;
-  --border-width-medium: 2px;
-  --border-width-thick: 4px;
-  --font-family-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --font-size-xs: 0.75rem; /** 12px */
-  --font-size-sm: 0.875rem; /** 14px */
-  --font-size-base: 1rem; /** 16px */
-  --font-size-lg: 1.125rem; /** 18px */
-  --font-size-xl: 1.25rem; /** 20px */
-  --font-size-2xl: 1.5rem; /** 24px */
-  --font-size-3xl: 1.875rem; /** 30px */
-  --font-size-4xl: 2.25rem; /** 36px */
-  --font-weight-normal: 400;
+  --border-width-medium: 1.5px;
+  --border-width-thick: 2px;
+  --border-width-heavy: 2.5px;
+  --font-family-display: var(--font-display), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif; /** Oversized bold display typography */
+  --font-family-serif: var(--font-serif), 'Instrument Serif', Georgia, serif; /** Editorial cursive italic accent words (.it) */
+  --font-family-body: var(--font-body), 'Figtree', system-ui, sans-serif; /** Modern readable body typography */
+  --font-size-hero: clamp(56px, 11vw, 190px);
+  --font-size-h1: clamp(52px, 11.5vw, 190px);
+  --font-size-h2: clamp(38px, 8.6vw, 150px);
+  --font-size-h3: clamp(30px, 5.2vw, 84px);
+  --font-size-title: clamp(22px, 3vw, 40px);
+  --font-size-lead: clamp(17px, 1.5vw, 21px);
+  --font-size-body: 17px;
+  --font-size-body-sm: 15px;
+  --font-size-caption: 14px;
+  --font-size-button: 13px;
+  --font-size-eyebrow: 12px;
+  --font-size-tag: 11px;
+  --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  --font-line-height-none: 1;
-  --font-line-height-tight: 1.25;
-  --font-line-height-snug: 1.375;
+  --font-weight-black: 800;
+  --font-line-height-hero: 0.82;
+  --font-line-height-tight: 0.84;
+  --font-line-height-heading: 0.9;
+  --font-line-height-snug: 1.15;
   --font-line-height-normal: 1.5;
-  --font-line-height-relaxed: 1.625;
+  --font-line-height-lead: 1.65;
+  --font-line-height-prose: 1.8;
+  --font-letter-spacing-tightest: -0.05em;
+  --font-letter-spacing-tighter: -0.035em;
+  --font-letter-spacing-tight: -0.02em;
+  --font-letter-spacing-normal: 0em;
+  --font-letter-spacing-wide: 0.1em;
+  --font-letter-spacing-wider: 0.14em;
+  --font-letter-spacing-widest: 0.2em;
   --shadow-none: none;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --semantic-surface-canvas: var(--color-neutral-0); /** Page background */
-  --semantic-surface-default: var(--color-neutral-0); /** Standard container background */
-  --semantic-surface-muted: var(--color-neutral-50); /** Subdued background */
-  --semantic-surface-subtle: var(--color-neutral-100); /** Subtle interactive background */
-  --semantic-surface-raised: var(--color-neutral-0); /** Card and elevated surface background */
-  --semantic-text-primary: var(--color-neutral-900); /** High contrast primary text */
-  --semantic-text-secondary: var(--color-neutral-600); /** Medium contrast secondary text */
-  --semantic-text-muted: var(--color-neutral-400); /** Low contrast muted text */
-  --semantic-text-inverse: var(--color-neutral-0); /** Inverted contrast text */
-  --semantic-text-brand: var(--color-brand-600); /** Brand colored text */
-  --semantic-border-subtle: var(--color-neutral-200); /** Subtle card or divider border */
-  --semantic-border-default: var(--color-neutral-300); /** Standard border */
-  --semantic-border-strong: var(--color-neutral-400); /** High-emphasis border */
-  --semantic-border-focus: var(--color-brand-500); /** Focus ring outline */
-  --semantic-interactive-primary: var(--color-brand-600); /** Primary action background */
-  --semantic-interactive-primary-hover: var(--color-brand-700); /** Primary action hover */
-  --semantic-interactive-primary-active: var(--color-brand-800); /** Primary action active */
-  --semantic-interactive-primary-contrast: var(--color-neutral-0); /** Primary action text/icon */
-  --semantic-feedback-success-bg: var(--color-success-50);
-  --semantic-feedback-success-text: var(--color-success-700);
-  --semantic-feedback-warning-bg: var(--color-warning-50);
-  --semantic-feedback-warning-text: var(--color-warning-700);
-  --semantic-feedback-danger-bg: var(--color-danger-50);
-  --semantic-feedback-danger-text: var(--color-danger-700);
-  --semantic-elevation-card: var(--shadow-sm);
-  --semantic-elevation-dropdown: var(--shadow-md);
-  --semantic-elevation-modal: var(--shadow-xl);
-  --component-button-padding-x: var(--space-4);
-  --component-button-padding-y: var(--space-2);
-  --component-button-radius: var(--radius-md);
-  --component-button-font-size: var(--font-size-sm);
-  --component-button-font-weight: var(--font-weight-medium);
-  --component-card-radius: var(--radius-xl);
-  --component-card-padding: var(--space-6);
+  --shadow-btn: 0 18px 36px -14px rgba(242, 184, 74, 0.6); /** Signature gold button glow */
+  --shadow-btn-dark: 0 22px 44px -18px #000000; /** Dark button deep shadow */
+  --shadow-card: 0 24px 50px -30px rgba(6, 37, 26, 0.5); /** Standard card shadow */
+  --shadow-card-hover: 0 40px 70px -30px rgba(6, 37, 26, 0.6); /** Card hover elevated shadow */
+  --shadow-reco: 0 30px 60px -28px rgba(6, 37, 26, 0.6); /** Recommendation box shadow */
+  --shadow-vid: 0 40px 80px -36px rgba(0, 0, 0, 0.6); /** Video frame deep shadow */
+  --shadow-play: 0 20px 50px -10px rgba(0, 0, 0, 0.6); /** Play button floating shadow */
+  --shadow-focus: 0 0 0 4px rgba(242, 184, 74, 0.3); /** Gold focus ring */
+  --component-button-min-height: 56px;
+  --component-button-line-bg: rgba(0, 0, 0, 0);
+  --component-button-ghost-bg: rgba(0, 0, 0, 0);
+  --component-button-ghost-icon-bg: rgba(255, 255, 255, 0.14);
+  --component-input-min-height: 56px;
+  --component-input-border: #4f8a6c;
+  --component-input-border-hover: #0a8a56;
+  --component-input-padding-x: 18px;
+  --semantic-color-bg: var(--color-neutral-canvas-light); /** Light mode page background */
+  --semantic-color-fg: var(--color-neutral-ink); /** Light mode primary text color */
+  --semantic-color-muted: var(--color-neutral-muted-light); /** Light mode muted text */
+  --semantic-color-card: var(--color-neutral-white); /** Light mode card container background */
+  --semantic-color-line: var(--color-neutral-line-light); /** Light mode border line */
+  --semantic-color-green: var(--color-forest-600); /** DSCA emerald green accent */
+  --semantic-color-forest: var(--color-forest-700); /** DSCA main forest hero band background */
+  --semantic-color-forest2: var(--color-forest-550); /** DSCA secondary forest accent */
+  --semantic-color-gold: var(--color-gold-500); /** DSCA gold button and highlight accent */
+  --semantic-color-coral: var(--color-coral-500); /** DSCA coral punctuation and tags */
+  --semantic-color-mint: var(--color-forest-100); /** DSCA mint background for pills and tags */
+  --semantic-color-ink: var(--color-forest-900); /** Deep espresso forest ink */
+  --semantic-color-gt: var(--color-forest-600); /** Eyebrow and accent text color */
+  --semantic-color-ait: var(--color-coral-800); /** Terracotta editorial italic text accent */
+  --semantic-color-highlight: var(--color-gold-200); /** Yellow highlight text on dark backgrounds */
+  --semantic-color-on-dark-text: var(--color-neutral-white);
+  --semantic-color-on-dark-muted: var(--color-neutral-cream-subtle);
+  --semantic-elevation-card: var(--shadow-card);
+  --semantic-elevation-card-hover: var(--shadow-card-hover);
+  --semantic-elevation-reco: var(--shadow-reco);
+  --semantic-elevation-button: var(--shadow-btn);
+  --semantic-elevation-button-dark: var(--shadow-btn-dark);
+  --semantic-elevation-video: var(--shadow-vid);
+  --semantic-elevation-play: var(--shadow-play);
+  --semantic-elevation-focus: var(--shadow-focus);
+  --component-tag-radius: var(--radius-pill);
+  --component-tag-font-size: var(--font-size-tag);
+  --component-tag-font-weight: var(--font-weight-bold);
+  --component-tag-letter-spacing: var(--font-letter-spacing-wider);
+  --component-eyebrow-font-size: var(--font-size-eyebrow);
+  --component-eyebrow-font-weight: var(--font-weight-bold);
+  --component-eyebrow-letter-spacing: var(--font-letter-spacing-widest);
+  --component-italic-font: var(--font-family-serif);
+  --component-button-radius: var(--radius-pill);
+  --component-button-font-size: var(--font-size-button);
+  --component-button-font-weight: var(--font-weight-bold);
+  --component-button-letter-spacing: var(--font-letter-spacing-wider);
+  --component-button-dark-text: var(--color-neutral-white);
+  --component-button-ghost-text: var(--color-neutral-white);
+  --component-button-ghost-icon-text: var(--color-neutral-white);
+  --component-card-radius: var(--radius-3xl);
   --component-input-radius: var(--radius-md);
-  --component-input-padding-x: var(--space-3);
-  --component-input-padding-y: var(--space-2);
-  --component-input-font-size: var(--font-size-sm);
-  --component-button-primary-bg: var(--semantic-interactive-primary);
-  --component-button-primary-hover: var(--semantic-interactive-primary-hover);
-  --component-button-primary-active: var(--semantic-interactive-primary-active);
-  --component-button-primary-text: var(--semantic-interactive-primary-contrast);
-  --component-card-bg: var(--semantic-surface-raised);
-  --component-card-border: var(--semantic-border-subtle);
+  --component-input-font-size: var(--font-size-body);
+  --component-input-font-weight: var(--font-weight-medium);
+  --component-tag-bg: var(--semantic-color-mint);
+  --component-tag-text: var(--semantic-color-ink);
+  --component-eyebrow-text: var(--semantic-color-gt);
+  --component-italic-text: var(--semantic-color-ait);
+  --component-button-primary-bg: var(--semantic-color-gold);
+  --component-button-primary-text: var(--semantic-color-ink);
+  --component-button-primary-shadow: var(--semantic-elevation-button);
+  --component-button-primary-icon-bg: var(--semantic-color-ink);
+  --component-button-primary-icon-text: var(--semantic-color-gold);
+  --component-button-dark-bg: var(--semantic-color-ink);
+  --component-button-dark-shadow: var(--semantic-elevation-button-dark);
+  --component-button-dark-icon-bg: var(--semantic-color-gold);
+  --component-button-dark-icon-text: var(--semantic-color-ink);
+  --component-button-line-text: var(--semantic-color-fg);
+  --component-button-line-border: var(--semantic-color-fg);
+  --component-button-line-icon-bg: var(--semantic-color-fg);
+  --component-button-line-icon-text: var(--semantic-color-bg);
+  --component-card-bg: var(--semantic-color-card);
   --component-card-shadow: var(--semantic-elevation-card);
-  --component-input-bg: var(--semantic-surface-default);
-  --component-input-border: var(--semantic-border-default);
-  --component-input-border-focus: var(--semantic-border-focus);
+  --component-card-shadow-hover: var(--semantic-elevation-card-hover);
+  --component-card-text: var(--semantic-color-fg);
+  --component-input-bg: var(--semantic-color-card);
+  --component-input-border-focus: var(--semantic-color-gold);
+  --component-input-shadow-focus: var(--semantic-elevation-focus);
 }

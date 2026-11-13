@@ -1,0 +1,23 @@
+{
+  "component": {
+    "tag": {
+      "bg": { "$value": "{semantic.color.mint}", "$type": "color" },
+      "text": { "$value": "{semantic.color.ink}", "$type": "color" },
+      "radius": { "$value": "{radius.pill}", "$type": "dimension" },
+      "fontSize": { "$value": "{font.size.tag}", "$type": "dimension" },
+      "fontWeight": { "$value": "{font.weight.bold}", "$type": "fontWeight" },
+      "letterSpacing": { "$value": "{font.letterSpacing.wider}", "$type": "dimension" }
+    },
+    "eyebrow": {
+      "text": { "$value": "{semantic.color.gt}", "$type": "color" },
+      "fontSize": { "$value": "{font.size.eyebrow}", "$type": "dimension" },
+      "fontWeight": { "$value": "{font.weight.bold}", "$type": "fontWeight" },
+      "letterSpacing": { "$value": "{font.letterSpacing.widest}", "$type": "dimension" }
+    },
+    "italic": {
+      "font": { "$value": "{font.family.serif}", "$type": "fontFamily" },
+      "text": { "$value": "{semantic.color.ait}", "$type": "color" }
+    }
+  }
+}
+

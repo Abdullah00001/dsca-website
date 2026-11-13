@@ -1,20 +1,38 @@
 {
   "component": {
     "button": {
+      "minHeight": { "$value": "56px", "$type": "dimension" },
+      "radius": { "$value": "{radius.pill}", "$type": "dimension" },
+      "fontSize": { "$value": "{font.size.button}", "$type": "dimension" },
+      "fontWeight": { "$value": "{font.weight.bold}", "$type": "fontWeight" },
+      "letterSpacing": { "$value": "{font.letterSpacing.wider}", "$type": "dimension" },
       "primary": {
-        "bg": { "$value": "{semantic.interactive.primary}", "$type": "color" },
-        "hover": { "$value": "{semantic.interactive.primaryHover}", "$type": "color" },
-        "active": { "$value": "{semantic.interactive.primaryActive}", "$type": "color" },
-        "text": { "$value": "{semantic.interactive.primaryContrast}", "$type": "color" }
+        "bg": { "$value": "{semantic.color.gold}", "$type": "color" },
+        "text": { "$value": "{semantic.color.ink}", "$type": "color" },
+        "shadow": { "$value": "{semantic.elevation.button}", "$type": "shadow" },
+        "iconBg": { "$value": "{semantic.color.ink}", "$type": "color" },
+        "iconText": { "$value": "{semantic.color.gold}", "$type": "color" }
       },
-      "padding": {
-        "x": { "$value": "{space.4}", "$type": "dimension" },
-        "y": { "$value": "{space.2}", "$type": "dimension" }
+      "dark": {
+        "bg": { "$value": "{semantic.color.ink}", "$type": "color" },
+        "text": { "$value": "{color.neutral.white}", "$type": "color" },
+        "shadow": { "$value": "{semantic.elevation.buttonDark}", "$type": "shadow" },
+        "iconBg": { "$value": "{semantic.color.gold}", "$type": "color" },
+        "iconText": { "$value": "{semantic.color.ink}", "$type": "color" }
       },
-      "radius": { "$value": "{radius.md}", "$type": "dimension" },
-      "fontSize": { "$value": "{font.size.sm}", "$type": "dimension" },
-      "fontWeight": { "$value": "{font.weight.medium}", "$type": "fontWeight" }
+      "line": {
+        "bg": { "$value": "transparent", "$type": "color" },
+        "text": { "$value": "{semantic.color.fg}", "$type": "color" },
+        "border": { "$value": "{semantic.color.fg}", "$type": "color" },
+        "iconBg": { "$value": "{semantic.color.fg}", "$type": "color" },
+        "iconText": { "$value": "{semantic.color.bg}", "$type": "color" }
+      },
+      "ghost": {
+        "bg": { "$value": "transparent", "$type": "color" },
+        "text": { "$value": "{color.neutral.white}", "$type": "color" },
+        "iconBg": { "$value": "rgba(255, 255, 255, 0.14)", "$type": "color" },
+        "iconText": { "$value": "{color.neutral.white}", "$type": "color" }
+      }
     }
   }
 }
-

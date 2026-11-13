@@ -10,23 +10,29 @@
     "8": { "$value": "2rem", "$type": "dimension", "$description": "32px" },
     "10": { "$value": "2.5rem", "$type": "dimension", "$description": "40px" },
     "12": { "$value": "3rem", "$type": "dimension", "$description": "48px" },
-    "16": { "$value": "4rem", "$type": "dimension", "$description": "64px" }
+    "16": { "$value": "4rem", "$type": "dimension", "$description": "64px" },
+    "20": { "$value": "5rem", "$type": "dimension", "$description": "80px" },
+    "gutter": { "$value": "max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px))", "$type": "string" },
+    "container": { "$value": "1360px", "$type": "dimension" },
+    "sectionY": { "$value": "clamp(72px, 10vw, 150px)", "$type": "string" }
   },
   "radius": {
     "none": { "$value": "0px", "$type": "dimension" },
-    "xs": { "$value": "0.125rem", "$type": "dimension", "$description": "2px" },
-    "sm": { "$value": "0.25rem", "$type": "dimension", "$description": "4px" },
-    "md": { "$value": "0.375rem", "$type": "dimension", "$description": "6px" },
-    "lg": { "$value": "0.5rem", "$type": "dimension", "$description": "8px" },
-    "xl": { "$value": "0.75rem", "$type": "dimension", "$description": "12px" },
-    "2xl": { "$value": "1rem", "$type": "dimension", "$description": "16px" },
-    "full": { "$value": "9999px", "$type": "dimension" }
+    "sm": { "$value": "8px", "$type": "dimension" },
+    "md": { "$value": "16px", "$type": "dimension", "$description": "Form fields and inputs" },
+    "lg": { "$value": "20px", "$type": "dimension", "$description": "Certificate container" },
+    "xl": { "$value": "24px", "$type": "dimension", "$description": "Location badges" },
+    "2xl": { "$value": "28px", "$type": "dimension", "$description": "Photo containers, recommendation boxes" },
+    "3xl": { "$value": "32px", "$type": "dimension", "$description": "Cards and map containers" },
+    "4xl": { "$value": "36px", "$type": "dimension", "$description": "Video player wrapper" },
+    "pill": { "$value": "99px", "$type": "dimension", "$description": "Full rounded buttons and chips" },
+    "circle": { "$value": "50%", "$type": "string", "$description": "Circular icons and avatars" }
   },
   "borderWidth": {
     "none": { "$value": "0px", "$type": "dimension" },
     "thin": { "$value": "1px", "$type": "dimension" },
-    "medium": { "$value": "2px", "$type": "dimension" },
-    "thick": { "$value": "4px", "$type": "dimension" }
+    "medium": { "$value": "1.5px", "$type": "dimension" },
+    "thick": { "$value": "2px", "$type": "dimension" },
+    "heavy": { "$value": "2.5px", "$type": "dimension" }
   }
 }
-
