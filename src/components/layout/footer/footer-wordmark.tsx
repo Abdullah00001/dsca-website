@@ -24,16 +24,18 @@ export function FooterWordmark() {
         focusable="false"
       >
         <defs>
+          {/* Reference `.ftword`: white → near-transparent down the letters. */}
           <linearGradient
             id="ftgr"
             gradientUnits="userSpaceOnUse"
             x1="0"
-            y1="2"
+            y1="0"
             x2="0"
             y2="32"
           >
-            <stop offset="0" stopColor="#fff" stopOpacity={0.5} />
-            <stop offset="1" stopColor="#fff" stopOpacity={0.28} />
+            <stop offset="0%" stopColor="#fff" stopOpacity={0.5} />
+            <stop offset="85%" stopColor="#fff" stopOpacity={0.04} />
+            <stop offset="100%" stopColor="#fff" stopOpacity={0.02} />
           </linearGradient>
         </defs>
         <text
