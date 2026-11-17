@@ -1,0 +1,147 @@
+/**
+ * @fileoverview DSCA liquid-fill button styles (reference `.btn`).
+ */
+
+@property --r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.btn {
+  --c: var(--gold);
+  --f: #073b2b;
+  --t: #073b2b;
+  --th: #fff;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  padding: 0 10px 0 30px;
+  border-radius: 99px;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  font: 700 13px var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--t);
+  background: radial-gradient(
+      circle at calc(100% - 30px) 50%,
+      var(--f) var(--r),
+      transparent calc(var(--r) + 0.5px)
+    ),
+    var(--c);
+  box-shadow: 0 18px 36px -14px rgba(242, 184, 74, 0.6);
+  transition:
+    --r 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+    color 0.12s 0.15s,
+    box-shadow 0.4s,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 50% 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+  border-radius: 99px 99px 0 0;
+}
+
+.btn:hover {
+  --r: 1600px;
+  color: var(--th);
+  box-shadow: 0 22px 40px -16px rgba(0, 0, 0, 0.45);
+}
+
+.btn:active {
+  transform: scale(0.95) !important;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  font-size: 18px;
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background 0.35s,
+    color 0.35s;
+}
+
+.btn:hover .icon {
+  background: var(--th);
+  color: var(--f);
+  transform: translateX(5px) rotate(-45deg);
+  transition-delay: 0.08s, 0.08s, 0.08s, 0s;
+}
+
+.ghost {
+  --c: transparent;
+  --f: #fff;
+  --t: #fff;
+  --th: #073b2b;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.4);
+}
+
+.ghost::before {
+  display: none;
+}
+
+.ghost .icon {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+.ghost:hover {
+  color: #073b2b;
+}
+
+.ghost:hover .icon {
+  background: #073b2b;
+  color: #fff;
+}
+
+.dark {
+  --c: #073b2b;
+  --f: var(--gold);
+  --t: #fff;
+  --th: #073b2b;
+  box-shadow: 0 22px 44px -18px #000;
+}
+
+.dark .icon {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.dark:hover .icon {
+  background: #073b2b;
+  color: var(--gold);
+}
+
+@media (max-width: 560px) {
+  .btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .icon {
+    transition: none;
+  }
+}

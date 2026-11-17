@@ -13,6 +13,7 @@ import {
   type ReactNode,
 } from "react";
 import { usePathname } from "next/navigation";
+import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 
@@ -87,6 +88,7 @@ export function SiteShell({ children }: SiteShellProps) {
       />
       <MobileMenu open={menuOpen} onNavigate={closeMenu} />
       <div id="dsca-main">{children}</div>
+      <Footer />
     </>
   );
 }

@@ -1,0 +1,49 @@
+/**
+ * @fileoverview Footer CTA — faithful port of `.ftcta` / `.ftt` / `.ftp` / `.ftbtns`.
+ */
+
+.ftcta {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 28px;
+  flex-wrap: wrap;
+  padding-bottom: clamp(40px, 6vw, 72px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.ftt {
+  margin: 14px 0 0;
+  font-family: var(--font-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: clamp(34px, 5.4vw, 80px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: #fff;
+  max-width: 900px;
+  text-wrap: balance;
+}
+
+.it {
+  font-family: var(--font-serif), "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: #ffe08a !important;
+}
+
+.ftp {
+  max-width: 560px;
+  color: #eefaf3;
+  line-height: 1.7;
+  margin: 18px 0 0;
+  font-size: 17px;
+}
+
+.ftbtns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}

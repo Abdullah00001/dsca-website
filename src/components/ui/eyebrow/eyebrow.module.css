@@ -1,0 +1,15 @@
+/**
+ * @fileoverview Eyebrow label styles (reference `.eyebrow`).
+ */
+
+.eyebrow {
+  margin: 0;
+  font: 700 12px var(--font-body);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gt);
+}
+
+.onDark {
+  color: #ffe08a !important;
+}

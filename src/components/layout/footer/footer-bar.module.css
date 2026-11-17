@@ -1,0 +1,58 @@
+/**
+ * @fileoverview Footer bottom bar — faithful port of `.ftbar` / `.ftl` / `#totop`.
+ */
+
+.ftbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-block: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  font-size: 14px;
+  color: #eefaf3;
+  position: relative;
+  background: inherit;
+}
+
+.ftl {
+  display: flex;
+  gap: 22px;
+}
+
+.ftl a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ftl a:hover {
+  color: #ffe08a;
+}
+
+.totop {
+  font: 700 13px var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-radius: 99px;
+  border: 0;
+  background: #f2b84a;
+  color: #073b2b;
+  cursor: pointer;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.3s;
+}
+
+.totop:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -10px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .totop {
+    transition: none;
+  }
+}

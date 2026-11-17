@@ -1,0 +1,26 @@
+/**
+ * @fileoverview DSCA wordmark — larger letters, full A, feet on the white rule.
+ */
+
+.ftclip {
+  width: 100%;
+  margin: 4px 0 0;
+  line-height: 0;
+  /* Cut the S/C overshoot so every letter ends on the white rule */
+  overflow: hidden;
+}
+
+.ftsvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 100 / 32;
+  overflow: hidden;
+}
+
+.ftsvg text {
+  font-family: var(--font-display), "Bricolage Grotesque", Impact, sans-serif;
+  font-weight: 800;
+  font-size: 42px;
+  letter-spacing: 0;
+}

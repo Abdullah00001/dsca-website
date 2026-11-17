@@ -8,3 +8,5 @@ export * from "@/components/ui/nav-link";
 export * from "@/components/ui/theme-toggle";
 export * from "@/components/ui/menu-toggle";
 export * from "@/components/ui/enroll-cta";
+export * from "@/components/ui/button";
+export * from "@/components/ui/eyebrow";
