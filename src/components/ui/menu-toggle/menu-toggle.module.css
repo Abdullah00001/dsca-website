@@ -11,11 +11,12 @@
   background: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.3s ease;
+  transition: background 0.3s, color 0.3s;
 }
 
 .toggle:hover {
   background: rgba(255, 255, 255, 0.16);
+  color: #fff;
 }
 
 .toggle:focus-visible {

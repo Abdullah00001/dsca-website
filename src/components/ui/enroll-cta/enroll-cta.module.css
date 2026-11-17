@@ -13,12 +13,13 @@
   border-radius: 99px;
   text-decoration: none;
   white-space: nowrap;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  /* Press scale is owned by `.pill a:active` (reference). */
+  transition: background 0.3s, color 0.3s;
 }
 
 .cta:hover {
-  background: var(--color-gold-300, #ffd666);
-  color: var(--ink);
+  background: #ffd666;
+  color: #073b2b;
 }
 
 .cta:focus-visible {
