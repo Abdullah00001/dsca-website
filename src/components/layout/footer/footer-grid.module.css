@@ -103,28 +103,9 @@
 
 .soc {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
-}
-
-.soc a {
-  padding: 9px 16px;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.14);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
-  font: 600 13px var(--font-body);
-  color: #fff;
-  text-decoration: none;
-  transition:
-    background 0.3s,
-    transform 0.3s,
-    color 0.3s;
-}
-
-.soc a:hover {
-  background: #f2b84a;
-  color: #073b2b;
-  transform: translateY(-3px);
+  align-items: center;
 }
 
 .ar2 {

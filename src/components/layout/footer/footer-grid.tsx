@@ -6,6 +6,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LOGO_SRC } from "@/components/ui/logo";
+import { SocialIcon } from "@/components/ui/social-icon";
 import {
   FOOTER_AREA_LINKS,
   FOOTER_QUICK_LINKS,
@@ -36,14 +37,12 @@ export function FooterGrid() {
         <p>{SITE_CONTACT.blurb}</p>
         <div className={styles.soc}>
           {SITE_SOCIAL.map((item) => (
-            <a
+            <SocialIcon
               key={item.href}
+              platform={item.platform}
+              label={item.label}
               href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {item.label}
-            </a>
+            />
           ))}
         </div>
       </div>

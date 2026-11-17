@@ -4,6 +4,19 @@
  */
 
 import type { NavItem } from "@/libs/navigation";
+import type { SocialPlatform } from "@/components/ui/social-icon";
+
+/**
+ * Social destination with a platform key for the circular icon button.
+ */
+export interface SocialItem {
+  /** Accessible label (screen readers / title). */
+  readonly label: string;
+  /** External profile URL. */
+  readonly href: string;
+  /** Icon glyph key. */
+  readonly platform: SocialPlatform;
+}
 
 /**
  * Academy contact and visit details (from the DSCA reference footer).
@@ -28,21 +41,25 @@ export const SITE_CONTACT = {
 /**
  * Social destinations shown in the footer brand column.
  */
-export const SITE_SOCIAL: readonly NavItem[] = [
+export const SITE_SOCIAL: readonly SocialItem[] = [
   {
     label: "Facebook",
+    platform: "facebook",
     href: "https://www.facebook.com/dhakaspecialitycoffeeacademy",
   },
   {
     label: "Instagram",
+    platform: "instagram",
     href: "https://www.instagram.com/dhakaspecialitycoffeeccademy/",
   },
   {
     label: "YouTube",
+    platform: "youtube",
     href: "https://www.youtube.com/@DhakaSpecialityCoffeeAcademy",
   },
   {
     label: "TikTok",
+    platform: "tiktok",
     href: "https://www.tiktok.com/@dhakaspecialitycoffee",
   },
 ] as const;
