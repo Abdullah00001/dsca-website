@@ -27,11 +27,14 @@ const figtree = Figtree({
   display: "swap",
 });
 
-export const metadata: Metadata = constructMetadata({
-  title: "Barista Course in Dhaka | ISO-Certified Training at DSCA",
-  description:
-    "ISO-certified barista courses in Farmgate, Dhaka. Commercial espresso machines, small batches of twelve, and job placement support. 4.9 from 99 Google reviews.",
-});
+export const metadata: Metadata = {
+  ...constructMetadata({
+    title: "Barista Course in Dhaka | ISO-Certified Training at DSCA",
+    description:
+      "ISO-certified barista courses in Farmgate, Dhaka. Commercial espresso machines, small batches of twelve, and job placement support. 4.9 from 99 Google reviews.",
+  }),
+  manifest: "/site.webmanifest",
+};
 
 export default function RootLayout({
   children,
