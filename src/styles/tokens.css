@@ -85,9 +85,9 @@
   --border-width-medium: 1.5px;
   --border-width-thick: 2px;
   --border-width-heavy: 2.5px;
-  --font-family-display: var(--font-display), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif; /** Oversized bold display typography */
-  --font-family-serif: var(--font-serif), 'Instrument Serif', Georgia, serif; /** Editorial cursive italic accent words (.it) */
-  --font-family-body: var(--font-body), 'Figtree', system-ui, sans-serif; /** Modern readable body typography */
+  --font-family-display: var(--font-bricolage), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif; /** Oversized bold display typography */
+  --font-family-serif: var(--font-instrument), 'Instrument Serif', Georgia, serif; /** Editorial cursive italic accent words (.it) */
+  --font-family-body: var(--font-figtree), 'Figtree', system-ui, sans-serif; /** Modern readable body typography */
   --font-size-hero: clamp(56px, 11vw, 190px);
   --font-size-h1: clamp(52px, 11.5vw, 190px);
   --font-size-h2: clamp(38px, 8.6vw, 150px);

@@ -10,14 +10,15 @@ import { constructMetadata, getOrganizationJsonLd } from "@/libs/seo";
 import "./globals.css";
 
 const bricolageGrotesque = Bricolage_Grotesque({
-  variable: "--font-display",
+  // Distinct from token `--font-display` so @theme cannot overwrite the face.
+  variable: "--font-bricolage",
   subsets: ["latin"],
   weight: ["500", "800"],
   display: "swap",
 });
 
 const instrumentSerif = Instrument_Serif({
-  variable: "--font-serif",
+  variable: "--font-instrument",
   subsets: ["latin"],
   weight: ["400"],
   style: ["italic"],
@@ -25,7 +26,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 const figtree = Figtree({
-  variable: "--font-body",
+  variable: "--font-figtree",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",

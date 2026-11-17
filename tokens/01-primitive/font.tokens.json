@@ -2,17 +2,17 @@
   "font": {
     "family": {
       "display": {
-        "$value": "var(--font-display), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif",
+        "$value": "var(--font-bricolage), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif",
         "$type": "fontFamily",
         "$description": "Oversized bold display typography"
       },
       "serif": {
-        "$value": "var(--font-serif), 'Instrument Serif', Georgia, serif",
+        "$value": "var(--font-instrument), 'Instrument Serif', Georgia, serif",
         "$type": "fontFamily",
         "$description": "Editorial cursive italic accent words (.it)"
       },
       "body": {
-        "$value": "var(--font-body), 'Figtree', system-ui, sans-serif",
+        "$value": "var(--font-figtree), 'Figtree', system-ui, sans-serif",
         "$type": "fontFamily",
         "$description": "Modern readable body typography"
       }

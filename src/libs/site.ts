@@ -90,7 +90,8 @@ export const FOOTER_LEGAL_LINKS: readonly NavItem[] = [
  */
 export const FOOTER_CTA = {
   eyebrow: "Next batch · 12 seats",
-  titleBefore: "Ready to Start Your Barista Career ",
+  /** Large-screen lockup — two display lines matching the reference. */
+  titleLines: ["Ready to Start Your", "Barista Career"] as const,
   titleItalic: "in Dhaka?",
   body: "Join the next DSCA batch. Seats are capped at 12 students, and our team will help you pick the right course. Message us today and get a reply on WhatsApp.",
   primary: { label: "Enrol in the Next Batch", href: "/contact" },

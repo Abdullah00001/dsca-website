@@ -12,9 +12,15 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.28);
 }
 
+/* Text column grows so the button row wraps under it like the reference. */
+.copy {
+  flex: 1 1 100%;
+  min-width: min(100%, 320px);
+}
+
 .ftt {
   margin: 14px 0 0;
-  font-family: var(--font-display), "Bricolage Grotesque", sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(34px, 5.4vw, 80px);
   line-height: 0.92;
@@ -22,11 +28,15 @@
   text-transform: uppercase;
   color: #fff;
   max-width: 900px;
-  text-wrap: balance;
+}
+
+/* Forced two-line lockup on large screens (reference) */
+.line {
+  display: block;
 }
 
 .it {
-  font-family: var(--font-serif), "Instrument Serif", Georgia, serif;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   text-transform: none;
@@ -40,6 +50,7 @@
   line-height: 1.7;
   margin: 18px 0 0;
   font-size: 17px;
+  text-wrap: pretty;
 }
 
 .ftbtns {

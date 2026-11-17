@@ -11,16 +11,24 @@ import styles from "@/components/layout/footer/footer-cta.module.css";
 /**
  * Enrolment CTA row at the top of the footer.
  *
+ * Large-screen lockup is **two lines** (reference):
+ * “Ready to Start Your / Barista Career in Dhaka?”
+ *
  * @returns Reference-matching footer CTA.
  */
 export function FooterCta() {
+  const [line1, line2] = FOOTER_CTA.titleLines;
+
   return (
     <div className={styles.ftcta}>
-      <div>
+      <div className={styles.copy}>
         <Eyebrow onDark>{FOOTER_CTA.eyebrow}</Eyebrow>
         <h2 className={styles.ftt}>
-          {FOOTER_CTA.titleBefore}
-          <span className={styles.it}>{FOOTER_CTA.titleItalic}</span>
+          <span className={styles.line}>{line1}</span>
+          <span className={styles.line}>
+            {line2}{" "}
+            <span className={styles.it}>{FOOTER_CTA.titleItalic}</span>
+          </span>
         </h2>
         <p className={styles.ftp}>{FOOTER_CTA.body}</p>
       </div>

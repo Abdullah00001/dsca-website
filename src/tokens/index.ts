@@ -133,11 +133,11 @@ export const BorderWidthMedium = "1.5px" as const;
 export const BorderWidthThick = "2px" as const;
 export const BorderWidthHeavy = "2.5px" as const;
 /** Oversized bold display typography */
-export const FontFamilyDisplay = "var(--font-display), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif" as const;
+export const FontFamilyDisplay = "var(--font-bricolage), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif" as const;
 /** Editorial cursive italic accent words (.it) */
-export const FontFamilySerif = "var(--font-serif), 'Instrument Serif', Georgia, serif" as const;
+export const FontFamilySerif = "var(--font-instrument), 'Instrument Serif', Georgia, serif" as const;
 /** Modern readable body typography */
-export const FontFamilyBody = "var(--font-body), 'Figtree', system-ui, sans-serif" as const;
+export const FontFamilyBody = "var(--font-figtree), 'Figtree', system-ui, sans-serif" as const;
 export const FontSizeHero = "clamp(56px, 11vw, 190px)" as const;
 export const FontSizeH1 = "clamp(52px, 11.5vw, 190px)" as const;
 export const FontSizeH2 = "clamp(38px, 8.6vw, 150px)" as const;
@@ -236,7 +236,7 @@ export const ComponentEyebrowText = "#0a7a4b" as const;
 export const ComponentEyebrowFontSize = "12px" as const;
 export const ComponentEyebrowFontWeight = "700" as const;
 export const ComponentEyebrowLetterSpacing = "0.2em" as const;
-export const ComponentItalicFont = "var(--font-serif), 'Instrument Serif', Georgia, serif" as const;
+export const ComponentItalicFont = "var(--font-instrument), 'Instrument Serif', Georgia, serif" as const;
 export const ComponentItalicText = "#a23f16" as const;
 export const ComponentButtonMinHeight = "56px" as const;
 export const ComponentButtonRadius = "99px" as const;
@@ -381,9 +381,9 @@ export const tokens = {
   },
   "font": {
     "family": {
-      "display": "var(--font-display), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif",
-      "serif": "var(--font-serif), 'Instrument Serif', Georgia, serif",
-      "body": "var(--font-body), 'Figtree', system-ui, sans-serif"
+      "display": "var(--font-bricolage), 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif",
+      "serif": "var(--font-instrument), 'Instrument Serif', Georgia, serif",
+      "body": "var(--font-figtree), 'Figtree', system-ui, sans-serif"
     },
     "size": {
       "hero": "clamp(56px, 11vw, 190px)",
@@ -483,7 +483,7 @@ export const tokens = {
       "letterSpacing": "0.2em"
     },
     "italic": {
-      "font": "var(--font-serif), 'Instrument Serif', Georgia, serif",
+      "font": "var(--font-instrument), 'Instrument Serif', Georgia, serif",
       "text": "#a23f16"
     },
     "button": {
