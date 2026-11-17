@@ -12,10 +12,18 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.28);
 }
 
-/* Text column grows so the button row wraps under it like the reference. */
 .copy {
-  flex: 1 1 100%;
-  min-width: min(100%, 320px);
+  flex: 1 1 36rem;
+  min-width: min(100%, 280px);
+}
+
+/*
+ * Reference cascade (styles.css L219):
+ *   `.ft .eyebrow { color: #ffe08a !important }`
+ * (inline `color:#fff` in index.html loses to that !important)
+ */
+.eyebrow {
+  color: #ffe08a !important;
 }
 
 .ftt {
@@ -26,13 +34,27 @@
   line-height: 0.92;
   letter-spacing: -0.035em;
   text-transform: uppercase;
-  color: #fff;
   max-width: 900px;
+  color: #fff;
 }
 
-/* Forced two-line lockup on large screens (reference) */
+/* Hard two-line lockup — line 2 keeps “in Dhaka?” on the same row. */
 .line {
   display: block;
+  white-space: nowrap;
+}
+
+.fade {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.92) 45%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .it {
@@ -42,6 +64,8 @@
   text-transform: none;
   letter-spacing: -0.01em;
   color: #ffe08a !important;
+  -webkit-text-fill-color: #ffe08a;
+  white-space: nowrap;
 }
 
 .ftp {

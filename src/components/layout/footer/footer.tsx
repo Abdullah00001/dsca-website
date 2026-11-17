@@ -18,7 +18,7 @@ import styles from "@/components/layout/footer/footer.module.css";
  */
 export function Footer() {
   return (
-    <footer className={`${styles.ft} ${layout.g}`}>
+    <footer id="dsca-footer" className={`${styles.ft} ${layout.g}`}>
       <div className={styles.in}>
         <FooterCta />
         <FooterGrid />

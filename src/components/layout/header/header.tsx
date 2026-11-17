@@ -5,6 +5,7 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import { LogoBox } from "@/components/layout/logo-box";
 import { NavPill } from "@/components/layout/nav-pill";
 import styles from "@/components/layout/header/header.module.css";
@@ -24,15 +25,86 @@ export interface HeaderProps {
 /**
  * Fixed top chrome matching the DSCA reference navigation bar.
  *
- * Uses `.g` gutters + a centered 1360px bar so the logo and pill
- * share the same content column as page `.in` sections.
+ * Hides when the footer enters the viewport (scroll down), and slides
+ * back in on scroll up.
  *
  * @param props - Shared menu state and handlers from {@link SiteShell}.
  * @returns Landmark navigation header.
  */
 export function Header({ menuOpen, onMenuToggle, onNavigate }: HeaderProps) {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    /**
+     * Keep the header visible while the mobile menu is open.
+     */
+    if (menuOpen) {
+      setHidden(false);
+      return;
+    }
+
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    /**
+     * True when any part of the footer is in (or about to enter) the viewport.
+     */
+    function footerInView(): boolean {
+      const footer = document.getElementById("dsca-footer");
+      if (!footer) {
+        return false;
+      }
+      const top = footer.getBoundingClientRect().top;
+      return top < window.innerHeight - 8;
+    }
+
+    /**
+     * Hide on scroll-down into the footer; show again on scroll-up.
+     */
+    function update(): void {
+      ticking = false;
+      const y = window.scrollY;
+      const goingUp = y < lastY - 2;
+      const goingDown = y > lastY + 2;
+      lastY = y;
+
+      if (goingUp || y < 24) {
+        setHidden(false);
+        return;
+      }
+
+      if (goingDown && footerInView()) {
+        setHidden(true);
+      }
+    }
+
+    /**
+     * Coalesces scroll events to one rAF tick.
+     */
+    function onScroll(): void {
+      if (ticking) {
+        return;
+      }
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [menuOpen]);
+
   return (
-    <nav className={styles.header} aria-label="Primary">
+    <nav
+      className={[styles.header, hidden ? styles.hidden : null]
+        .filter(Boolean)
+        .join(" ")}
+      aria-label="Primary"
+      aria-hidden={hidden || undefined}
+    >
       <div className={styles.bar}>
         <LogoBox onNavigate={onNavigate} />
         <NavPill
