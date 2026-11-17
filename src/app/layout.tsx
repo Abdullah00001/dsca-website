@@ -5,6 +5,7 @@ import {
   Instrument_Serif,
   Figtree,
 } from "next/font/google";
+import { SiteShell } from "@/components/layout";
 import { constructMetadata, getOrganizationJsonLd } from "@/libs/seo";
 import "./globals.css";
 
@@ -53,7 +54,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-bg text-fg">{children}</body>
+      <body className="min-h-full flex flex-col bg-bg text-fg">
+        <SiteShell>{children}</SiteShell>
+      </body>
     </html>
   );
 }

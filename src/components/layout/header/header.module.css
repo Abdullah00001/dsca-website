@@ -1,0 +1,35 @@
+/**
+ * @fileoverview Styles for the fixed site header organism.
+ *
+ * Matches reference `nav.g`: fixed full-bleed chrome with `.g` gutters
+ * and a centered 1360px bar so logo/pill align with page `.in` content.
+ */
+
+.header {
+  position: fixed;
+  top: env(safe-area-inset-top, 0px);
+  left: 0;
+  right: 0;
+  z-index: 60;
+  padding-block: 14px;
+  padding-left: max(
+    clamp(20px, 4vw, 48px),
+    env(safe-area-inset-left, 0px)
+  );
+  padding-right: max(
+    clamp(20px, 4vw, 48px),
+    env(safe-area-inset-right, 0px)
+  );
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.bar {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: auto;
+}

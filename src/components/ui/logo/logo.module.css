@@ -1,0 +1,9 @@
+/**
+ * @fileoverview Styles for the DSCA logo image atom.
+ */
+
+.logo {
+  display: block;
+  width: auto;
+  height: var(--logo-height, 46px);
+}

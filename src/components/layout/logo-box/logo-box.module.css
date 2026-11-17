@@ -1,0 +1,19 @@
+/**
+ * @fileoverview Styles for the frosted white logo box molecule.
+ */
+
+.box {
+  display: flex;
+  padding: 6px 16px;
+  border-radius: 99px;
+  background: #fff;
+  box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  text-decoration: none;
+}
+
+.box:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}

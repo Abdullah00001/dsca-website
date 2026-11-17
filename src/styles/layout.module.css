@@ -1,0 +1,29 @@
+/**
+ * @fileoverview Shared page gutters and content-column utilities
+ * matching the DSCA reference `.g` + `.in` layout system.
+ * @module styles/layout
+ */
+
+/**
+ * Horizontal page gutters (reference `.g`).
+ * Does not center the 1360px column — pair with {@link .in}.
+ */
+.g {
+  padding-left: max(
+    clamp(20px, 4vw, 48px),
+    env(safe-area-inset-left, 0px)
+  );
+  padding-right: max(
+    clamp(20px, 4vw, 48px),
+    env(safe-area-inset-right, 0px)
+  );
+}
+
+/**
+ * Centered content column (reference `.in`).
+ */
+.in {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+}
