@@ -1,5 +1,11 @@
 /**
- * @fileoverview Styles for the circular full-screen mobile menu overlay.
+ * @fileoverview Circular reveal menu — port of reference `.menu` / `.menu.on`.
+ *
+ * Reference:
+ *   .menu    { clip-path: circle(0 at calc(100% - 60px) 40px); transition: clip-path .7s cubic-bezier(.7,0,.2,1); }
+ *   .menu.on { clip-path: circle(150% at calc(100% - 60px) 40px); }
+ *
+ * Same top-right origin; slightly slower (1.05s) and % radii so the expand interpolates.
  */
 
 .menu {
@@ -12,14 +18,21 @@
   flex-direction: column;
   justify-content: center;
   padding: 100px max(24px, env(safe-area-inset-left, 0px)) 40px;
-  clip-path: circle(0 at calc(100% - 60px) 40px);
-  transition: clip-path 0.7s cubic-bezier(0.7, 0, 0.2, 1);
+  clip-path: circle(0% at calc(100% - 60px) 40px);
+  transition:
+    clip-path 1.05s cubic-bezier(0.7, 0, 0.2, 1),
+    visibility 0s linear 1.05s;
   visibility: hidden;
   pointer-events: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
-.open {
+.menu.open {
   clip-path: circle(150% at calc(100% - 60px) 40px);
+  transition:
+    clip-path 1.05s cubic-bezier(0.7, 0, 0.2, 1),
+    visibility 0s linear 0s;
   visibility: visible;
   pointer-events: auto;
 }

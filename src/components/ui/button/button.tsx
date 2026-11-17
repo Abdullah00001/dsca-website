@@ -85,6 +85,7 @@ export function Button({
       <a
         href={href}
         className={classNames}
+        data-magnetic="btn"
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
       >
@@ -94,7 +95,7 @@ export function Button({
   }
 
   return (
-    <Link href={href} className={classNames}>
+    <Link href={href} className={classNames} data-magnetic="btn">
       {content}
     </Link>
   );

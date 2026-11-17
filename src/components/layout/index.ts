@@ -9,3 +9,4 @@ export * from "@/components/layout/header";
 export * from "@/components/layout/mobile-menu";
 export * from "@/components/layout/footer";
 export * from "@/components/layout/site-shell";
+export * from "@/components/layout/magnetic-buttons";

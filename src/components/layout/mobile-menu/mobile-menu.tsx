@@ -21,7 +21,8 @@ export interface MobileMenuProps {
 }
 
 /**
- * Forest-colored full-viewport menu with circular clip-path reveal.
+ * Forest full-viewport menu with a slow circular reveal from the top-right
+ * corner (reference `.menu` / `.menu.on` clip-path).
  *
  * @param props - Open state and navigate callback.
  * @returns Accessible dialog-like navigation overlay.

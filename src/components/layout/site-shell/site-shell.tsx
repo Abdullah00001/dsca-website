@@ -15,6 +15,7 @@ import {
 import { usePathname } from "next/navigation";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { MagneticButtons } from "@/components/layout/magnetic-buttons";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 
 /**
@@ -69,18 +70,69 @@ export function SiteShell({ children }: SiteShellProps) {
       }
     }
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    /**
+     * True when the event target is inside the open mobile menu.
+     *
+     * @param target - Event target node.
+     */
+    function isInsideMenu(target: EventTarget | null): boolean {
+      return target instanceof Element && !!target.closest("#dsca-mobile-menu");
+    }
+
+    /**
+     * Blocks background scroll without toggling the scrollbar
+     * (scrollbar toggle is what was jerking the layout).
+     *
+     * @param event - Wheel or touch move on the document.
+     */
+    function preventScroll(event: Event): void {
+      if (isInsideMenu(event.target)) {
+        return;
+      }
+      event.preventDefault();
+    }
+
+    /**
+     * Blocks keyboard scrolling of the page behind the menu.
+     *
+     * @param event - Keyboard event from the document.
+     */
+    function preventKeyScroll(event: KeyboardEvent): void {
+      if (isInsideMenu(event.target)) {
+        return;
+      }
+      const block = [
+        "ArrowUp",
+        "ArrowDown",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+        " ",
+      ];
+      if (block.includes(event.key)) {
+        event.preventDefault();
+      }
+    }
+
+    document.documentElement.classList.add("menu-open");
     document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", preventKeyScroll, { passive: false });
+    document.addEventListener("wheel", preventScroll, { passive: false });
+    document.addEventListener("touchmove", preventScroll, { passive: false });
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.documentElement.classList.remove("menu-open");
       document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", preventKeyScroll);
+      document.removeEventListener("wheel", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
     };
   }, [menuOpen]);
 
   return (
     <>
+      <MagneticButtons enabled={!menuOpen} />
       <Header
         menuOpen={menuOpen}
         onMenuToggle={toggleMenu}

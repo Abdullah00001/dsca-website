@@ -33,7 +33,12 @@ export function FooterBar() {
           </Link>
         ))}
       </span>
-      <button type="button" className={styles.totop} onClick={scrollToTop}>
+      <button
+        type="button"
+        className={styles.totop}
+        data-magnetic="totop"
+        onClick={scrollToTop}
+      >
         Back to top ↑
       </button>
     </div>
