@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Instrument_Serif, Figtree } from "next/font/google";
-import { SiteShell } from "@/components/layout";
+import {
+  Bricolage_Grotesque,
+  Instrument_Serif,
+  Figtree,
+} from "next/font/google";
 import { constructMetadata, getOrganizationJsonLd } from "@/libs/seo";
 import "./globals.css";
 
@@ -36,11 +39,7 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   const jsonLd = getOrganizationJsonLd();
 
   return (
@@ -54,9 +53,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-bg text-fg">
-        <SiteShell>{children}</SiteShell>
-      </body>
+      <body className="min-h-full flex flex-col bg-bg text-fg">{children}</body>
     </html>
   );
 }

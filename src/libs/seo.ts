@@ -1,3 +1,8 @@
+/**
+ * @fileoverview SEO Library
+ * @module libs/seo
+ */
+
 import type { Metadata } from "next";
 
 export const SITE_URL =

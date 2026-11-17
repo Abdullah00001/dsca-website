@@ -3,6 +3,5 @@
  * @module components
  */
 
-export * from "./ui";
-export * from "./layout";
-
+export * from "@/components/ui";
+export * from "@/components/layout";
