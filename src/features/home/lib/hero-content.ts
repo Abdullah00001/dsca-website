@@ -32,7 +32,6 @@ export const HERO_CONTENT = {
    * so the hero never lands on an empty frame.
    */
   journey: {
-    eyebrow: "The DSCA path",
     lines: [
       { text: "Pour", accent: "your craft." },
       { text: "Learn on", accent: "real machines." },
@@ -45,10 +44,13 @@ export const HERO_CONTENT = {
 export const HERO_VIDEO_SRC = "/assets/hero-section-timelapse.mp4";
 
 /** Large hero mark used for the flying logo (docks into the header). */
-export const HERO_LOGO_SRC = "/assets/hero-logo.png";
+export const HERO_LOGO_SRC = "/assets/hero-logo.svg";
 
 /** Intrinsic size of {@link HERO_LOGO_SRC}. */
-export const HERO_LOGO_SIZE = { width: 583, height: 279 } as const;
+export const HERO_LOGO_SIZE = { width: 1000, height: 440 } as const;
 
-/** Scroll progress at which the flying logo docks into the header. */
-export const HERO_LOGO_DOCK_AT = 0.8;
+/**
+ * Timeline time (and approx. scroll progress on a ~1.0-long tl) when the
+ * flying logo finishes docking into the header.
+ */
+export const HERO_LOGO_DOCK_AT = 0.52;

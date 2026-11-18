@@ -102,21 +102,44 @@ export function ThemeToggle({
     setTheme(next);
   }
 
+  const isChip = variant === "chip";
+
   return (
     <button
       type="button"
-      className={[
-        styles.toggle,
-        variant === "chip" ? styles.chip : null,
-        className,
-      ]
+      className={[styles.toggle, isChip ? styles.chip : null, className]
         .filter(Boolean)
         .join(" ")}
       onClick={handleToggle}
       aria-label="Toggle light and dark mode"
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
     >
-      ◐
+      {isChip ? (
+        <svg
+          className={styles.icon}
+          viewBox="0 0 18 18"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          focusable="false"
+        >
+          {/* Half-moon mark — same footprint as hamburger bars (18×14–18) */}
+          <circle
+            cx="9"
+            cy="9"
+            r="6.25"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+          />
+          <path
+            d="M9 2.75a6.25 6.25 0 0 0 0 12.5V2.75Z"
+            fill="currentColor"
+          />
+        </svg>
+      ) : (
+        "◐"
+      )}
     </button>
   );
 }

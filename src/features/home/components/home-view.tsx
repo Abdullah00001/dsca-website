@@ -7,6 +7,7 @@
 
 import { HeroSection } from "@/features/home/components/hero-section";
 import { HomeMarquee } from "@/features/home/components/home-marquee";
+import { IsoSection } from "@/features/home/components/iso-section";
 import styles from "@/features/home/styles/home-view.module.css";
 
 /**
@@ -20,6 +21,7 @@ export function HomeView() {
     <div className={styles.page}>
       <HeroSection />
       <HomeMarquee />
+      <IsoSection />
     </div>
   );
 }

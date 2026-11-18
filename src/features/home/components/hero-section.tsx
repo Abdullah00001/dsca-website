@@ -38,6 +38,7 @@ function HeroLogoMark() {
       width={HERO_LOGO_SIZE.width}
       height={HERO_LOGO_SIZE.height}
       priority
+      unoptimized
       className={styles.flyerLogo}
     />
   );
@@ -127,19 +128,37 @@ export function HeroSection() {
     html.dataset.heroLogo = "flying";
 
     /**
-     * Matches flyer width to the start-slot so scale math stays 1:1.
+     * Matches flyer to the visible start-slot footprint (width may be
+     * height-capped on tablet — never size to a collapsed/over-wide box).
      */
     const sizeFlyer = (): void => {
-      flyer.style.width = `${startSlot.offsetWidth}px`;
+      const w = startSlot.offsetWidth;
+      const h = startSlot.offsetHeight;
+      if (w <= 0) {
+        return;
+      }
+      const fitted =
+        h > 0 ? Math.min(w, h * (HERO_LOGO_SIZE.width / HERO_LOGO_SIZE.height)) : w;
+      flyer.style.width = `${fitted}px`;
+    };
+
+    /**
+     * Top-left of the flyer so it stays centered over the start slot.
+     */
+    const flyerStart = (): { x: number; y: number } => {
+      const slot = startSlot.getBoundingClientRect();
+      const fw = flyer.offsetWidth || slot.width;
+      const fh = flyer.offsetHeight || slot.height;
+      return {
+        x: slot.left + (slot.width - fw) / 2,
+        y: slot.top + (slot.height - fh) / 2,
+      };
     };
 
     sizeFlyer();
 
     const wipeEls = root.querySelectorAll<HTMLElement>(`.${styles.wipe}`);
     const blurEls = root.querySelectorAll<HTMLElement>(`.${styles.blurLine}`);
-    const journeyEyebrow = journey.querySelector<HTMLElement>(
-      `.${styles.journeyEyebrow}`,
-    );
     const journeyLines = journey.querySelectorAll<HTMLElement>(
       `.${styles.journeyLine}`,
     );
@@ -148,31 +167,34 @@ export function HeroSection() {
     );
 
     const ctx = gsap.context(() => {
+      // Resolved after the timeline is built (logo time / total duration).
+      let dockAtProgress = HERO_LOGO_DOCK_AT;
+
+      // Soft scrub so a sudden flick never lands on an empty mid-frame.
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: root,
           start: "top top",
-          end: "+=180%",
+          end: "+=115%",
           pin: true,
-          scrub: true,
+          scrub: 0.55,
           invalidateOnRefresh: true,
           onRefreshInit: sizeFlyer,
           onUpdate: (self) => {
-            // Logo tween ends at HERO_LOGO_DOCK_AT on a ~1.2-long timeline
-            const docked = self.progress >= 0.62;
+            const docked = self.progress >= dockAtProgress;
             gsap.set(flyer, { opacity: docked ? 0 : 1 });
             html.dataset.heroLogo = docked ? "docked" : "flying";
           },
         },
       });
 
-      // ——— Beat 1: intro clears, logo docks ———
+      // ——— Beat 1: intro clears while logo docks ———
       tl.fromTo(
         flyer,
         {
-          x: () => startSlot.getBoundingClientRect().left,
-          y: () => startSlot.getBoundingClientRect().top,
+          x: () => flyerStart().x,
+          y: () => flyerStart().y,
           scale: 1,
           opacity: 1,
         },
@@ -180,7 +202,8 @@ export function HeroSection() {
           x: () => headerLogo.getBoundingClientRect().left,
           y: () => headerLogo.getBoundingClientRect().top,
           scale: () =>
-            headerLogo.getBoundingClientRect().width / startSlot.offsetWidth,
+            headerLogo.getBoundingClientRect().width /
+            Math.max(flyer.offsetWidth, 1),
           duration: HERO_LOGO_DOCK_AT,
           ease: "power3.inOut",
           immediateRender: true,
@@ -205,10 +228,10 @@ export function HeroSection() {
           paddingBottom: 6,
           paddingLeft: 16,
           boxShadow: "0 14px 30px -14px rgba(0,0,0,0.5)",
-          duration: 0.45,
+          duration: 0.28,
           ease: "power2.in",
         },
-        0.32,
+        0.22,
       );
 
       if (wipeEls.length > 0) {
@@ -217,11 +240,11 @@ export function HeroSection() {
           { clipPath: "inset(0% 0% 0% 0%)" },
           {
             clipPath: "inset(0% 0% 100% 0%)",
-            duration: 0.35,
-            stagger: 0.1,
+            duration: 0.28,
+            stagger: 0.06,
             ease: "power2.inOut",
           },
-          0.05,
+          0.04,
         );
       }
 
@@ -232,88 +255,62 @@ export function HeroSection() {
           {
             opacity: 0,
             filter: "blur(12px)",
-            duration: 0.4,
-            stagger: 0.08,
+            duration: 0.3,
+            stagger: 0.05,
             ease: "power1.inOut",
           },
-          0.1,
+          0.06,
         );
       }
 
       if (scrollHint) {
-        tl.to(scrollHint, { opacity: 0, duration: 0.12 }, 0);
+        tl.to(scrollHint, { opacity: 0, duration: 0.1 }, 0);
       }
 
-      // Soft forest field — never a dead black void
-      tl.to(media, { filter: "blur(8px)", scale: 1.08, duration: 1 }, 0);
-      tl.to(overlay, { opacity: 0.88, duration: 0.55, ease: "power1.in" }, 0);
+      // Soft forest field under the journey copy — never a dead void.
+      tl.to(media, { filter: "blur(8px)", scale: 1.06, duration: 0.85 }, 0);
+      tl.to(overlay, { opacity: 0.72, duration: 0.4, ease: "power1.in" }, 0);
 
-      // ——— Beat 2: journey fills the cleared frame ———
+      // ——— Beat 2: journey crossfades in early and HOLDS until pin end ———
+      // Previous gap (wipe done → journey late → early exit) left a blank
+      // green frame on fast scrolls. Overlap wipe + keep lines on screen.
       if (journeyGlow) {
         tl.fromTo(
           journeyGlow,
           { opacity: 0, scale: 0.7 },
-          { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" },
-          0.42,
-        );
-      }
-
-      if (journeyEyebrow) {
-        tl.fromTo(
-          journeyEyebrow,
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.22, ease: "power2.out" },
-          0.45,
+          { opacity: 1, scale: 1, duration: 0.28, ease: "power2.out" },
+          0.2,
         );
       }
 
       if (journeyLines.length > 0) {
         tl.fromTo(
           journeyLines,
-          { opacity: 0, y: 40, filter: "blur(14px)" },
+          { opacity: 0, y: 36, filter: "blur(14px)" },
           {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.32,
-            stagger: 0.1,
+            duration: 0.28,
+            stagger: 0.07,
             ease: "power2.out",
           },
-          0.48,
+          0.22,
         );
 
-        // Soft exit into the marquee / next section
-        tl.to(
-          journeyLines,
-          {
-            opacity: 0,
-            y: -28,
-            filter: "blur(10px)",
-            duration: 0.28,
-            stagger: 0.06,
-            ease: "power1.in",
-          },
-          0.88,
-        );
-      }
-
-      if (journeyEyebrow) {
-        tl.to(
-          journeyEyebrow,
-          { opacity: 0, y: -12, duration: 0.2, ease: "power1.in" },
-          0.9,
-        );
+        // Hold journey through the rest of the pin. Fading it out early left a
+        // blank green frame on fast scrolls; unpin scrolls the hero away instead.
+        tl.to(journeyLines, { opacity: 1, duration: 0.35 }, 0.55);
       }
 
       if (journeyGlow) {
-        tl.to(
-          journeyGlow,
-          { opacity: 0, scale: 1.15, duration: 0.25, ease: "power1.in" },
-          0.9,
-        );
+        tl.to(journeyGlow, { opacity: 1, scale: 1, duration: 0.35 }, 0.55);
       }
 
-      tl.to(overlay, { opacity: 1, duration: 0.2, ease: "power1.in" }, 0.92);
+      // Stay on the soft forest field — never ramp to a solid empty green.
+      tl.to(overlay, { opacity: 0.78, duration: 0.35 }, 0.55);
+
+      dockAtProgress = HERO_LOGO_DOCK_AT / Math.max(tl.duration(), 0.001);
     }, root);
 
     return () => {
@@ -348,61 +345,46 @@ export function HeroSection() {
 
         <div className={`${styles.stage} ${layout.g}`}>
           <div className={`${styles.inner} ${layout.in}`}>
-            <div className={styles.leftCol}>
-              <div
-                ref={startSlotRef}
-                className={styles.startSlot}
-                aria-hidden="true"
-              >
-                <div className={styles.startLogo}>
-                  <HeroLogoMark />
-                </div>
+            <div
+              ref={startSlotRef}
+              className={styles.startSlot}
+              aria-hidden="true"
+            >
+              <div className={styles.startLogo}>
+                <HeroLogoMark />
               </div>
-
-              <Link
-                href={HERO_CONTENT.location.href}
-                className={`${styles.locationCard} ${styles.wipe}`}
-              >
-                <span className={styles.locationCopy}>
-                  {HERO_CONTENT.location.lines.map((line) => (
-                    <span key={line} className={styles.locationLine}>
-                      {line}
-                    </span>
-                  ))}
-                </span>
-                <span className={styles.locationArrow} aria-hidden="true">
-                  →
-                </span>
-              </Link>
             </div>
 
-            <div className={styles.copy}>
-              <p className={`${styles.eyebrow} ${styles.blurLine}`}>
-                {HERO_CONTENT.eyebrow}
-              </p>
-              <h1 id="hero-heading" className={styles.headline}>
-                <span className={`${styles.headlineRow} ${styles.blurLine}`}>
-                  {HERO_CONTENT.title.line1}
-                </span>
-                <span className={`${styles.headlineRow} ${styles.blurLine}`}>
-                  {HERO_CONTENT.title.line2Lead}{" "}
-                  <span className={styles.accent}>
-                    {HERO_CONTENT.title.line2Accent}
+            <div className={styles.rightCol}>
+              <div className={styles.copy}>
+                <p className={`${styles.eyebrow} ${styles.blurLine}`}>
+                  {HERO_CONTENT.eyebrow}
+                </p>
+                <h1 id="hero-heading" className={styles.headline}>
+                  <span className={`${styles.headlineRow} ${styles.blurLine}`}>
+                    {HERO_CONTENT.title.line1}
                   </span>
-                </span>
-                <span className={`${styles.headlineRow} ${styles.blurLine}`}>
-                  {HERO_CONTENT.title.line3Lead}{" "}
-                  <span className={styles.accent}>
-                    {HERO_CONTENT.title.line3Accent}
+                  <span className={`${styles.headlineRow} ${styles.blurLine}`}>
+                    {HERO_CONTENT.title.line2Lead}{" "}
+                    <span className={styles.accent}>
+                      {HERO_CONTENT.title.line2Accent}
+                    </span>
                   </span>
-                </span>
-              </h1>
-              <p className={`${styles.subhead} ${styles.blurLine}`}>
-                {HERO_CONTENT.subhead}
-              </p>
-              <p className={`${styles.description} ${styles.blurLine}`}>
-                {HERO_CONTENT.description}
-              </p>
+                  <span className={`${styles.headlineRow} ${styles.blurLine}`}>
+                    {HERO_CONTENT.title.line3Lead}{" "}
+                    <span className={styles.accent}>
+                      {HERO_CONTENT.title.line3Accent}
+                    </span>
+                  </span>
+                </h1>
+                <p className={`${styles.subhead} ${styles.blurLine}`}>
+                  {HERO_CONTENT.subhead}
+                </p>
+                <p className={`${styles.description} ${styles.blurLine}`}>
+                  {HERO_CONTENT.description}
+                </p>
+              </div>
+
               <div className={`${styles.actions} ${styles.blurLine}`}>
                 <Button href={HERO_CONTENT.primary.href}>
                   {HERO_CONTENT.primary.label}
@@ -412,6 +394,22 @@ export function HeroSection() {
                 </Button>
               </div>
             </div>
+
+            <Link
+              href={HERO_CONTENT.location.href}
+              className={`${styles.locationCard} ${styles.wipe}`}
+            >
+              <span className={styles.locationCopy}>
+                {HERO_CONTENT.location.lines.map((line) => (
+                  <span key={line} className={styles.locationLine}>
+                    {line}
+                  </span>
+                ))}
+              </span>
+              <span className={styles.locationArrow} aria-hidden="true">
+                →
+              </span>
+            </Link>
 
             <p ref={scrollHintRef} className={styles.scrollHint}>
               {HERO_CONTENT.scrollHint}
@@ -425,9 +423,6 @@ export function HeroSection() {
           aria-hidden="true"
         >
           <div className={styles.journeyGlow} />
-          <p className={styles.journeyEyebrow}>
-            {HERO_CONTENT.journey.eyebrow}
-          </p>
           {HERO_CONTENT.journey.lines.map((line) => (
             <p key={line.text} className={styles.journeyLine}>
               {line.text}{" "}
