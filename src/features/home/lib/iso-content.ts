@@ -11,7 +11,7 @@ export const ISO_CONTENT = {
   lead: "DSCA is ISO 9001:2015 certified, the international standard for quality management. For you, that means a written curriculum, trained instructors, consistent delivery, and results we track batch after batch. A DSCA course in Dhaka is taught to the same standard every time.",
   listTitle: "What ISO 9001:2015 means for your training",
   bullets: [
-    "A defined curriculum for every course level, from Intermediate to Advance Professional",
+    "A defined curriculum for every level — Intermediate to Advance Professional",
     "The same teaching standard in every batch, whoever sits next to you",
     "Records of your progress and feedback, so nothing is left to chance",
     "A built-in process for improving the course after every batch",

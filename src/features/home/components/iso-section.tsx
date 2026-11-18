@@ -95,14 +95,15 @@ export function IsoSection() {
       }
 
       if (paper) {
+        // One-shot entrance — settles into the static 2° tilt (no loop float)
         tl.from(
           paper,
           {
             opacity: 0,
-            y: 48,
-            rotate: 8,
-            scale: 0.94,
-            duration: 0.95,
+            y: 40,
+            rotate: 6,
+            scale: 0.96,
+            duration: 0.9,
             ease: "power3.out",
           },
           0.12,
@@ -113,8 +114,8 @@ export function IsoSection() {
         tl.fromTo(
           shine,
           { xPercent: -130 },
-          { xPercent: 130, duration: 1.1, ease: "power2.inOut" },
-          0.45,
+          { xPercent: 130, duration: 1.05, ease: "power2.inOut" },
+          0.42,
         );
       }
 
@@ -124,18 +125,6 @@ export function IsoSection() {
           { opacity: 0, y: 12, duration: 0.45, ease: "power2.out" },
           0.55,
         );
-      }
-
-      // Soft float after entrance — modern, calm presence
-      if (paper) {
-        gsap.to(paper, {
-          y: -8,
-          duration: 3.2,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-          delay: 1.1,
-        });
       }
     }, root);
 
