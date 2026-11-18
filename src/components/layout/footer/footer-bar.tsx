@@ -20,6 +20,9 @@ function scrollToTop(): void {
 /**
  * Copyright / legal / back-to-top strip.
  *
+ * On 320–767px the totop control is icon-only (↑); tablet+ keeps the
+ * full “Back to top ↑” label.
+ *
  * @returns Footer bottom bar.
  */
 export function FooterBar() {
@@ -38,8 +41,12 @@ export function FooterBar() {
         className={styles.totop}
         data-magnetic="totop"
         onClick={scrollToTop}
+        aria-label="Back to top"
       >
-        Back to top ↑
+        <span className={styles.totopLabel}>Back to top</span>
+        <span className={styles.totopIcon} aria-hidden="true">
+          ↑
+        </span>
       </button>
     </div>
   );
