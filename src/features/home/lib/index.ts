@@ -4,3 +4,4 @@
  */
 
 export * from "./home-utils";
+export * from "./hero-content";

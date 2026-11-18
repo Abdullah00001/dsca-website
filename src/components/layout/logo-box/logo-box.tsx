@@ -25,6 +25,7 @@ export function LogoBox({ onNavigate }: LogoBoxProps) {
   return (
     <Link
       href="/"
+      id="dsca-header-logo"
       className={styles.box}
       aria-label="DSCA home"
       onClick={onNavigate}

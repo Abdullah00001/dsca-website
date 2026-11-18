@@ -1,25 +1,27 @@
 /**
- * @fileoverview Full-bleed forest hero with looping timelapse background.
+ * @fileoverview Home hero: full-bleed video, split brand / CTA, scroll pin.
  */
 
 .hero {
   position: relative;
   isolation: isolate;
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  align-items: flex-end;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   color: #fff;
-  background: var(--forest, #066a43);
-  padding-top: 120px;
-  padding-bottom: clamp(48px, 8vw, 96px);
+  background: #0a1f15;
 }
 
-.video {
+.media {
   position: absolute;
   inset: 0;
   z-index: 0;
+  transform-origin: center center;
+  will-change: transform, filter;
+}
+
+.video {
+  display: block;
   width: 100%;
   height: 100%;
   max-width: none;
@@ -34,37 +36,294 @@
   z-index: 1;
   pointer-events: none;
   /* #0A1F15 @ 70% */
-  background: linear-gradient(0deg, rgba(10, 31, 21, 0.7), rgba(10, 31, 21, 0.7));
+  background: rgba(10, 31, 21, 0.7);
 }
 
-.content {
-  position: relative;
+.overlay {
+  position: absolute;
+  inset: 0;
   z-index: 2;
+  pointer-events: none;
+  background: #0a1f15;
+  opacity: 0;
+}
+
+.stage {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+}
+
+.inner {
+  position: relative;
+  height: 100%;
+}
+
+/*
+ * Wireframe: large logo vertically centered with the right copy;
+ * glass location card sits directly under the logo on the left.
+ */
+.leftCol {
+  --logo-w: min(46vw, 460px);
+  --logo-h: calc(var(--logo-w) * 279 / 583);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: min(32rem, 46vw);
+  max-width: calc(100% - 1rem);
+  /* Center the logo mark on the midline; location card hangs below */
+  transform: translateY(calc(var(--logo-h) / -2));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.15rem;
+}
+
+.startSlot {
+  width: var(--logo-w);
+  height: var(--logo-h);
+  aspect-ratio: 583 / 279;
+  pointer-events: none;
+}
+
+/* Glass location card (attachment) */
+.locationCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   width: 100%;
+  padding: 1.05rem 1.05rem 1.05rem 1.35rem;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  color: #fff;
+  text-decoration: none;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.locationCard:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.36);
+  transform: translateY(-2px);
+}
+
+.locationCard:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.locationCopy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.locationLine {
+  margin: 0;
+  font: 600 clamp(0.72rem, 1.05vw, 0.82rem) / 1.55 var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.locationLine:first-child {
+  font-weight: 800;
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+}
+
+.locationArrow {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #fff;
+}
+
+/* Right: course copy — same vertical center as logo */
+.copy {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: min(52vw, 40rem);
+  max-width: 100%;
+  transform: translateY(-50%);
 }
 
 .eyebrow {
-  margin: 0 0 18px;
-  font: 600 13px var(--font-body);
-  letter-spacing: 0.14em;
+  margin: 0 0 0.85rem;
+  font: 600 11px / 1.35 var(--font-body);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #ffe08a;
 }
 
-.title {
+.headline {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(48px, 10vw, 120px);
-  line-height: 0.9;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.35rem, 5.4vw, 4.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  max-width: 12ch;
-  text-shadow: 0 2px 18px rgba(0, 40, 24, 0.55);
+  text-shadow: 0 2px 18px rgba(0, 40, 24, 0.45);
+}
+
+.headlineRow {
+  display: block;
+}
+
+.accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  color: #ffe08a;
+}
+
+.subhead {
+  margin: 1rem 0 0;
+  font: 600 clamp(0.8rem, 1.15vw, 0.95rem) / 1.4 var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffe08a;
+}
+
+.description {
+  margin: 0.85rem 0 0;
+  max-width: 36rem;
+  font: 600 clamp(0.95rem, 1.4vw, 1.125rem) / 1.45 var(--font-body);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+}
+
+.wipe {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.blurLine {
+  filter: blur(0);
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  z-index: 3;
+  margin: 0;
+  transform: translateX(-50%);
+  font: 600 11px / 1 var(--font-body);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  pointer-events: none;
+}
+
+/*
+ * Flying logo shell: transparent in the hero, white pill morphs in toward dock.
+ */
+.flyer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 460px;
+  aspect-ratio: 583 / 279;
+  padding: 0;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0);
+  box-shadow: 0 0 0 0 transparent;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: top left;
+  will-change: transform, opacity, background-color, box-shadow, padding;
+}
+
+.flyerLogo {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 28px rgba(0, 20, 12, 0.35));
+}
+
+.startLogo {
+  display: none;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+}
+
+@media (max-width: 767px) {
+  .leftCol {
+    --logo-w: min(78vw, 300px);
+    top: max(5rem, calc(env(safe-area-inset-top, 0px) + 4rem));
+    width: min(92vw, 22rem);
+    transform: none;
+    gap: 0.85rem;
+  }
+
+  .copy {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: clamp(1.5rem, 4vh, 2.5rem);
+    width: 100%;
+    transform: none;
+  }
+
+  .headline {
+    font-size: clamp(2rem, 11vw, 2.75rem);
+  }
+
+  .locationCard {
+    padding: 0.9rem 0.9rem 0.9rem 1.1rem;
+    border-radius: 28px;
+  }
+
+  .scrollHint {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .video {
     display: none;
+  }
+
+  .flyer {
+    display: none;
+  }
+
+  .startLogo {
+    display: flex;
   }
 }

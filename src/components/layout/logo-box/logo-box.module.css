@@ -11,6 +11,13 @@
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+/* While the hero logo is in flight, hide the docked header mark. */
+:global(html[data-hero-logo="flying"]) .box {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .box:focus-visible {
