@@ -6,6 +6,7 @@
 "use client";
 
 import { HeroSection } from "@/features/home/components/hero-section";
+import { HomeMarquee } from "@/features/home/components/home-marquee";
 import styles from "@/features/home/styles/home-view.module.css";
 
 /**
@@ -18,6 +19,7 @@ export function HomeView() {
   return (
     <div className={styles.page}>
       <HeroSection />
+      <HomeMarquee />
     </div>
   );
 }
