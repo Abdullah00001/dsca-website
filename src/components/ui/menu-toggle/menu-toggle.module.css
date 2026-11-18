@@ -11,7 +11,7 @@
   background: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.3s, color 0.3s, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 .toggle:hover {
@@ -22,4 +22,87 @@
 .toggle:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
+}
+
+.toggle:active {
+  transform: scale(0.92);
+}
+
+/* —— Hamburger chip (320–767px, header right) —— */
+
+.hamburger {
+  display: inline-grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border-radius: 99px;
+  background: rgba(6, 100, 64, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 14px 30px -14px rgba(0, 0, 0, 0.5);
+  flex: none;
+}
+
+.hamburger:hover {
+  background: rgba(6, 100, 64, 0.92);
+}
+
+.bars {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 14px;
+}
+
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 99px;
+  background: #fff;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.25s ease,
+    top 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.bar:nth-child(1) {
+  top: 0;
+}
+
+.bar:nth-child(2) {
+  top: 6px;
+}
+
+.bar:nth-child(3) {
+  top: 12px;
+}
+
+.hamburgerOpen .bar:nth-child(1) {
+  top: 6px;
+  transform: rotate(45deg);
+}
+
+.hamburgerOpen .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerOpen .bar:nth-child(3) {
+  top: 6px;
+  transform: rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle,
+  .bar {
+    transition: none;
+  }
+
+  .toggle:active {
+    transform: none;
+  }
 }

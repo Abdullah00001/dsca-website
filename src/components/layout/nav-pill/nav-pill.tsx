@@ -25,7 +25,9 @@ export interface NavPillProps {
 }
 
 /**
- * Desktop / shared control cluster: primary links, theme, menu, enroll CTA.
+ * Tablet+ control cluster: primary links, theme, Menu, enroll CTA.
+ * Phones use separate theme + hamburger chips in {@link Header} instead;
+ * Enroll moves into the hamburger sheet.
  *
  * @param props - Menu open state and handlers.
  * @returns Frosted nav pill matching the DSCA reference.

@@ -12,6 +12,26 @@ import styles from "@/components/ui/theme-toggle/theme-toggle.module.css";
 export type ThemeMode = "light" | "dark";
 
 /**
+ * Visual presentation of the theme control.
+ * - `plain` — sits inside the frosted nav pill
+ * - `chip` — standalone forest chip (phone header)
+ */
+export type ThemeToggleVariant = "plain" | "chip";
+
+/**
+ * Props for {@link ThemeToggle}.
+ */
+export interface ThemeToggleProps {
+  /**
+   * Button presentation.
+   * @default "plain"
+   */
+  variant?: ThemeToggleVariant;
+  /** Optional class name merged onto the button. */
+  className?: string;
+}
+
+/**
  * Reads the current theme from the document element.
  *
  * @returns Active theme mode, defaulting to system preference when unset.
@@ -48,9 +68,13 @@ function applyTheme(mode: ThemeMode): void {
 /**
  * Client button that toggles `data-theme` between light and dark.
  *
- * @returns Accessible theme toggle control for the nav pill.
+ * @param props - Optional visual variant.
+ * @returns Accessible theme toggle control.
  */
-export function ThemeToggle() {
+export function ThemeToggle({
+  variant = "plain",
+  className,
+}: ThemeToggleProps) {
   const [theme, setTheme] = useState<ThemeMode>("light");
 
   useEffect(() => {
@@ -81,7 +105,13 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className={styles.toggle}
+      className={[
+        styles.toggle,
+        variant === "chip" ? styles.chip : null,
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       onClick={handleToggle}
       aria-label="Toggle light and dark mode"
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}

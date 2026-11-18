@@ -6,5 +6,7 @@
 export {
   MenuToggle,
   MOBILE_MENU_ID,
+  MENU_TOGGLE_ID,
   type MenuToggleProps,
+  type MenuToggleVariant,
 } from "@/components/ui/menu-toggle/menu-toggle";

@@ -8,7 +8,12 @@
 import { useEffect, useState } from "react";
 import { LogoBox } from "@/components/layout/logo-box";
 import { NavPill } from "@/components/layout/nav-pill";
+import { MenuToggle } from "@/components/ui/menu-toggle";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import styles from "@/components/layout/header/header.module.css";
+
+/** Phone breakpoint: separate theme + hamburger chips (320–767px). */
+const PHONE_MQ = "(max-width: 767px)";
 
 /**
  * Props for {@link Header}.
@@ -25,14 +30,30 @@ export interface HeaderProps {
 /**
  * Fixed top chrome matching the DSCA reference navigation bar.
  *
- * Hides when the footer enters the viewport (scroll down), and slides
- * back in on scroll up.
+ * Phone (≤767px): logo left; separate theme chip + hamburger on the right
+ * (Enroll lives in the hamburger sheet). Tablet+: frosted pill with Menu + Enroll.
  *
  * @param props - Shared menu state and handlers from {@link SiteShell}.
  * @returns Landmark navigation header.
  */
 export function Header({ menuOpen, onMenuToggle, onNavigate }: HeaderProps) {
   const [hidden, setHidden] = useState(false);
+  const [isPhone, setIsPhone] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(PHONE_MQ);
+    /**
+     * Keeps phone layout in sync with the viewport.
+     */
+    function sync(): void {
+      setIsPhone(mq.matches);
+    }
+    sync();
+    mq.addEventListener("change", sync);
+    return () => {
+      mq.removeEventListener("change", sync);
+    };
+  }, []);
 
   useEffect(() => {
     /**
@@ -107,11 +128,22 @@ export function Header({ menuOpen, onMenuToggle, onNavigate }: HeaderProps) {
     >
       <div className={styles.bar}>
         <LogoBox onNavigate={onNavigate} />
-        <NavPill
-          menuOpen={menuOpen}
-          onMenuToggle={onMenuToggle}
-          onNavigate={onNavigate}
-        />
+        {isPhone ? (
+          <div className={styles.actions}>
+            <ThemeToggle variant="chip" />
+            <MenuToggle
+              open={menuOpen}
+              onToggle={onMenuToggle}
+              variant="hamburger"
+            />
+          </div>
+        ) : (
+          <NavPill
+            menuOpen={menuOpen}
+            onMenuToggle={onMenuToggle}
+            onNavigate={onNavigate}
+          />
+        )}
       </div>
     </nav>
   );

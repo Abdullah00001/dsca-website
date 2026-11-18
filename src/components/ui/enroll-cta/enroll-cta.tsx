@@ -23,6 +23,8 @@ export interface EnrollCtaProps {
   href?: string;
   /** Optional callback when the CTA is activated. */
   onNavigate?: () => void;
+  /** Optional class name merged onto the link. */
+  className?: string;
 }
 
 /**
@@ -35,9 +37,14 @@ export function EnrollCta({
   label = NAV_ENROLL.label,
   href = NAV_ENROLL.href,
   onNavigate,
+  className,
 }: EnrollCtaProps) {
   return (
-    <Link href={href} className={styles.cta} onClick={onNavigate}>
+    <Link
+      href={href}
+      className={[styles.cta, className].filter(Boolean).join(" ")}
+      onClick={onNavigate}
+    >
       {label}
     </Link>
   );

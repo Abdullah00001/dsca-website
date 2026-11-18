@@ -42,7 +42,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   pointer-events: auto;
+}
+
+/* Phone: separate theme + hamburger chips on the right. */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
 }
 
 .hidden .bar {

@@ -1,11 +1,8 @@
 /**
  * @fileoverview Circular reveal menu — port of reference `.menu` / `.menu.on`.
  *
- * Reference:
- *   .menu    { clip-path: circle(0 at calc(100% - 60px) 40px); transition: clip-path .7s cubic-bezier(.7,0,.2,1); }
- *   .menu.on { clip-path: circle(150% at calc(100% - 60px) 40px); }
- *
- * Same top-right origin; slightly slower (1.05s) and % radii so the expand interpolates.
+ * Origin comes from `--menu-ox` / `--menu-oy` (toggle center).
+ * Fallback: top-right (text Menu / right-side hamburger).
  */
 
 .menu {
@@ -18,7 +15,9 @@
   flex-direction: column;
   justify-content: center;
   padding: 100px max(24px, env(safe-area-inset-left, 0px)) 40px;
-  clip-path: circle(0% at calc(100% - 60px) 40px);
+  clip-path: circle(
+    0% at var(--menu-ox, calc(100% - 60px)) var(--menu-oy, 40px)
+  );
   transition:
     clip-path 1.05s cubic-bezier(0.7, 0, 0.2, 1),
     visibility 0s linear 1.05s;
@@ -29,7 +28,9 @@
 }
 
 .menu.open {
-  clip-path: circle(150% at calc(100% - 60px) 40px);
+  clip-path: circle(
+    150% at var(--menu-ox, calc(100% - 60px)) var(--menu-oy, 40px)
+  );
   transition:
     clip-path 1.05s cubic-bezier(0.7, 0, 0.2, 1),
     visibility 0s linear 0s;
@@ -46,6 +47,20 @@
   width: 100%;
 }
 
+.enroll {
+  max-width: 1100px;
+  margin: 28px auto 0;
+  width: 100%;
+}
+
+.enrollBtn {
+  min-height: 52px;
+  padding: 14px 28px;
+  font: 700 13px var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .footer {
   color: #9db3a6;
   font: 600 13px var(--font-body);
@@ -56,8 +71,25 @@
   width: 100%;
 }
 
+@media (max-width: 767px) {
+  .enroll {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  /* Tablet+ still has Enroll in the header pill — hide duplicate in sheet. */
+  .enroll {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
   .col {
     grid-template-columns: 1fr;
+  }
+
+  .enrollBtn {
+    width: 100%;
   }
 }
