@@ -242,6 +242,75 @@
 }
 
 /*
+ * Second scroll beat — centered journey copy that fills the pin
+ * after the intro wipes away (avoids a blank hero frame).
+ */
+.journey {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1.25rem;
+  padding: 0 max(clamp(20px, 4vw, 48px), env(safe-area-inset-left, 0px));
+  text-align: center;
+  pointer-events: none;
+}
+
+.journeyEyebrow {
+  margin: 0;
+  font: 600 12px / 1.3 var(--font-body);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffe08a;
+  opacity: 0;
+}
+
+.journeyLine {
+  margin: 0;
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  filter: blur(14px);
+  transform: translate3d(0, 36px, 0);
+  will-change: transform, opacity, filter;
+}
+
+.journeyAccent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  color: #ffe08a;
+}
+
+.journeyGlow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: min(70vw, 520px);
+  height: min(70vw, 520px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(242, 184, 74, 0.16) 0%,
+    transparent 68%
+  );
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/*
  * Flying logo shell: transparent in the hero, white pill morphs in toward dock.
  */
 .flyer {
@@ -312,6 +381,11 @@
   .scrollHint {
     display: none;
   }
+
+  .journeyLine {
+    font-size: clamp(1.85rem, 10vw, 2.6rem);
+    max-width: 14ch;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -325,5 +399,9 @@
 
   .startLogo {
     display: flex;
+  }
+
+  .journey {
+    display: none;
   }
 }

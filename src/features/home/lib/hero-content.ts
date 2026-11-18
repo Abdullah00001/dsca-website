@@ -27,6 +27,18 @@ export const HERO_CONTENT = {
   primary: { label: "Explore barista courses", href: "/courses" },
   secondary: { label: "Get a free callback", href: "/contact" },
   scrollHint: "Scroll to continue",
+  /**
+   * Second scroll beat — fills the pin after intro content clears
+   * so the hero never lands on an empty frame.
+   */
+  journey: {
+    eyebrow: "The DSCA path",
+    lines: [
+      { text: "Pour", accent: "your craft." },
+      { text: "Learn on", accent: "real machines." },
+      { text: "Leave ready for", accent: "the bar." },
+    ],
+  },
 } as const;
 
 /** Public path to the looping hero timelapse. */

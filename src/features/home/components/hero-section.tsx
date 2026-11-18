@@ -57,6 +57,7 @@ export function HeroSection() {
   const startSlotRef = useRef<HTMLDivElement>(null);
   const flyerRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLParagraphElement>(null);
+  const journeyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -96,9 +97,18 @@ export function HeroSection() {
     const startSlot = startSlotRef.current;
     const flyer = flyerRef.current;
     const scrollHint = scrollHintRef.current;
+    const journey = journeyRef.current;
     const headerLogo = document.getElementById(HEADER_LOGO_ID);
 
-    if (!root || !media || !overlay || !startSlot || !flyer || !headerLogo) {
+    if (
+      !root ||
+      !media ||
+      !overlay ||
+      !startSlot ||
+      !flyer ||
+      !headerLogo ||
+      !journey
+    ) {
       return;
     }
 
@@ -127,6 +137,15 @@ export function HeroSection() {
 
     const wipeEls = root.querySelectorAll<HTMLElement>(`.${styles.wipe}`);
     const blurEls = root.querySelectorAll<HTMLElement>(`.${styles.blurLine}`);
+    const journeyEyebrow = journey.querySelector<HTMLElement>(
+      `.${styles.journeyEyebrow}`,
+    );
+    const journeyLines = journey.querySelectorAll<HTMLElement>(
+      `.${styles.journeyLine}`,
+    );
+    const journeyGlow = journey.querySelector<HTMLElement>(
+      `.${styles.journeyGlow}`,
+    );
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -134,19 +153,21 @@ export function HeroSection() {
         scrollTrigger: {
           trigger: root,
           start: "top top",
-          end: "+=150%",
+          end: "+=180%",
           pin: true,
           scrub: true,
           invalidateOnRefresh: true,
           onRefreshInit: sizeFlyer,
           onUpdate: (self) => {
-            const docked = self.progress >= HERO_LOGO_DOCK_AT;
+            // Logo tween ends at HERO_LOGO_DOCK_AT on a ~1.2-long timeline
+            const docked = self.progress >= 0.62;
             gsap.set(flyer, { opacity: docked ? 0 : 1 });
             html.dataset.heroLogo = docked ? "docked" : "flying";
           },
         },
       });
 
+      // ——— Beat 1: intro clears, logo docks ———
       tl.fromTo(
         flyer,
         {
@@ -223,8 +244,76 @@ export function HeroSection() {
         tl.to(scrollHint, { opacity: 0, duration: 0.12 }, 0);
       }
 
-      tl.to(media, { filter: "blur(6px)", scale: 1.06, duration: 1 }, 0);
-      tl.to(overlay, { opacity: 1, duration: 1, ease: "power1.in" }, 0);
+      // Soft forest field — never a dead black void
+      tl.to(media, { filter: "blur(8px)", scale: 1.08, duration: 1 }, 0);
+      tl.to(overlay, { opacity: 0.88, duration: 0.55, ease: "power1.in" }, 0);
+
+      // ——— Beat 2: journey fills the cleared frame ———
+      if (journeyGlow) {
+        tl.fromTo(
+          journeyGlow,
+          { opacity: 0, scale: 0.7 },
+          { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" },
+          0.42,
+        );
+      }
+
+      if (journeyEyebrow) {
+        tl.fromTo(
+          journeyEyebrow,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.22, ease: "power2.out" },
+          0.45,
+        );
+      }
+
+      if (journeyLines.length > 0) {
+        tl.fromTo(
+          journeyLines,
+          { opacity: 0, y: 40, filter: "blur(14px)" },
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.32,
+            stagger: 0.1,
+            ease: "power2.out",
+          },
+          0.48,
+        );
+
+        // Soft exit into the marquee / next section
+        tl.to(
+          journeyLines,
+          {
+            opacity: 0,
+            y: -28,
+            filter: "blur(10px)",
+            duration: 0.28,
+            stagger: 0.06,
+            ease: "power1.in",
+          },
+          0.88,
+        );
+      }
+
+      if (journeyEyebrow) {
+        tl.to(
+          journeyEyebrow,
+          { opacity: 0, y: -12, duration: 0.2, ease: "power1.in" },
+          0.9,
+        );
+      }
+
+      if (journeyGlow) {
+        tl.to(
+          journeyGlow,
+          { opacity: 0, scale: 1.15, duration: 0.25, ease: "power1.in" },
+          0.9,
+        );
+      }
+
+      tl.to(overlay, { opacity: 1, duration: 0.2, ease: "power1.in" }, 0.92);
     }, root);
 
     return () => {
@@ -328,6 +417,23 @@ export function HeroSection() {
               {HERO_CONTENT.scrollHint}
             </p>
           </div>
+        </div>
+
+        <div
+          ref={journeyRef}
+          className={styles.journey}
+          aria-hidden="true"
+        >
+          <div className={styles.journeyGlow} />
+          <p className={styles.journeyEyebrow}>
+            {HERO_CONTENT.journey.eyebrow}
+          </p>
+          {HERO_CONTENT.journey.lines.map((line) => (
+            <p key={line.text} className={styles.journeyLine}>
+              {line.text}{" "}
+              <span className={styles.journeyAccent}>{line.accent}</span>
+            </p>
+          ))}
         </div>
       </section>
 
