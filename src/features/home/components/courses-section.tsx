@@ -38,49 +38,148 @@ export function CoursesSection() {
       return;
     }
 
-    const intro = root.querySelectorAll<HTMLElement>("[data-courses-intro]");
+    const isCompact = window.matchMedia("(max-width: 1024px)").matches;
+    const intro = root.querySelectorAll<HTMLElement>(
+      `[data-courses-animate="copy"]`,
+    );
+    const accent = root.querySelector<HTMLElement>(`.${styles.accent}`);
     const rows = root.querySelectorAll<HTMLElement>(`.${styles.row}`);
-    const cta = root.querySelector<HTMLElement>(`.${styles.cta}`);
+    const thumbs = root.querySelectorAll<HTMLElement>(`.${styles.thumb}`);
+    const shine = root.querySelector<HTMLElement>(
+      `[data-courses-animate="shine"]`,
+    );
+    const cta = root.querySelector<HTMLElement>(
+      `[data-courses-animate="cta"]`,
+    );
 
     const ctx = gsap.context(() => {
-      gsap.from(intro, {
-        opacity: 0,
-        y: 28,
-        filter: "blur(10px)",
-        duration: 0.7,
-        stagger: 0.08,
-        ease: "power3.out",
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
         scrollTrigger: {
           trigger: root,
-          start: "top 78%",
+          start: "top 72%",
           once: true,
         },
       });
 
-      gsap.from(rows, {
-        opacity: 0,
-        y: 36,
-        duration: 0.65,
-        stagger: 0.07,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: root,
-          start: "top 70%",
-          once: true,
-        },
-      });
+      if (intro.length > 0) {
+        tl.from(
+          intro,
+          {
+            opacity: 0,
+            y: 28,
+            filter: "blur(8px)",
+            duration: 0.7,
+            stagger: 0.1,
+          },
+          0,
+        );
+      }
+
+      if (accent) {
+        tl.from(
+          accent,
+          { scale: 0.92, y: 8, duration: 0.55, ease: "back.out(2.2)" },
+          0.12,
+        );
+      }
+
+      if (shine) {
+        tl.fromTo(
+          shine,
+          { xPercent: -130, opacity: 0.55 },
+          {
+            xPercent: 130,
+            opacity: 0,
+            duration: 1.1,
+            ease: "power2.inOut",
+          },
+          0.2,
+        );
+      }
+
+      // Desktop: one-shot row reveal. Compact: scrub blur handles rows.
+      if (!isCompact && rows.length > 0) {
+        tl.from(
+          rows,
+          {
+            opacity: 0,
+            y: 32,
+            duration: 0.65,
+            stagger: 0.09,
+            ease: "power3.out",
+          },
+          0.28,
+        );
+      }
+
+      if (!isCompact && thumbs.length > 0) {
+        tl.from(
+          thumbs,
+          {
+            opacity: 0,
+            y: 28,
+            rotate: 8,
+            scale: 0.92,
+            duration: 0.75,
+            stagger: 0.09,
+            ease: "power3.out",
+            clearProps: "transform",
+          },
+          0.36,
+        );
+      }
 
       if (cta) {
-        gsap.from(cta, {
-          opacity: 0,
-          y: 18,
-          duration: 0.55,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: cta,
-            start: "top 92%",
-            once: true,
-          },
+        tl.from(
+          cta,
+          { opacity: 0, y: 16, duration: 0.5, ease: "power2.out" },
+          isCompact ? 0.35 : 0.7,
+        );
+      }
+
+      // Tablet / mobile: blur in → sharp mid-screen → blur out (both scroll dirs)
+      if (isCompact && rows.length > 0) {
+        rows.forEach((row) => {
+          gsap.set(row, {
+            opacity: 0.28,
+            filter: "blur(12px)",
+            y: 28,
+            scale: 0.97,
+            transformOrigin: "50% 50%",
+          });
+
+          gsap
+            .timeline({
+              defaults: { ease: "none" },
+              scrollTrigger: {
+                trigger: row,
+                start: "top 96%",
+                end: "bottom 8%",
+                scrub: 0.55,
+              },
+            })
+            .to(row, {
+              opacity: 1,
+              filter: "blur(0px)",
+              y: 0,
+              scale: 1,
+              duration: 0.38,
+            })
+            .to(row, {
+              opacity: 1,
+              filter: "blur(0px)",
+              y: 0,
+              scale: 1,
+              duration: 0.24,
+            })
+            .to(row, {
+              opacity: 0.28,
+              filter: "blur(12px)",
+              y: -28,
+              scale: 0.97,
+              duration: 0.38,
+            });
         });
       }
     }, root);
@@ -290,15 +389,25 @@ export function CoursesSection() {
       className={`${styles.section} ${layout.g}`}
       aria-labelledby="courses-heading"
     >
+      <span
+        className={styles.shine}
+        data-courses-animate="shine"
+        aria-hidden="true"
+      />
+
       <div className={`${styles.inner} ${layout.in}`}>
-        <p className={styles.eyebrow} data-courses-intro>
+        <p className={styles.eyebrow} data-courses-animate="copy">
           {COURSES_CONTENT.eyebrow}
         </p>
-        <h2 id="courses-heading" className={styles.title} data-courses-intro>
+        <h2
+          id="courses-heading"
+          className={styles.title}
+          data-courses-animate="copy"
+        >
           {COURSES_CONTENT.titleBefore}{" "}
           <span className={styles.accent}>{COURSES_CONTENT.titleAccent}</span>
         </h2>
-        <p className={styles.lead} data-courses-intro>
+        <p className={styles.lead} data-courses-animate="copy">
           {COURSES_CONTENT.lead}
         </p>
 
@@ -336,7 +445,7 @@ export function CoursesSection() {
           ))}
         </div>
 
-        <div className={styles.cta}>
+        <div className={styles.cta} data-courses-animate="cta">
           <Button href={COURSES_CONTENT.cta.href}>
             {COURSES_CONTENT.cta.label}
           </Button>
