@@ -67,6 +67,8 @@ export function HeroSection() {
     }
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Seek before EOF so the decoder never paints the trailing blank frame.
+    const LOOP_PAD_S = 0.12;
 
     /**
      * Plays or pauses the timelapse based on reduced-motion preference.
@@ -84,9 +86,38 @@ export function HeroSection() {
       });
     }
 
+    /**
+     * Soft-loops before the file ends to avoid the one-frame blank flash.
+     */
+    function onTimeUpdate(): void {
+      if (!video || reduce.matches) {
+        return;
+      }
+      const { duration, currentTime } = video;
+      if (!Number.isFinite(duration) || duration <= LOOP_PAD_S) {
+        return;
+      }
+      if (currentTime >= duration - LOOP_PAD_S) {
+        video.currentTime = 0.001;
+      }
+    }
+
+    /** Fallback if EOF still fires (tab throttle / coarse timeupdate). */
+    function onEnded(): void {
+      if (!video || reduce.matches) {
+        return;
+      }
+      video.currentTime = 0.001;
+      void video.play().catch(() => undefined);
+    }
+
+    video.addEventListener("timeupdate", onTimeUpdate);
+    video.addEventListener("ended", onEnded);
     syncPlayback();
     reduce.addEventListener("change", syncPlayback);
     return () => {
+      video.removeEventListener("timeupdate", onTimeUpdate);
+      video.removeEventListener("ended", onEnded);
       reduce.removeEventListener("change", syncPlayback);
     };
   }, []);
@@ -332,9 +363,8 @@ export function HeroSection() {
             className={styles.video}
             autoPlay
             muted
-            loop
             playsInline
-            preload="metadata"
+            preload="auto"
             aria-hidden="true"
           >
             <source src={HERO_VIDEO_SRC} type="video/mp4" />
