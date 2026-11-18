@@ -5,6 +5,7 @@
 
 "use client";
 
+import { CoursesSection } from "@/features/home/components/courses-section";
 import { HeroSection } from "@/features/home/components/hero-section";
 import { HomeMarquee } from "@/features/home/components/home-marquee";
 import { IsoSection } from "@/features/home/components/iso-section";
@@ -24,6 +25,7 @@ export function HomeView() {
       <HomeMarquee />
       <IsoSection />
       <OnboardSection />
+      <CoursesSection />
     </div>
   );
 }
