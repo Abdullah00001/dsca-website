@@ -11,8 +11,8 @@ import styles from "@/components/layout/footer/footer-cta.module.css";
 /**
  * Enrolment CTA row at the top of the footer.
  *
- * Large-screen lockup is **exactly two lines**:
- * “Ready to Start Your / Barista Career in Dhaka?”
+ * Tablet+ lockup is **exactly two lines** (nowrap).
+ * Phones wrap so the title never clips the viewport.
  *
  * @returns Reference-matching footer CTA.
  */

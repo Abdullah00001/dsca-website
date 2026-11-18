@@ -33,9 +33,9 @@ export function FooterWordmark() {
             x2="0"
             y2="32"
           >
-            <stop offset="0%" stopColor="#fff" stopOpacity={0.5} />
-            <stop offset="85%" stopColor="#fff" stopOpacity={0.04} />
-            <stop offset="100%" stopColor="#fff" stopOpacity={0.02} />
+            <stop offset="0%" stopColor="#fff" stopOpacity={0.3} />
+            <stop offset="85%" stopColor="#fff" stopOpacity={0.02} />
+            <stop offset="100%" stopColor="#fff" stopOpacity={0.01} />
           </linearGradient>
         </defs>
         <text

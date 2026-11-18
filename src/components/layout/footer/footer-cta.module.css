@@ -1,5 +1,8 @@
 /**
  * @fileoverview Footer CTA — faithful port of `.ftcta` / `.ftt` / `.ftp` / `.ftbtns`.
+ *
+ * Desktop: hard 2-line lockup with nowrap.
+ * Phone (≤767px): allow wrap + smaller type so lines don’t clip.
  */
 
 .ftcta {
@@ -10,17 +13,19 @@
   flex-wrap: wrap;
   padding-bottom: clamp(40px, 6vw, 72px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  min-width: 0;
+  width: 100%;
 }
 
 .copy {
   flex: 1 1 36rem;
-  min-width: min(100%, 280px);
+  min-width: 0;
+  max-width: 100%;
 }
 
 /*
  * Reference cascade (styles.css L219):
  *   `.ft .eyebrow { color: #ffe08a !important }`
- * (inline `color:#fff` in index.html loses to that !important)
  */
 .eyebrow {
   color: #ffe08a !important;
@@ -30,18 +35,29 @@
   margin: 14px 0 0;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(34px, 5.4vw, 80px);
+  font-size: clamp(28px, 8.2vw, 80px);
   line-height: 0.92;
   letter-spacing: -0.035em;
   text-transform: uppercase;
   max-width: 900px;
   color: #fff;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
-/* Hard two-line lockup — line 2 keeps “in Dhaka?” on the same row. */
+/* Desktop/tablet: hard two-line lockup. */
 .line {
   display: block;
-  white-space: nowrap;
+}
+
+.it {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: #ffe08a !important;
+  -webkit-text-fill-color: #ffe08a;
 }
 
 .fade {
@@ -57,19 +73,9 @@
   -webkit-text-fill-color: transparent;
 }
 
-.it {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: -0.01em;
-  color: #ffe08a !important;
-  -webkit-text-fill-color: #ffe08a;
-  white-space: nowrap;
-}
-
 .ftp {
   max-width: 560px;
+  width: 100%;
   color: #eefaf3;
   line-height: 1.7;
   margin: 18px 0 0;
@@ -81,4 +87,39 @@
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .ftt {
+    font-size: clamp(34px, 5.4vw, 80px);
+  }
+
+  .line {
+    white-space: nowrap;
+  }
+
+  .it {
+    white-space: nowrap;
+  }
+
+  .ftbtns {
+    width: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .ftt {
+    font-size: clamp(26px, 9.5vw, 40px);
+    line-height: 0.95;
+    max-width: 100%;
+  }
+
+  .ftp {
+    font-size: 15px;
+  }
+
+  .ftbtns > * {
+    flex: 1 1 100%;
+  }
 }
