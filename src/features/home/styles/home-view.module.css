@@ -1,0 +1,9 @@
+/**
+ * @fileoverview Home view page shell styles.
+ * @module features/home/styles/home-view.module.css
+ */
+
+.page {
+  width: 100%;
+  min-width: 0;
+}

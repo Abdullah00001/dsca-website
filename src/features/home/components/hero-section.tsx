@@ -1,13 +1,13 @@
 /**
  * @fileoverview Home hero band with looping timelapse background video.
- * @module components/layout/hero-section
+ * @module features/home/components/hero-section
  */
 
 "use client";
 
 import { useEffect, useRef } from "react";
 import layout from "@/styles/layout.module.css";
-import styles from "@/components/layout/hero-section/hero-section.module.css";
+import styles from "@/features/home/components/hero-section.module.css";
 
 /** Public path to the hero timelapse. */
 const HERO_VIDEO_SRC = "/assets/hero-section-timelapse.mp4";

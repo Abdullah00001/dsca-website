@@ -1,19 +1,15 @@
 /**
- * @fileoverview Home page — hero band with looping timelapse.
+ * @fileoverview Home page route — delegates to the home feature view.
  * @module app/page
  */
 
-import { HeroSection } from "@/components/layout/hero-section";
+import { HomeView } from "@/features/home";
 
 /**
- * Home landing surface. Full homepage composition will grow beneath the hero.
+ * Home landing route.
  *
- * @returns Home page.
+ * @returns Home feature view.
  */
 export default function HomePage() {
-  return (
-    <main>
-      <HeroSection />
-    </main>
-  );
+  return <HomeView />;
 }
