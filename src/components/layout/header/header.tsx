@@ -28,10 +28,25 @@ export interface HeaderProps {
 }
 
 /**
+ * True when any part of `#dsca-footer` intersects the viewport.
+ *
+ * @returns Whether the footer is on screen.
+ */
+function isFooterOnScreen(): boolean {
+  const footer = document.getElementById("dsca-footer");
+  if (!footer) {
+    return false;
+  }
+  const rect = footer.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
+/**
  * Fixed top chrome matching the DSCA reference navigation bar.
  *
- * Phone (≤767px): logo left; separate theme chip + hamburger on the right
- * (Enroll lives in the hamburger sheet). Tablet+: frosted pill with Menu + Enroll.
+ * Visible only while the footer is completely off-screen below the fold.
+ * Any footer pixel on screen (including while scrolling up inside it)
+ * keeps the nav hidden.
  *
  * @param props - Shared menu state and handlers from {@link SiteShell}.
  * @returns Landmark navigation header.
@@ -64,45 +79,20 @@ export function Header({ menuOpen, onMenuToggle, onNavigate }: HeaderProps) {
       return;
     }
 
-    let lastY = window.scrollY;
     let ticking = false;
 
     /**
-     * True when any part of the footer is in (or about to enter) the viewport.
-     */
-    function footerInView(): boolean {
-      const footer = document.getElementById("dsca-footer");
-      if (!footer) {
-        return false;
-      }
-      const top = footer.getBoundingClientRect().top;
-      return top < window.innerHeight - 8;
-    }
-
-    /**
-     * Hide on scroll-down into the footer; show again on scroll-up.
+     * Hide nav whenever the footer is on screen; show only outside it.
      */
     function update(): void {
       ticking = false;
-      const y = window.scrollY;
-      const goingUp = y < lastY - 2;
-      const goingDown = y > lastY + 2;
-      lastY = y;
-
-      if (goingUp || y < 24) {
-        setHidden(false);
-        return;
-      }
-
-      if (goingDown && footerInView()) {
-        setHidden(true);
-      }
+      setHidden(isFooterOnScreen());
     }
 
     /**
-     * Coalesces scroll events to one rAF tick.
+     * Coalesces scroll/resize to one rAF tick.
      */
-    function onScroll(): void {
+    function onScrollOrResize(): void {
       if (ticking) {
         return;
       }
@@ -110,11 +100,13 @@ export function Header({ menuOpen, onMenuToggle, onNavigate }: HeaderProps) {
       requestAnimationFrame(update);
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
     update();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
     };
   }, [menuOpen]);
 
