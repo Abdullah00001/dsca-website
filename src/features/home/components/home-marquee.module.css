@@ -5,12 +5,21 @@
 .tick {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   overflow: hidden;
   white-space: nowrap;
   padding-block: 18px;
-  background: rgba(10, 20, 14, 0.82);
+  /*
+   * Opaque fill — reference used rgba(10,20,14,.82), which blended with
+   * whatever sat behind it (hero locally vs page canvas on Vercel) and
+   * looked like two different colors. Lock the resolved dark strip.
+   */
+  background-color: #0a140e;
   color: #fff;
   width: 100%;
+  /* Kill theme/canvas bleed under the strip */
+  box-shadow: none;
+  border: 0;
 }
 
 .track {
@@ -22,6 +31,7 @@
   letter-spacing: -0.02em;
   will-change: transform;
   width: max-content;
+  color: #fff;
 }
 
 .item {
@@ -29,10 +39,12 @@
   align-items: center;
   gap: 44px;
   flex: none;
+  color: #fff;
 }
 
 .star {
-  color: var(--gold, #f2b84a);
+  /* Hard hex so light/dark theme tokens cannot retint the ✦ on deploy */
+  color: #f2b84a;
   font-weight: 800;
 }
 
