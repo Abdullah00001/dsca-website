@@ -113,6 +113,14 @@ export function WhySection() {
     const hint = hintRef.current;
     if (!stage || !copy || !track || !frame || !dash || !reel || !hint) return;
 
+    const stageEl: HTMLElement = stage;
+    const copyEl: HTMLDivElement = copy;
+    const trackEl: HTMLDivElement = track;
+    const frameEl: HTMLDivElement = frame;
+    const dashEl: HTMLDivElement = dash;
+    const reelEl: HTMLDivElement = reel;
+    const hintEl: HTMLDivElement = hint;
+
     const copyEls = [
       eyebrowRef.current,
       headlineRef.current,
@@ -153,14 +161,14 @@ export function WhySection() {
       const pad = 6;
       const left = focusX - bigW / 2;
       const top = cy - bigH / 2;
-      frame.style.width = `${bigW}px`;
-      frame.style.height = `${bigH}px`;
-      frame.style.left = `${left}px`;
-      frame.style.top = `${top}px`;
-      dash.style.width = `${bigW + pad * 2}px`;
-      dash.style.height = `${bigH + pad * 2}px`;
-      dash.style.left = `${left - pad}px`;
-      dash.style.top = `${top - pad}px`;
+      frameEl.style.width = `${bigW}px`;
+      frameEl.style.height = `${bigH}px`;
+      frameEl.style.left = `${left}px`;
+      frameEl.style.top = `${top}px`;
+      dashEl.style.width = `${bigW + pad * 2}px`;
+      dashEl.style.height = `${bigH + pad * 2}px`;
+      dashEl.style.left = `${left - pad}px`;
+      dashEl.style.top = `${top - pad}px`;
       slideRefs.current.forEach((slide) => {
         if (!slide) return;
         slide.style.width = `${bigW}px`;
@@ -170,7 +178,7 @@ export function WhySection() {
         card.style.width = `${smW}px`;
         card.style.height = `${smH}px`;
       });
-      track.style.transformOrigin = `${focusX}px ${cy}px`;
+      trackEl.style.transformOrigin = `${focusX}px ${cy}px`;
     }
 
     function layout(intro: number, strip: number, t: number) {
@@ -178,21 +186,21 @@ export function WhySection() {
       const frameLeft = anchorX() - bigW / 2;
       const step = smW + gap;
 
-      reel.style.transform = `translate3d(${(-t * bigW).toFixed(1)}px,0,0)`;
+      reelEl.style.transform = `translate3d(${(-t * bigW).toFixed(1)}px,0,0)`;
 
       if (intro < 1) {
         introSealed = false;
-        frame.style.opacity = String(clamp(intro * 2));
-        dash.style.opacity = String(clamp(intro * 2));
+        frameEl.style.opacity = String(clamp(intro * 2));
+        dashEl.style.opacity = String(clamp(intro * 2));
         const inset = (1 - intro) * 18;
-        reel.style.clipPath = `inset(${inset}% ${inset * 0.75}%)`;
-        track.style.transform = `scale(${lerp(0.6, 1, intro)})`;
+        reelEl.style.clipPath = `inset(${inset}% ${inset * 0.75}%)`;
+        trackEl.style.transform = `scale(${lerp(0.6, 1, intro)})`;
       } else if (!introSealed) {
         introSealed = true;
-        frame.style.opacity = "1";
-        dash.style.opacity = "1";
-        reel.style.clipPath = "none";
-        track.style.transform = "none";
+        frameEl.style.opacity = "1";
+        dashEl.style.opacity = "1";
+        reelEl.style.clipPath = "none";
+        trackEl.style.transform = "none";
       }
 
       const y = cy - M.smH / 2;
@@ -246,9 +254,9 @@ export function WhySection() {
         copySealed = true;
       }
       if (time > STRIP_END) {
-        hint.style.opacity = String(1 - clamp((time - STRIP_END) / 0.35));
-      } else if (hint.style.opacity !== "1") {
-        hint.style.opacity = "1";
+        hintEl.style.opacity = String(1 - clamp((time - STRIP_END) / 0.35));
+      } else if (hintEl.style.opacity !== "1") {
+        hintEl.style.opacity = "1";
       }
     }
 
@@ -256,8 +264,8 @@ export function WhySection() {
       copyEls.forEach((el) => {
         el.style.transform = "";
       });
-      copy.classList.remove(styles.copyFinal);
-      const base = stage.getBoundingClientRect();
+      copyEl.classList.remove(styles.copyFinal);
+      const base = stageEl.getBoundingClientRect();
       const r = (el: HTMLElement) => {
         const b = el.getBoundingClientRect();
         return {
@@ -267,25 +275,25 @@ export function WhySection() {
         };
       };
       const a = copyEls.map(r);
-      copy.classList.add(styles.copyFinal);
-      copy.style.transform = "none";
+      copyEl.classList.add(styles.copyFinal);
+      copyEl.style.transform = "none";
       const heroLeft = (M.vw - M.bigW) / 2;
-      const naturalRight = copy.getBoundingClientRect().right - base.left;
+      const naturalRight = copyEl.getBoundingClientRect().right - base.left;
       const room = heroLeft - naturalRight - 18;
       const need = 2 * (M.smW + M.gap);
       if (M.vw >= 768 && room < need) {
         const thumbTop = M.cy - M.smH / 2;
-        const top = Math.max(96, thumbTop - copy.offsetHeight - 36);
-        copy.style.top = `${top}px`;
+        const top = Math.max(96, thumbTop - copyEl.offsetHeight - 36);
+        copyEl.style.top = `${top}px`;
         copyRight = 0;
       } else {
-        copy.style.top = "";
-        copyRight = copy.getBoundingClientRect().right - base.left;
+        copyEl.style.top = "";
+        copyRight = copyEl.getBoundingClientRect().right - base.left;
       }
       const b = copyEls.map(r);
-      copy.classList.remove(styles.copyFinal);
-      copy.style.top = "";
-      copy.style.transform = "";
+      copyEl.classList.remove(styles.copyFinal);
+      copyEl.style.top = "";
+      copyEl.style.transform = "";
       return copyEls.map((_, i) => ({
         x: b[i].x - a[i].x,
         y: b[i].y - a[i].y,
@@ -301,13 +309,13 @@ export function WhySection() {
       M = getMetrics();
 
       if (reduce) {
-        copy.classList.add(styles.copyFinal);
-        const base = stage.getBoundingClientRect();
-        copyRight = copy.getBoundingClientRect().right - base.left;
+        copyEl.classList.add(styles.copyFinal);
+        const base = stageEl.getBoundingClientRect();
+        copyRight = copyEl.getBoundingClientRect().right - base.left;
         sizeStage();
         layout(1, 1, 0);
         applyCopy(1);
-        hint.style.opacity = "0";
+        hintEl.style.opacity = "0";
         return;
       }
 
@@ -317,7 +325,7 @@ export function WhySection() {
       sizeStage();
 
       st = ScrollTrigger.create({
-        trigger: stage,
+        trigger: stageEl,
         start: "top top",
         end: () => `+=${window.innerHeight * 6}`,
         pin: true,
