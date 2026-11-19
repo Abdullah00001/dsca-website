@@ -67,9 +67,7 @@ export function OnboardSection() {
     days: GOALS[0].days,
     amount: GOALS[0].amount,
   });
-  const applyGoalRef = useRef<(index: number, opts?: { punch?: boolean }) => void>(
-    () => undefined,
-  );
+  const applyGoalRef = useRef<(index: number) => void>(() => undefined);
   /** Animates rocket (and page sync) to a chip — used by click. */
   const goToChipRef = useRef<(index: number) => void>(() => undefined);
   const [active, setActive] = useState<OnboardGoal>(GOALS[0]);
@@ -141,12 +139,8 @@ export function OnboardSection() {
      * Updates reco copy + active chip for a goal index.
      *
      * @param index - Goal index.
-     * @param opts.punch - Soft scale reaction on the stack.
      */
-    function applyGoal(
-      index: number,
-      opts: { punch?: boolean } = {},
-    ): void {
+    function applyGoal(index: number): void {
       const goal = GOALS[index];
       if (!goal || index === indexRef.current) {
         return;
@@ -218,23 +212,6 @@ export function OnboardSection() {
           }
         },
       });
-
-      if (opts.punch) {
-        goals.forEach((btn, i) => {
-          gsap.fromTo(
-            btn,
-            { scale: 1 },
-            {
-              scale: i === index ? 1.06 : 0.95,
-              duration: i === index ? 0.36 : 0.22,
-              ease: i === index ? "back.out(2.8)" : "power2.out",
-              yoyo: true,
-              repeat: 1,
-              overwrite: "auto",
-            },
-          );
-        });
-      }
     }
 
     applyGoalRef.current = applyGoal;
@@ -259,6 +236,9 @@ export function OnboardSection() {
       GOALS.length <= 1 ? 0 : i / (GOALS.length - 1),
     );
     let clickDriving = false;
+    /** Smoothed scroll progress so the rocket eases instead of snapping. */
+    const scrollProgress = { value: 0 };
+    let smoothScrollTween: gsap.core.Tween | null = null;
 
     /**
      * Linear interpolate two points.
@@ -426,21 +406,33 @@ export function OnboardSection() {
           )
           .to(maskPathEl, { strokeDashoffset: 0, duration: 1 }, 0);
 
+        scrollProgress.value = prevProgress;
         rocketTl.progress(prevProgress);
 
         pathScrollTrigger = ScrollTrigger.create({
           trigger: root,
-          start: "top 55%",
-          end: "bottom 40%",
-          scrub: 0.55,
+          // Longer travel distance → slower rocket along the path.
+          start: "top 75%",
+          end: "bottom 15%",
+          scrub: 1.4,
           onUpdate: (self) => {
             if (clickDriving || Date.now() < clickLockUntil.current) {
               return;
             }
-            rocketTl?.progress(self.progress);
             if (self.direction !== 0) {
               faceRocket(self.direction > 0);
             }
+            smoothScrollTween?.kill();
+            smoothScrollTween = gsap.to(scrollProgress, {
+              value: self.progress,
+              duration: 0.9,
+              ease: "power3.out",
+              overwrite: true,
+              onUpdate: () => {
+                rocketTl?.progress(scrollProgress.value);
+              },
+            });
+
             let idx = 0;
             let best = Infinity;
             chipProgress.forEach((cp, i) => {
@@ -451,7 +443,7 @@ export function OnboardSection() {
               }
             });
             if (idx !== indexRef.current) {
-              applyGoal(idx, { punch: false });
+              applyGoal(idx);
             }
           },
         });
@@ -461,27 +453,31 @@ export function OnboardSection() {
     }
 
     /**
-     * Sends the rocket to a chip (click) and syncs page scroll.
+     * Sends the rocket to a chip on click (no page scroll).
      *
      * @param index - Goal index.
      */
     function goToChip(index: number): void {
       const target = chipProgress[index] ?? 0;
-      const from = rocketTl?.progress() ?? 0;
+      const from = rocketTl?.progress() ?? scrollProgress.value;
       const delta = Math.abs(target - from);
       faceRocket(target >= from);
       clickDriving = true;
-      // Keep scroll from yanking the rocket until the click tween finishes.
-      const duration = Math.max(1.05, delta * 2.4);
-      clickLockUntil.current = Date.now() + duration * 1000 + 200;
-      applyGoal(index, { punch: true });
+      smoothScrollTween?.kill();
+      // Far hops (e.g. 1 → 3) stay slow; nearby hops still feel deliberate.
+      const duration = Math.max(1.8, delta * 5.5);
+      clickLockUntil.current = Date.now() + duration * 1000 + 400;
+      applyGoal(index);
 
       if (rocketTl) {
-        gsap.to(rocketTl, {
-          progress: target,
+        gsap.to(scrollProgress, {
+          value: target,
           duration,
-          ease: "power2.inOut",
+          ease: "sine.inOut",
           overwrite: true,
+          onUpdate: () => {
+            rocketTl?.progress(scrollProgress.value);
+          },
           onComplete: () => {
             clickDriving = false;
           },
@@ -578,7 +574,9 @@ export function OnboardSection() {
       }
       window.removeEventListener("resize", onResize);
       pathCtx?.revert();
+      smoothScrollTween?.kill();
       gsap.killTweensOf(counter);
+      gsap.killTweensOf(scrollProgress);
       if (rocketTl) {
         gsap.killTweensOf(rocketTl);
       }
