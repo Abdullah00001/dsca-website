@@ -66,6 +66,37 @@ function applyTheme(mode: ThemeMode): void {
 }
 
 /**
+ * Contrast / half-moon mark (reference ◐) drawn as SVG so Figtree cannot
+ * collapse the glyph to a speck.
+ *
+ * @returns Decorative SVG icon.
+ */
+function ThemeIcon() {
+  return (
+    <svg
+      className={styles.icon}
+      viewBox="0 0 20 20"
+      width="20"
+      height="20"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {/* Outlined circle keeps the open half visible on dark green */}
+      <circle
+        cx="10"
+        cy="10"
+        r="7.25"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+      />
+      {/* Solid right half — classic contrast / theme mark */}
+      <path d="M10 2.75a7.25 7.25 0 0 0 0 14.5V2.75Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+/**
  * Client button that toggles `data-theme` between light and dark.
  *
  * @param props - Optional visual variant.
@@ -114,32 +145,7 @@ export function ThemeToggle({
       aria-label="Toggle light and dark mode"
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {isChip ? (
-        <svg
-          className={styles.icon}
-          viewBox="0 0 18 18"
-          width="18"
-          height="18"
-          aria-hidden="true"
-          focusable="false"
-        >
-          {/* Half-moon mark — same footprint as hamburger bars (18×14–18) */}
-          <circle
-            cx="9"
-            cy="9"
-            r="6.25"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.75"
-          />
-          <path
-            d="M9 2.75a6.25 6.25 0 0 0 0 12.5V2.75Z"
-            fill="currentColor"
-          />
-        </svg>
-      ) : (
-        "◐"
-      )}
+      <ThemeIcon />
     </button>
   );
 }

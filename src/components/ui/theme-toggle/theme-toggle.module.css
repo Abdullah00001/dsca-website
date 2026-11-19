@@ -1,16 +1,23 @@
 /**
  * @fileoverview Styles for the theme toggle button atom.
+ *
+ * Plain variant matches Menu / nav-link hit area (padding 11×15) so hover
+ * wash reads as a real pill control, not a floating speck.
  */
 
 .toggle {
-  color: #fff;
-  font: 600 13px var(--font-body);
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  min-width: 42px;
+  min-height: 35px;
   padding: 11px 15px;
   border-radius: 99px;
   border: 0;
   background: none;
+  color: #fff;
   cursor: pointer;
-  white-space: nowrap;
+  line-height: 0;
   transition:
     background 0.3s,
     color 0.3s,
@@ -22,10 +29,6 @@
   color: #fff;
 }
 
-.toggle:active {
-  transform: scale(0.92);
-}
-
 .toggle:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
@@ -33,15 +36,12 @@
 
 /* Standalone chip — phone header, matched to hamburger chip (46×46). */
 .chip {
-  display: inline-grid;
-  place-items: center;
   width: 46px;
   height: 46px;
   min-width: 46px;
   min-height: 46px;
   padding: 0;
   flex: none;
-  line-height: 0;
   background: rgba(6, 100, 64, 0.78);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -54,7 +54,6 @@
   background: rgba(6, 100, 64, 0.92);
 }
 
-/* Same optical size as `.bars` in the hamburger (18px). */
 .icon {
   display: block;
   width: 18px;
@@ -62,12 +61,13 @@
   color: #fff;
 }
 
+.chip .icon {
+  width: 20px;
+  height: 20px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .toggle {
     transition: background 0.3s, color 0.3s;
-  }
-
-  .toggle:active {
-    transform: none;
   }
 }
