@@ -10,7 +10,7 @@ import styles from "@/components/ui/button/button.module.css";
 /**
  * Visual variants matching the reference button system.
  */
-export type ButtonVariant = "default" | "ghost" | "dark";
+export type ButtonVariant = "default" | "ghost" | "dark" | "line";
 
 /**
  * Props for {@link Button}.
@@ -67,6 +67,7 @@ export function Button({
     styles.btn,
     variant === "ghost" ? styles.ghost : null,
     variant === "dark" ? styles.dark : null,
+    variant === "line" ? styles.line : null,
     className,
   ]
     .filter(Boolean)

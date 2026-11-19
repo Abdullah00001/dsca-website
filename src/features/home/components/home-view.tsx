@@ -10,6 +10,7 @@ import { HeroSection } from "@/features/home/components/hero-section";
 import { HomeMarquee } from "@/features/home/components/home-marquee";
 import { IsoSection } from "@/features/home/components/iso-section";
 import { OnboardSection } from "@/features/home/components/onboard-section";
+import { TrainersSection } from "@/features/home/components/trainers-section";
 import styles from "@/features/home/styles/home-view.module.css";
 
 /**
@@ -26,6 +27,7 @@ export function HomeView() {
       <IsoSection />
       <OnboardSection />
       <CoursesSection />
+      <TrainersSection />
     </div>
   );
 }
