@@ -92,6 +92,7 @@
 html {
   /* Keep layout width stable when the scrollbar appears/disappears */
   scrollbar-gutter: stable;
+  overflow-x: hidden;
 }
 
 body {
@@ -99,7 +100,14 @@ body {
   color: var(--foreground);
   font-family: var(--font-body);
   overflow-x: hidden;
+  max-width: 100%;
   transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Hero flyer must never sit above the open menu sheet. */
+html.menu-open [data-hero-flyer] {
+  opacity: 0 !important;
+  visibility: hidden;
 }
 
 /* Menu open: freeze page scroll without removing the scrollbar (no layout jump). */

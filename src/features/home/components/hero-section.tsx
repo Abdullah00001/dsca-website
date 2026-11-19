@@ -462,7 +462,12 @@ export function HeroSection() {
         </div>
       </section>
 
-      <div ref={flyerRef} className={styles.flyer} aria-hidden="true">
+      <div
+        ref={flyerRef}
+        className={styles.flyer}
+        data-hero-flyer
+        aria-hidden="true"
+      >
         <HeroLogoMark />
       </div>
     </>

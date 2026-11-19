@@ -10,7 +10,7 @@
   top: env(safe-area-inset-top, 0px);
   left: 0;
   right: 0;
-  z-index: 60;
+  z-index: 80;
   padding-block: 14px;
   padding-left: max(
     clamp(20px, 4vw, 48px),

@@ -8,7 +8,7 @@
 .menu {
   position: fixed;
   inset: 0;
-  z-index: 55;
+  z-index: 70;
   background: var(--forest);
   color: #fff;
   display: flex;
