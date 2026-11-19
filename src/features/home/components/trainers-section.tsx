@@ -197,7 +197,7 @@ export function TrainersSection() {
             </span>
           </h2>
           <div className={styles.cta} data-trainers-animate="cta">
-            <Button href={TRAINERS_CONTENT.cta.href} variant="ghost">
+            <Button href={TRAINERS_CONTENT.cta.href} variant="line">
               {TRAINERS_CONTENT.cta.label}
             </Button>
           </div>

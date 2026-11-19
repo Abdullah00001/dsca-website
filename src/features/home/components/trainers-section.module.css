@@ -1,13 +1,14 @@
 /**
  * @fileoverview Home trainers track (reference `.tr-wrap` + `.track` + `.tc`).
+ * Theme-aware via --bg / --fg / --muted / --gt / --ait / --gold (like onboard).
  */
 
 .section {
   position: relative;
   overflow: hidden;
   padding-block: clamp(72px, 10vw, 150px);
-  color: #eef5ef;
-  background: #0b1a14;
+  color: var(--fg);
+  background: var(--bg);
 }
 
 .shine {
@@ -44,7 +45,17 @@
   font: 700 12px / 1.3 var(--font-body);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #f2b84a;
+  color: var(--gt);
+}
+
+:root[data-theme="dark"] .eyebrow {
+  color: var(--gold);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .eyebrow {
+    color: var(--gold);
+  }
 }
 
 .title {
@@ -56,7 +67,7 @@
   line-height: 0.92;
   letter-spacing: -0.035em;
   text-transform: uppercase;
-  color: #eef5ef;
+  color: var(--fg);
 }
 
 .accent {
@@ -65,25 +76,21 @@
   font-weight: 400;
   text-transform: none;
   letter-spacing: -0.01em;
-  color: #eef5ef;
+  color: var(--ait);
+}
+
+:root[data-theme="dark"] .accent {
+  color: var(--gold);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .accent {
+    color: var(--gold);
+  }
 }
 
 .cta {
   margin-top: 28px;
-}
-
-.cta :global(a) {
-  --c: transparent;
-  --f: #fff;
-  --t: #fff;
-  --th: #0b1a14;
-  color: #fff;
-  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.7);
-}
-
-.cta :global(a i) {
-  background: #fff;
-  color: #0b1a14;
 }
 
 .lead {
@@ -92,7 +99,7 @@
   font-size: 17px;
   line-height: 1.7;
   font-weight: 500;
-  color: #cfe6d8;
+  color: var(--muted);
 }
 
 .track {
