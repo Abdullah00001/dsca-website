@@ -13,6 +13,11 @@ import styles from "@/components/ui/button/button.module.css";
 export type ButtonVariant = "default" | "ghost" | "dark" | "line";
 
 /**
+ * Control size matching reference `.btn` / `.btn.big`.
+ */
+export type ButtonSize = "default" | "big";
+
+/**
  * Props for {@link Button}.
  */
 export interface ButtonProps {
@@ -27,6 +32,11 @@ export interface ButtonProps {
    * @default "default"
    */
   variant?: ButtonVariant;
+  /**
+   * Control size.
+   * @default "default"
+   */
+  size?: ButtonSize;
   /**
    * Trailing arrow glyph (reference `<i>→</i>`).
    * @default true
@@ -60,6 +70,7 @@ export function Button({
   children,
   href,
   variant = "default",
+  size = "default",
   showArrow = true,
   className,
 }: ButtonProps) {
@@ -68,6 +79,7 @@ export function Button({
     variant === "ghost" ? styles.ghost : null,
     variant === "dark" ? styles.dark : null,
     variant === "line" ? styles.line : null,
+    size === "big" ? styles.big : null,
     className,
   ]
     .filter(Boolean)

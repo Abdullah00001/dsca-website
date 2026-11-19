@@ -62,8 +62,27 @@
   box-shadow: 0 22px 40px -16px rgba(0, 0, 0, 0.45);
 }
 
-.btn:active {
-  transform: scale(0.95) !important;
+/*
+ * Fine-pointer press scale is applied by MagneticButtons (keeps x/y + scale
+ * in one GSAP transform). Touch / no-hover keeps a plain CSS press.
+ */
+@media (hover: none) {
+  .btn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Reference `.btn.big` — larger page-CTA control. */
+.big {
+  min-height: 76px;
+  padding-left: 44px;
+  font-size: 15px;
+}
+
+.big .icon {
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
 }
 
 .icon {

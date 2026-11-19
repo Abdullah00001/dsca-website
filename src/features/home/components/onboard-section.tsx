@@ -45,6 +45,10 @@ function formatAmount(value: number): string {
  * @returns Onboarding landmark for the home page.
  */
 export function OnboardSection() {
+  // GSAP + MotionPath mutate the tree; React Compiler's memoization walks
+  // circular graphs here and blows the call stack ("Maximum call stack size exceeded").
+  "use no memo";
+
   const rootRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const recoRef = useRef<HTMLDivElement>(null);
@@ -136,29 +140,51 @@ export function OnboardSection() {
     }
 
     /**
+     * Syncs aria-pressed on chips without a React re-render.
+     *
+     * @param index - Active goal index.
+     */
+    function syncChipPressed(index: number): void {
+      goals.forEach((btn, i) => {
+        btn.setAttribute("aria-pressed", i === index ? "true" : "false");
+      });
+    }
+
+    /**
      * Updates reco copy + active chip for a goal index.
      *
+     * Scroll-driven updates stay DOM-only (no setState) so React Compiler /
+     * re-renders cannot recurse into a call-stack blowup.
+     *
      * @param index - Goal index.
+     * @param syncReact - When true (clicks), also update React state.
      */
-    function applyGoal(index: number): void {
+    function applyGoal(index: number, syncReact = false): void {
       const goal = GOALS[index];
       if (!goal || index === indexRef.current) {
         return;
       }
 
       indexRef.current = index;
+      syncChipPressed(index);
       const courseEl = courseRef.current;
       const detailEl = detailRef.current;
       const shine = shineRef.current;
 
       if (reduce || !courseEl || !detailEl || !reco) {
-        setActive(goal);
+        if (syncReact) {
+          setActive(goal);
+        } else if (courseEl) {
+          courseEl.textContent = goal.course;
+        }
         runCounters(goal, false);
         return;
       }
 
       if (busyRef.current) {
-        setActive(goal);
+        if (syncReact) {
+          setActive(goal);
+        }
         courseEl.textContent = goal.course;
         runCounters(goal, true);
         return;
@@ -174,7 +200,9 @@ export function OnboardSection() {
         duration: 0.18,
         ease: "power2.in",
         onComplete: () => {
-          setActive(goal);
+          if (syncReact) {
+            setActive(goal);
+          }
           courseEl.textContent = goal.course;
           runCounters(goal, true);
 
@@ -309,8 +337,12 @@ export function OnboardSection() {
     /**
      * Builds the serpentine dash + rocket timeline behind the chips.
      */
+    /** Prevents resize ↔ refresh re-entrancy (stack overflow). */
+    let pathBusy = false;
+
     function initPath(): void {
       if (
+        pathBusy ||
         !svgEl ||
         !dashBaseEl ||
         !dashLitEl ||
@@ -322,134 +354,139 @@ export function OnboardSection() {
         return;
       }
 
-      const prevProgress = rocketTl?.progress() ?? 0;
-      pathCtx?.revert();
-      pathCtx = null;
-      rocketTl = null;
-      pathScrollTrigger = null;
+      pathBusy = true;
+      try {
+        const prevProgress = rocketTl?.progress() ?? 0;
+        pathCtx?.revert();
+        pathCtx = null;
+        rocketTl = null;
+        pathScrollTrigger = null;
 
-      const W = stage.offsetWidth;
-      const H = stage.offsetHeight;
-      if (W <= 0 || H <= 0) {
-        return;
-      }
-
-      svgEl.setAttribute("width", String(W));
-      svgEl.setAttribute("height", String(H));
-      svgEl.setAttribute("viewBox", `0 0 ${W} ${H}`);
-      maskNode.setAttribute("x", "-200");
-      maskNode.setAttribute("y", "-200");
-      maskNode.setAttribute("width", String(W + 400));
-      maskNode.setAttribute("height", String(H + 400));
-
-      const widest = Math.max(...goals.map((g) => g.offsetWidth));
-      const pad = Math.max(0, (W - widest) / 2);
-      const k = Math.max(28, Math.min(pad * 0.85, 72));
-
-      const pts = goals.map((_, i) => ({
-        l: edge(i, "l"),
-        r: edge(i, "r"),
-        c: mix(edge(i, "l"), edge(i, "r"), 0.5),
-      }));
-
-      const P = (p: { x: number; y: number }) => `${p.x} ${p.y}`;
-      // Start under chip 0 center so the nose never peeks past the left edge.
-      let d = `M ${P(pts[0].c)}`;
-      const anchorDs: string[] = [d];
-
-      for (let i = 1; i < pts.length; i += 1) {
-        const prev = pts[i - 1];
-        const cur = pts[i];
-        // Leave previous chip toward the loop side, curve into current, park at center.
-        if (i % 2 === 1) {
-          d += ` L ${P(prev.r)} C ${prev.r.x + k} ${prev.r.y}, ${cur.r.x + k} ${cur.r.y}, ${P(cur.r)} L ${P(cur.c)}`;
-        } else {
-          d += ` L ${P(prev.l)} C ${prev.l.x - k} ${prev.l.y}, ${cur.l.x - k} ${cur.l.y}, ${P(cur.l)} L ${P(cur.c)}`;
+        const W = stage.offsetWidth;
+        const H = stage.offsetHeight;
+        if (W <= 0 || H <= 0) {
+          return;
         }
-        anchorDs.push(d);
-      }
 
-      const total = Math.max(lengthOf(d, svgEl), 1);
-      chipProgress = anchorDs.map((ad) => lengthOf(ad, svgEl) / total);
+        svgEl.setAttribute("width", String(W));
+        svgEl.setAttribute("height", String(H));
+        svgEl.setAttribute("viewBox", `0 0 ${W} ${H}`);
+        maskNode.setAttribute("x", "-200");
+        maskNode.setAttribute("y", "-200");
+        maskNode.setAttribute("width", String(W + 400));
+        maskNode.setAttribute("height", String(H + 400));
 
-      for (const p of [dashBaseEl, dashLitEl, maskPathEl]) {
-        p.setAttribute("d", d);
-      }
-      gsap.set(maskPathEl, {
-        strokeDasharray: total,
-        strokeDashoffset: total,
-      });
-      gsap.set(rocketEl, {
-        transformOrigin: "50% 50%",
-        scaleY: 1,
-        opacity: 1,
-      });
+        const widest = Math.max(...goals.map((g) => g.offsetWidth));
+        const pad = Math.max(0, (W - widest) / 2);
+        const k = Math.max(28, Math.min(pad * 0.85, 72));
 
-      pathCtx = gsap.context(() => {
-        rocketTl = gsap.timeline({
-          paused: true,
-          defaults: { ease: "none" },
+        const pts = goals.map((_, i) => ({
+          l: edge(i, "l"),
+          r: edge(i, "r"),
+          c: mix(edge(i, "l"), edge(i, "r"), 0.5),
+        }));
+
+        const P = (p: { x: number; y: number }) => `${p.x} ${p.y}`;
+        // Start under chip 0 center so the nose never peeks past the left edge.
+        let d = `M ${P(pts[0].c)}`;
+        const anchorDs: string[] = [d];
+
+        for (let i = 1; i < pts.length; i += 1) {
+          const prev = pts[i - 1];
+          const cur = pts[i];
+          // Leave previous chip toward the loop side, curve into current, park at center.
+          if (i % 2 === 1) {
+            d += ` L ${P(prev.r)} C ${prev.r.x + k} ${prev.r.y}, ${cur.r.x + k} ${cur.r.y}, ${P(cur.r)} L ${P(cur.c)}`;
+          } else {
+            d += ` L ${P(prev.l)} C ${prev.l.x - k} ${prev.l.y}, ${cur.l.x - k} ${cur.l.y}, ${P(cur.l)} L ${P(cur.c)}`;
+          }
+          anchorDs.push(d);
+        }
+
+        const total = Math.max(lengthOf(d, svgEl), 1);
+        chipProgress = anchorDs.map((ad) => lengthOf(ad, svgEl) / total);
+
+        for (const p of [dashBaseEl, dashLitEl, maskPathEl]) {
+          p.setAttribute("d", d);
+        }
+        gsap.set(maskPathEl, {
+          strokeDasharray: total,
+          strokeDashoffset: total,
         });
-        rocketTl
-          .to(
-            rocketEl,
-            {
-              motionPath: {
-                path: dashBaseEl,
-                align: dashBaseEl,
-                alignOrigin: [0.5, 0.5],
-                autoRotate: ROCKET_ANGLE,
+        gsap.set(rocketEl, {
+          transformOrigin: "50% 50%",
+          scaleY: 1,
+          opacity: 1,
+        });
+
+        pathCtx = gsap.context(() => {
+          rocketTl = gsap.timeline({
+            paused: true,
+            defaults: { ease: "none" },
+          });
+          rocketTl
+            .to(
+              rocketEl,
+              {
+                motionPath: {
+                  path: dashBaseEl,
+                  align: dashBaseEl,
+                  alignOrigin: [0.5, 0.5],
+                  autoRotate: ROCKET_ANGLE,
+                },
+                duration: 1,
               },
-              duration: 1,
-            },
-            0,
-          )
-          .to(maskPathEl, { strokeDashoffset: 0, duration: 1 }, 0);
+              0,
+            )
+            .to(maskPathEl, { strokeDashoffset: 0, duration: 1 }, 0);
 
-        scrollProgress.value = prevProgress;
-        rocketTl.progress(prevProgress);
+          scrollProgress.value = prevProgress;
+          rocketTl.progress(prevProgress);
 
-        pathScrollTrigger = ScrollTrigger.create({
-          trigger: root,
-          // Longer travel distance → slower rocket along the path.
-          start: "top 75%",
-          end: "bottom 15%",
-          scrub: 1.4,
-          onUpdate: (self) => {
-            if (clickDriving || Date.now() < clickLockUntil.current) {
-              return;
-            }
-            if (self.direction !== 0) {
-              faceRocket(self.direction > 0);
-            }
-            smoothScrollTween?.kill();
-            smoothScrollTween = gsap.to(scrollProgress, {
-              value: self.progress,
-              duration: 0.9,
-              ease: "power3.out",
-              overwrite: true,
-              onUpdate: () => {
-                rocketTl?.progress(scrollProgress.value);
-              },
-            });
-
-            let idx = 0;
-            let best = Infinity;
-            chipProgress.forEach((cp, i) => {
-              const dist = Math.abs(cp - self.progress);
-              if (dist < best) {
-                best = dist;
-                idx = i;
+          pathScrollTrigger = ScrollTrigger.create({
+            trigger: root,
+            // Longer travel distance → slower rocket along the path.
+            start: "top 75%",
+            end: "bottom 15%",
+            scrub: 1.4,
+            onUpdate: (self) => {
+              if (clickDriving || Date.now() < clickLockUntil.current) {
+                return;
               }
-            });
-            if (idx !== indexRef.current) {
-              applyGoal(idx);
-            }
-          },
-        });
-      }, stage);
+              if (self.direction !== 0) {
+                faceRocket(self.direction > 0);
+              }
+              smoothScrollTween?.kill();
+              smoothScrollTween = gsap.to(scrollProgress, {
+                value: self.progress,
+                duration: 0.9,
+                ease: "power3.out",
+                overwrite: true,
+                onUpdate: () => {
+                  rocketTl?.progress(scrollProgress.value);
+                },
+              });
 
-      ScrollTrigger.refresh();
+              let idx = 0;
+              let best = Infinity;
+              for (let i = 0; i < chipProgress.length; i += 1) {
+                const dist = Math.abs(chipProgress[i] - self.progress);
+                if (dist < best) {
+                  best = dist;
+                  idx = i;
+                }
+              }
+              if (idx !== indexRef.current) {
+                applyGoal(idx);
+              }
+            },
+          });
+        }, stage);
+      } finally {
+        // Do not ScrollTrigger.refresh() here — pin/spacer updates can re-enter
+        // resize → initPath and blow the call stack.
+        pathBusy = false;
+      }
     }
 
     /**
@@ -467,7 +504,7 @@ export function OnboardSection() {
       // Far hops (e.g. 1 → 3) stay slow; nearby hops still feel deliberate.
       const duration = Math.max(1.8, delta * 5.5);
       clickLockUntil.current = Date.now() + duration * 1000 + 400;
-      applyGoal(index);
+      applyGoal(index, true);
 
       if (rocketTl) {
         gsap.to(scrollProgress, {
@@ -560,6 +597,9 @@ export function OnboardSection() {
      * Debounced path rebuild on resize.
      */
     function onResize(): void {
+      if (pathBusy) {
+        return;
+      }
       if (resizeTimer) {
         clearTimeout(resizeTimer);
       }
@@ -582,7 +622,8 @@ export function OnboardSection() {
       }
       ctx.revert();
     };
-  }, [maskId]);
+    // maskId is stable for the component lifetime; empty deps — run once.
+  }, []);
 
   /**
    * Click handler — rockets to the chip and updates the reco.

@@ -1,0 +1,160 @@
+/**
+ * @fileoverview Page-end CTA band — port of reference `.last` (+ `.soft` look).
+ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+  padding-block: clamp(72px, 10vw, 150px);
+  background:
+    radial-gradient(
+      800px 420px at 92% -10%,
+      rgba(255, 214, 102, 0.22),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 460px at 0% 110%,
+      rgba(94, 234, 212, 0.18),
+      transparent 62%
+    ),
+    linear-gradient(135deg, #0c5a6b 0%, #0a4a5c 55%, #083a4b 100%);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 46%,
+    transparent 62%
+  );
+}
+
+.shine {
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 38%,
+    rgba(255, 214, 102, 0.22) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+  opacity: 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eyebrow {
+  margin: 0;
+  font: 700 12px / 1.3 var(--font-body);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffd666;
+}
+
+.title {
+  margin: 24px 0 0;
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(58px, 16vw, 280px);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  will-change: transform;
+}
+
+.accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: #ffd666;
+}
+
+.body {
+  margin: 34px auto 0;
+  max-width: 520px;
+  font-size: 19px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #e6f6f8;
+}
+
+.action {
+  margin-top: 36px;
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(44px, 14vw, 72px);
+    max-width: none;
+  }
+
+  .body {
+    font-size: 16px;
+    margin-top: 24px;
+  }
+
+  .action {
+    margin-top: 28px;
+    width: 100%;
+  }
+}
+
+/* Reference `.mq` — gold on forest, sits directly under `.last`. */
+.mq {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  padding-block: 16px;
+  background: #073b2b;
+  color: #f2b84a;
+}
+
+.mqTrack {
+  display: inline-flex;
+  gap: 44px;
+  padding-right: 44px;
+  width: max-content;
+  font: 800 22px / 1 var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: #f2b84a;
+  will-change: transform;
+}
+
+.mqItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 44px;
+  flex: none;
+  color: #f2b84a;
+}
+
+.mqStar {
+  color: #f2b84a;
+  font-weight: 800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mqTrack {
+    transform: none !important;
+  }
+}

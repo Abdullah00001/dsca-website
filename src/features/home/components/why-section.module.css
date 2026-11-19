@@ -1,0 +1,269 @@
+/**
+ * Why DSCA showcase — pinned stage, FLIP copy, center-focus card track.
+ */
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  height: 100svh;
+  font-family: var(--font-body);
+  color: #eef5ef;
+  background:
+    radial-gradient(90% 80% at 0% 100%, rgba(246, 183, 60, 0.1), transparent 52%),
+    radial-gradient(70% 70% at 100% 0%, rgba(0, 98, 65, 0.22), transparent 58%),
+    #101816;
+}
+
+/* ---------- copy: hero (centered) → final (top-left) ---------- */
+
+.copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 33%;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 5vw;
+  pointer-events: none;
+}
+
+.copyFinal {
+  top: 50%;
+  left: 4.2vw;
+  right: auto;
+  width: max-content;
+  max-width: 32vw;
+  align-items: flex-start;
+  text-align: left;
+  transform: translateY(-46%);
+}
+
+.eyebrow {
+  margin: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: rgba(238, 245, 239, 0.55);
+  font-size: clamp(14px, 2.2vw, 40px);
+  will-change: transform;
+}
+
+.headline {
+  --glow: 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  white-space: nowrap;
+  font-size: clamp(56px, 11.5vw, 230px);
+  text-shadow: 0 0 calc(40px * var(--glow, 1))
+    rgba(255, 224, 138, calc(0.55 * var(--glow, 1)));
+  will-change: transform;
+}
+
+.sub {
+  margin: 1.2vw 0 0;
+  font-weight: 600;
+  color: rgba(238, 245, 239, 0.75);
+  font-size: clamp(14px, 1.4vw, 24px);
+  will-change: transform;
+}
+
+.cta {
+  pointer-events: auto;
+  margin-top: 1.6vw;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 999px;
+  padding: 12px 14px 12px 26px;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #0f3b2c;
+  background: linear-gradient(#f9c95a, #efa93a);
+  box-shadow: 0 10px 30px rgba(246, 183, 60, 0.3);
+  will-change: transform;
+}
+
+.ctaIcon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #0f3b2c;
+  color: #f6b73c;
+  font-style: normal;
+}
+
+.copyFinal .eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: rgba(238, 245, 239, 0.72);
+}
+
+.copyFinal .headline {
+  font-size: clamp(36px, 2.6vw, 52px);
+  letter-spacing: -0.035em;
+  text-shadow: none;
+}
+
+.copyFinal .sub {
+  font-size: 14px;
+  line-height: 1.35;
+  margin-top: 10px;
+  max-width: 260px;
+  white-space: normal;
+}
+
+.copyFinal .cta {
+  margin-top: 16px;
+  padding: 8px 10px 8px 16px;
+  font-size: 11px;
+}
+
+@media (max-width: 767px) {
+  .headline {
+    font-size: 15vw;
+  }
+
+  .eyebrow {
+    font-size: 4vw;
+  }
+
+  .sub {
+    font-size: 3.6vw;
+    margin-top: 3vw;
+  }
+
+  .cta {
+    margin-top: 5vw;
+  }
+
+  .copyFinal {
+    top: 11vh;
+  }
+
+  .copyFinal .headline {
+    font-size: 8vw;
+  }
+
+  .copyFinal .eyebrow {
+    font-size: 3.2vw;
+  }
+
+  .copyFinal .sub {
+    font-size: 2.9vw;
+    margin-top: 1.5vw;
+  }
+
+  .copyFinal .cta {
+    margin-top: 3vw;
+    padding: 8px 10px 8px 18px;
+    font-size: 11px;
+  }
+}
+
+/* ---------- track / cards ---------- */
+
+.track {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.frame {
+  position: absolute;
+  z-index: 6;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #101816;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dash {
+  position: absolute;
+  z-index: 7;
+  box-sizing: border-box;
+  border: 1px dashed rgba(255, 255, 255, 0.92);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.reel {
+  display: flex;
+  height: 100%;
+  will-change: transform;
+}
+
+.slide {
+  flex: none;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0;
+  will-change: transform, width, height;
+  background: #142028;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.dim {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.hint {
+  position: absolute;
+  bottom: 1.35rem;
+  left: 50%;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(238, 245, 239, 0.85);
+  pointer-events: none;
+}
+
+.hintIcon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.6);
+}

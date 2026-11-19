@@ -9,5 +9,6 @@ export * from "@/components/ui/theme-toggle";
 export * from "@/components/ui/menu-toggle";
 export * from "@/components/ui/enroll-cta";
 export * from "@/components/ui/button";
+export * from "@/components/ui/page-cta";
 export * from "@/components/ui/eyebrow";
 export * from "@/components/ui/social-icon";

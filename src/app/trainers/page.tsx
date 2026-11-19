@@ -4,8 +4,9 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { PageCta } from "@/components/ui/page-cta";
 import { TRAINERS_CONTENT } from "@/features/home/lib/trainers-content";
+import { PAGE_CTA_VISIT } from "@/libs/page-cta";
 import layout from "@/styles/layout.module.css";
 import styles from "@/features/home/components/trainers-section.module.css";
 
@@ -16,48 +17,48 @@ export const metadata: Metadata = {
 };
 
 /**
- * Trainers index — portraits and roles from the home band content.
+ * Trainers index — portraits, roles, and the visit CTA before the footer.
  *
  * @returns Trainers page.
  */
 export default function TrainersPage() {
   return (
-    <main className={`${styles.section} ${layout.g}`}>
-      <div className={`${styles.inner} ${layout.in}`}>
-        <p className={styles.eyebrow}>{TRAINERS_CONTENT.eyebrow}</p>
-        <h1 className={styles.title}>
-          {TRAINERS_CONTENT.titleBefore}{" "}
-          <span className={styles.accent}>{TRAINERS_CONTENT.titleAccent}</span>
-        </h1>
-        <p className={styles.lead} style={{ marginBottom: 48 }}>
-          {TRAINERS_CONTENT.lead}
-        </p>
-      </div>
-      <div className={`${styles.track} ${layout.in}`} role="list">
-        {TRAINERS_CONTENT.trainers.map((trainer) => (
-          <article key={trainer.id} className={styles.card} role="listitem">
-            <div className={styles.photo}>
-              <Image
-                src={trainer.image}
-                alt={`${trainer.name}, ${trainer.role}`}
-                fill
-                sizes="(max-width: 900px) 78vw, 25vw"
-                className={styles.img}
-              />
-            </div>
-            <div className={styles.copy}>
-              <h2 className={styles.name}>{trainer.name}</h2>
-              <small className={styles.role}>{trainer.role}</small>
-              <p className={styles.role} style={{ marginTop: 14 }}>
-                {trainer.bio}
-              </p>
-            </div>
-          </article>
-        ))}
-      </div>
-      <div className={`${layout.in}`} style={{ marginTop: 48 }}>
-        <Link href="/">← Back home</Link>
-      </div>
-    </main>
+    <>
+      <main className={`${styles.section} ${layout.g}`}>
+        <div className={`${styles.inner} ${layout.in}`}>
+          <p className={styles.eyebrow}>{TRAINERS_CONTENT.eyebrow}</p>
+          <h1 className={styles.title}>
+            {TRAINERS_CONTENT.titleBefore}{" "}
+            <span className={styles.accent}>{TRAINERS_CONTENT.titleAccent}</span>
+          </h1>
+          <p className={styles.lead} style={{ marginBottom: 48 }}>
+            {TRAINERS_CONTENT.lead}
+          </p>
+        </div>
+        <div className={`${styles.track} ${layout.in}`} role="list">
+          {TRAINERS_CONTENT.trainers.map((trainer) => (
+            <article key={trainer.id} className={styles.card} role="listitem">
+              <div className={styles.photo}>
+                <Image
+                  src={trainer.image}
+                  alt={`${trainer.name}, ${trainer.role}`}
+                  fill
+                  sizes="(max-width: 900px) 78vw, 25vw"
+                  className={styles.img}
+                />
+              </div>
+              <div className={styles.copy}>
+                <h2 className={styles.name}>{trainer.name}</h2>
+                <small className={styles.role}>{trainer.role}</small>
+                <p className={styles.role} style={{ marginTop: 14 }}>
+                  {trainer.bio}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </main>
+      <PageCta content={PAGE_CTA_VISIT} />
+    </>
   );
 }
