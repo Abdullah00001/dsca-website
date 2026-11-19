@@ -1,0 +1,128 @@
+/**
+ * @fileoverview Trust stats band (reference `.dkband` four-up figures).
+ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(72px, 10vw, 140px);
+  color: #fff;
+  background:
+    radial-gradient(
+      800px 420px at 100% 0%,
+      rgba(255, 214, 102, 0.3),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 420px at 0% 100%,
+      rgba(120, 255, 190, 0.2),
+      transparent 62%
+    ),
+    linear-gradient(150deg, #066b44, #07784a 60%, #066a43);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.16) 46%,
+    rgba(255, 255, 255, 0.04) 54%,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  margin: 0 0 clamp(36px, 5vw, 56px);
+  max-width: 14ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(32px, 5.6vw, 88px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: #ffe08a;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stat {
+  min-width: 0;
+  padding: 26px 16px 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.stat:nth-child(even) {
+  padding-left: 18px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(40px, 8vw, 72px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: #ffe08a;
+}
+
+.label {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #fff;
+}
+
+@media (min-width: 900px) {
+  .title {
+    max-width: 16ch;
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stat {
+    padding: 30px 24px 0;
+  }
+
+  .stat:first-child {
+    padding-left: 0;
+  }
+
+  .stat:nth-child(n + 2) {
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .value {
+    font-size: clamp(44px, 5.4vw, 88px);
+  }
+
+  .label {
+    font-size: 16px;
+  }
+}
