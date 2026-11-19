@@ -42,10 +42,10 @@
 
 .title {
   margin: 0 0 clamp(36px, 5vw, 56px);
-  max-width: 14ch;
+  max-width: 18ch;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(32px, 5.6vw, 88px);
+  font-size: clamp(28px, 8.2vw, 80px);
   line-height: 0.92;
   letter-spacing: -0.035em;
   text-transform: uppercase;
@@ -83,25 +83,42 @@
 .value {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(40px, 8vw, 72px);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
+  font-size: clamp(22px, 3vw, 38px);
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: #ffe08a;
 }
 
 .label {
-  margin-top: 10px;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 1.4;
+  margin-top: 8px;
+  max-width: 18ch;
+  font: 600 14px / 1.45 var(--font-body);
   color: #fff;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 768px) {
   .title {
-    max-width: 16ch;
+    font-size: clamp(34px, 5.4vw, 80px);
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(26px, 9.5vw, 40px);
+    line-height: 0.95;
+    max-width: none;
   }
 
+  .value {
+    font-size: clamp(20px, 5.5vw, 28px);
+  }
+
+  .label {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 900px) {
   .stats {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -116,13 +133,5 @@
 
   .stat:nth-child(n + 2) {
     border-left: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .value {
-    font-size: clamp(44px, 5.4vw, 88px);
-  }
-
-  .label {
-    font-size: 16px;
   }
 }

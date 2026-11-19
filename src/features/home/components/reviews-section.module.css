@@ -1,0 +1,210 @@
+/**
+ * @fileoverview Student-review marquee (reference `.tmq` cards on `.sec`).
+ * Theme-aware via --bg / --fg / --card / --muted / --gt / --gold.
+ */
+
+.section {
+  padding-block: clamp(72px, 10vw, 140px);
+  color: var(--fg);
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.eyebrow {
+  margin: 0;
+  font: 700 12px / 1.3 var(--font-body);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gt);
+}
+
+:root[data-theme="dark"] .eyebrow {
+  color: var(--gold);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .eyebrow {
+    color: var(--gold);
+  }
+}
+
+.title {
+  margin: 18px 0 0;
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 8.2vw, 80px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--ait);
+}
+
+:root[data-theme="dark"] .accent {
+  color: var(--gold);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .accent {
+    color: var(--gold);
+  }
+}
+
+.lead {
+  margin: 28px 0 0;
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.7;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.viewport {
+  overflow: hidden;
+  margin-top: 40px;
+  padding-block: 14px;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.group {
+  display: flex;
+  gap: 24px;
+  flex: none;
+  margin: 0;
+  padding: 0 24px 0 0;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  gap: 18px;
+  align-content: space-between;
+  width: min(86vw, 430px);
+  min-height: 250px;
+  flex: none;
+  margin: 0;
+  padding: 30px;
+  border-radius: 32px;
+  background: var(--card);
+  color: var(--fg);
+  box-shadow: 0 24px 50px -30px rgba(6, 37, 26, 0.5);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff;
+  color: #4285f4;
+  font: 800 19px / 1 var(--font-body);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+.source {
+  margin-top: 6px;
+  font: 500 14px / 1.5 var(--font-body);
+  color: var(--muted);
+}
+
+.quote {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.more {
+  justify-self: start;
+  font: 700 13px / 1.3 var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gt);
+  text-decoration: none;
+}
+
+.more:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 20px;
+}
+
+.links a {
+  font-weight: 700;
+  color: var(--gt);
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: clamp(34px, 5.4vw, 80px);
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(26px, 9.5vw, 40px);
+    line-height: 0.95;
+    max-width: none;
+  }
+
+  .lead,
+  .quote {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport {
+    overflow-x: auto;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}

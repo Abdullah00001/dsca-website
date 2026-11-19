@@ -11,3 +11,4 @@ export * from "./onboard-content";
 export * from "./courses-content";
 export * from "./trainers-content";
 export * from "./trust-content";
+export * from "./reviews-content";
