@@ -5,8 +5,9 @@
 
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import gsap from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,10 +17,14 @@ import {
 import layout from "@/styles/layout.module.css";
 import styles from "@/features/home/components/onboard-section.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 /** Resting tilt for each goal chip (matches reference stack). */
 const GOAL_TILTS = [-4, 3, -2, 5, -3] as const;
+/** Rocket artwork points up — MotionPath autoRotate offset (deg). */
+const ROCKET_ANGLE = 90;
+const ROCKET_SRC = "/assets/rocket.svg";
+const SVG_NS = "http://www.w3.org/2000/svg";
 
 const GOALS = ONBOARD_CONTENT.goals;
 
@@ -35,7 +40,7 @@ function formatAmount(value: number): string {
 
 /**
  * Interactive “which barista are you” section: fall-in chips, light float,
- * click + scroll auto-select with day/amount counters.
+ * click + scroll auto-select with day/amount counters, plus path rocket.
  *
  * @returns Onboarding landmark for the home page.
  */
@@ -49,6 +54,12 @@ export function OnboardSection() {
   const amountRef = useRef<HTMLSpanElement>(null);
   const blurbRef = useRef<HTMLSpanElement>(null);
   const shineRef = useRef<HTMLSpanElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const dashBaseRef = useRef<SVGPathElement>(null);
+  const dashLitRef = useRef<SVGPathElement>(null);
+  const maskPathRef = useRef<SVGPathElement>(null);
+  const rocketRef = useRef<SVGImageElement>(null);
+  const maskElRef = useRef<SVGMaskElement>(null);
   const busyRef = useRef(false);
   const indexRef = useRef(0);
   const clickLockUntil = useRef(0);
@@ -59,14 +70,20 @@ export function OnboardSection() {
   const applyGoalRef = useRef<(index: number, opts?: { punch?: boolean }) => void>(
     () => undefined,
   );
+  /** Animates rocket (and page sync) to a chip — used by click. */
+  const goToChipRef = useRef<(index: number) => void>(() => undefined);
   const [active, setActive] = useState<OnboardGoal>(GOALS[0]);
+  const uid = useId().replace(/:/g, "");
+  const maskId = `onboard-reveal-${uid}`;
 
   useEffect(() => {
-    const root = rootRef.current;
-    const stage = stageRef.current;
-    if (!root || !stage) {
+    const rootEl = rootRef.current;
+    const stageEl = stageRef.current;
+    if (!rootEl || !stageEl) {
       return;
     }
+    const root = rootEl;
+    const stage = stageEl;
 
     const reduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -226,12 +243,263 @@ export function OnboardSection() {
       return;
     }
 
+    const svgEl = svgRef.current;
+    const dashBaseEl = dashBaseRef.current;
+    const dashLitEl = dashLitRef.current;
+    const maskPathEl = maskPathRef.current;
+    const rocketEl = rocketRef.current;
+    const maskNode = maskElRef.current;
+
+    let pathCtx: gsap.Context | null = null;
+    let resizeTimer: ReturnType<typeof setTimeout> | null = null;
+    let rocketTl: gsap.core.Timeline | null = null;
+    let pathScrollTrigger: ScrollTrigger | null = null;
+    /** Path progress (0–1) parked under each chip center. */
+    let chipProgress: number[] = GOALS.map((_, i) =>
+      GOALS.length <= 1 ? 0 : i / (GOALS.length - 1),
+    );
+    let clickDriving = false;
+
+    /**
+     * Linear interpolate two points.
+     *
+     * @param a - Start.
+     * @param b - End.
+     * @param t - 0–1.
+     */
+    function mix(
+      a: { x: number; y: number },
+      b: { x: number; y: number },
+      t: number,
+    ): { x: number; y: number } {
+      return {
+        x: a.x + (b.x - a.x) * t,
+        y: a.y + (b.y - a.y) * t,
+      };
+    }
+
+    /**
+     * Point on left/right edge of a tilted chip, in stage coords.
+     *
+     * @param i - Goal index.
+     * @param side - Edge side.
+     */
+    function edge(
+      i: number,
+      side: "l" | "r",
+    ): { x: number; y: number } {
+      const el = goals[i];
+      const cx = el.offsetLeft + el.offsetWidth / 2;
+      const cy = el.offsetTop + el.offsetHeight / 2;
+      const a = ((GOAL_TILTS[i] ?? 0) * Math.PI) / 180;
+      const w = (el.offsetWidth / 2) * (side === "r" ? 1 : -1);
+      return {
+        x: cx + w * Math.cos(a),
+        y: cy + w * Math.sin(a),
+      };
+    }
+
+    /**
+     * Measures SVG path length for a `d` string.
+     *
+     * @param d - Path data.
+     * @param svg - Parent SVG for temporary measure node.
+     */
+    function lengthOf(d: string, svg: SVGSVGElement): number {
+      const p = document.createElementNS(SVG_NS, "path");
+      p.setAttribute("d", d);
+      svg.appendChild(p);
+      const len = p.getTotalLength();
+      p.remove();
+      return len;
+    }
+
+    /**
+     * Faces the rocket along travel direction.
+     *
+     * @param goingForward - True when moving toward later chips.
+     */
+    function faceRocket(goingForward: boolean): void {
+      if (!rocketEl) {
+        return;
+      }
+      gsap.set(rocketEl, { scaleY: goingForward ? 1 : -1 });
+    }
+
+    /**
+     * Builds the serpentine dash + rocket timeline behind the chips.
+     */
+    function initPath(): void {
+      if (
+        !svgEl ||
+        !dashBaseEl ||
+        !dashLitEl ||
+        !maskPathEl ||
+        !rocketEl ||
+        !maskNode ||
+        goals.length < 2
+      ) {
+        return;
+      }
+
+      const prevProgress = rocketTl?.progress() ?? 0;
+      pathCtx?.revert();
+      pathCtx = null;
+      rocketTl = null;
+      pathScrollTrigger = null;
+
+      const W = stage.offsetWidth;
+      const H = stage.offsetHeight;
+      if (W <= 0 || H <= 0) {
+        return;
+      }
+
+      svgEl.setAttribute("width", String(W));
+      svgEl.setAttribute("height", String(H));
+      svgEl.setAttribute("viewBox", `0 0 ${W} ${H}`);
+      maskNode.setAttribute("x", "-200");
+      maskNode.setAttribute("y", "-200");
+      maskNode.setAttribute("width", String(W + 400));
+      maskNode.setAttribute("height", String(H + 400));
+
+      const widest = Math.max(...goals.map((g) => g.offsetWidth));
+      const pad = Math.max(0, (W - widest) / 2);
+      const k = Math.max(28, Math.min(pad * 0.85, 72));
+
+      const pts = goals.map((_, i) => ({
+        l: edge(i, "l"),
+        r: edge(i, "r"),
+        c: mix(edge(i, "l"), edge(i, "r"), 0.5),
+      }));
+
+      const P = (p: { x: number; y: number }) => `${p.x} ${p.y}`;
+      // Start under chip 0 center so the nose never peeks past the left edge.
+      let d = `M ${P(pts[0].c)}`;
+      const anchorDs: string[] = [d];
+
+      for (let i = 1; i < pts.length; i += 1) {
+        const prev = pts[i - 1];
+        const cur = pts[i];
+        // Leave previous chip toward the loop side, curve into current, park at center.
+        if (i % 2 === 1) {
+          d += ` L ${P(prev.r)} C ${prev.r.x + k} ${prev.r.y}, ${cur.r.x + k} ${cur.r.y}, ${P(cur.r)} L ${P(cur.c)}`;
+        } else {
+          d += ` L ${P(prev.l)} C ${prev.l.x - k} ${prev.l.y}, ${cur.l.x - k} ${cur.l.y}, ${P(cur.l)} L ${P(cur.c)}`;
+        }
+        anchorDs.push(d);
+      }
+
+      const total = Math.max(lengthOf(d, svgEl), 1);
+      chipProgress = anchorDs.map((ad) => lengthOf(ad, svgEl) / total);
+
+      for (const p of [dashBaseEl, dashLitEl, maskPathEl]) {
+        p.setAttribute("d", d);
+      }
+      gsap.set(maskPathEl, {
+        strokeDasharray: total,
+        strokeDashoffset: total,
+      });
+      gsap.set(rocketEl, {
+        transformOrigin: "50% 50%",
+        scaleY: 1,
+        opacity: 1,
+      });
+
+      pathCtx = gsap.context(() => {
+        rocketTl = gsap.timeline({
+          paused: true,
+          defaults: { ease: "none" },
+        });
+        rocketTl
+          .to(
+            rocketEl,
+            {
+              motionPath: {
+                path: dashBaseEl,
+                align: dashBaseEl,
+                alignOrigin: [0.5, 0.5],
+                autoRotate: ROCKET_ANGLE,
+              },
+              duration: 1,
+            },
+            0,
+          )
+          .to(maskPathEl, { strokeDashoffset: 0, duration: 1 }, 0);
+
+        rocketTl.progress(prevProgress);
+
+        pathScrollTrigger = ScrollTrigger.create({
+          trigger: root,
+          start: "top 55%",
+          end: "bottom 40%",
+          scrub: 0.55,
+          onUpdate: (self) => {
+            if (clickDriving || Date.now() < clickLockUntil.current) {
+              return;
+            }
+            rocketTl?.progress(self.progress);
+            if (self.direction !== 0) {
+              faceRocket(self.direction > 0);
+            }
+            let idx = 0;
+            let best = Infinity;
+            chipProgress.forEach((cp, i) => {
+              const dist = Math.abs(cp - self.progress);
+              if (dist < best) {
+                best = dist;
+                idx = i;
+              }
+            });
+            if (idx !== indexRef.current) {
+              applyGoal(idx, { punch: false });
+            }
+          },
+        });
+      }, stage);
+
+      ScrollTrigger.refresh();
+    }
+
+    /**
+     * Sends the rocket to a chip (click) and syncs page scroll.
+     *
+     * @param index - Goal index.
+     */
+    function goToChip(index: number): void {
+      const target = chipProgress[index] ?? 0;
+      const from = rocketTl?.progress() ?? 0;
+      const delta = Math.abs(target - from);
+      faceRocket(target >= from);
+      clickDriving = true;
+      // Keep scroll from yanking the rocket until the click tween finishes.
+      const duration = Math.max(1.05, delta * 2.4);
+      clickLockUntil.current = Date.now() + duration * 1000 + 200;
+      applyGoal(index, { punch: true });
+
+      if (rocketTl) {
+        gsap.to(rocketTl, {
+          progress: target,
+          duration,
+          ease: "power2.inOut",
+          overwrite: true,
+          onComplete: () => {
+            clickDriving = false;
+          },
+        });
+      } else {
+        clickDriving = false;
+      }
+    }
+
+    goToChipRef.current = goToChip;
+
     const ctx = gsap.context(() => {
+      // Chips start in place (no fall-from-top entrance).
       gsap.set(goals, {
-        opacity: 0,
-        y: -140,
-        scale: 0.9,
-        rotation: (i) => (GOAL_TILTS[i] ?? 0) - 8,
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotation: (i) => GOAL_TILTS[i] ?? 0,
         transformOrigin: "50% 50%",
       });
 
@@ -242,7 +510,6 @@ export function OnboardSection() {
           start: "top 78%",
           once: true,
           onEnter: () => {
-            // Intro count-up from 0 into the first reco
             counter.days = 0;
             counter.amount = 0;
             runCounters(GOALS[0], true);
@@ -278,66 +545,54 @@ export function OnboardSection() {
         );
       }
 
-      tl.to(
-        goals,
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotation: (i) => GOAL_TILTS[i] ?? 0,
-          duration: 0.85,
-          stagger: 0.09,
-          ease: "bounce.out",
-        },
-        0.12,
-      );
-
-      tl.add(() => {
-        goals.forEach((btn, i) => {
-          const base = GOAL_TILTS[i] ?? 0;
-          gsap.to(btn, {
-            y: i % 2 === 0 ? -5 : 5,
-            rotation: base + (i % 2 === 0 ? 0.8 : -0.8),
-            duration: 2.8 + i * 0.25,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: i * 0.08,
-          });
+      goals.forEach((btn, i) => {
+        const base = GOAL_TILTS[i] ?? 0;
+        gsap.to(btn, {
+          y: i % 2 === 0 ? -5 : 5,
+          rotation: base + (i % 2 === 0 ? 0.8 : -0.8),
+          duration: 2.8 + i * 0.25,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          delay: i * 0.08,
         });
-      }, "+=0.15");
-
-      ScrollTrigger.create({
-        trigger: root,
-        start: "top 55%",
-        end: "bottom 40%",
-        scrub: 0.55,
-        onUpdate: (self) => {
-          if (Date.now() < clickLockUntil.current) {
-            return;
-          }
-          const idx = Math.round(self.progress * (GOALS.length - 1));
-          if (idx !== indexRef.current) {
-            applyGoal(idx, { punch: false });
-          }
-        },
       });
+      initPath();
     }, root);
 
+    /**
+     * Debounced path rebuild on resize.
+     */
+    function onResize(): void {
+      if (resizeTimer) {
+        clearTimeout(resizeTimer);
+      }
+      resizeTimer = setTimeout(initPath, 200);
+    }
+
+    window.addEventListener("resize", onResize);
+
     return () => {
+      if (resizeTimer) {
+        clearTimeout(resizeTimer);
+      }
+      window.removeEventListener("resize", onResize);
+      pathCtx?.revert();
       gsap.killTweensOf(counter);
+      if (rocketTl) {
+        gsap.killTweensOf(rocketTl);
+      }
       ctx.revert();
     };
-  }, []);
+  }, [maskId]);
 
   /**
-   * Click handler — locks scroll sync briefly so the pick sticks.
+   * Click handler — rockets to the chip and updates the reco.
    *
    * @param index - Tapped goal index.
    */
   function onGoalClick(index: number): void {
-    clickLockUntil.current = Date.now() + 1200;
-    applyGoalRef.current(index, { punch: true });
+    goToChipRef.current(index);
   }
 
   return (
@@ -392,6 +647,53 @@ export function OnboardSection() {
         </div>
 
         <div ref={stageRef} className={styles.stage}>
+          <svg
+            ref={svgRef}
+            className={styles.route}
+            aria-hidden="true"
+          >
+            <defs>
+              <mask
+                ref={maskElRef}
+                id={maskId}
+                maskUnits="userSpaceOnUse"
+              >
+                <path
+                  ref={maskPathRef}
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="16"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </mask>
+            </defs>
+            <path
+              ref={dashBaseRef}
+              fill="none"
+              stroke="rgba(242,184,74,0.28)"
+              strokeWidth="3"
+              strokeDasharray="9 9"
+              strokeLinecap="round"
+            />
+            <path
+              ref={dashLitRef}
+              fill="none"
+              stroke="var(--gold, #f2b84a)"
+              strokeWidth="3"
+              strokeDasharray="9 9"
+              strokeLinecap="round"
+              mask={`url(#${maskId})`}
+            />
+            <image
+              ref={rocketRef}
+              href={ROCKET_SRC}
+              width="48"
+              height="66"
+              preserveAspectRatio="xMidYMid meet"
+            />
+          </svg>
+
           <div
             className={styles.stack}
             role="group"
