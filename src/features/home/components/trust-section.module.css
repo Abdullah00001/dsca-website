@@ -35,6 +35,21 @@
   pointer-events: none;
 }
 
+.shine {
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 38%,
+    rgba(255, 224, 138, 0.22) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+  opacity: 0;
+}
+
 .inner {
   position: relative;
   z-index: 1;
@@ -83,9 +98,9 @@
 .value {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(22px, 3vw, 38px);
-  line-height: 1;
-  letter-spacing: -0.02em;
+  font-size: clamp(40px, 8vw, 72px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
   color: #ffe08a;
 }
 
@@ -109,10 +124,6 @@
     max-width: none;
   }
 
-  .value {
-    font-size: clamp(20px, 5.5vw, 28px);
-  }
-
   .label {
     font-size: 13px;
   }
@@ -133,5 +144,9 @@
 
   .stat:nth-child(n + 2) {
     border-left: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .value {
+    font-size: clamp(44px, 5.4vw, 88px);
   }
 }

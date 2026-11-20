@@ -7,6 +7,8 @@
 
 import { PageCta } from "@/components/ui/page-cta";
 import { CoursesSection } from "@/features/home/components/courses-section";
+import { AreasSection } from "@/features/home/components/areas-section";
+import { GallerySection } from "@/features/home/components/gallery-section";
 import { HeroSection } from "@/features/home/components/hero-section";
 import { HomeMarquee } from "@/features/home/components/home-marquee";
 import { IsoSection } from "@/features/home/components/iso-section";
@@ -36,6 +38,8 @@ export function HomeView() {
       <WhySection />
       <TrustSection />
       <ReviewsSection />
+      <GallerySection />
+      <AreasSection />
       <PageCta content={PAGE_CTA_VISIT} />
     </div>
   );

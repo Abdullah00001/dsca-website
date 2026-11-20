@@ -86,6 +86,7 @@ export function OnboardSection() {
     }
     const root = rootEl;
     const stage = stageEl;
+    let sectionCtx: gsap.Context | null = null;
 
     const reduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -419,69 +420,78 @@ export function OnboardSection() {
           opacity: 1,
         });
 
-        pathCtx = gsap.context(() => {
-          rocketTl = gsap.timeline({
-            paused: true,
-            defaults: { ease: "none" },
-          });
-          rocketTl
-            .to(
-              rocketEl,
-              {
-                motionPath: {
-                  path: dashBaseEl,
-                  align: dashBaseEl,
-                  alignOrigin: [0.5, 0.5],
-                  autoRotate: ROCKET_ANGLE,
+        // Keep the path context outside the section context. Nested
+        // gsap.context() trees make Context.getTweens recurse forever on revert.
+        const buildPath = (): void => {
+          pathCtx = gsap.context(() => {
+            rocketTl = gsap.timeline({
+              paused: true,
+              defaults: { ease: "none" },
+            });
+            rocketTl
+              .to(
+                rocketEl,
+                {
+                  motionPath: {
+                    path: dashBaseEl,
+                    align: dashBaseEl,
+                    alignOrigin: [0.5, 0.5],
+                    autoRotate: ROCKET_ANGLE,
+                  },
+                  duration: 1,
                 },
-                duration: 1,
-              },
-              0,
-            )
-            .to(maskPathEl, { strokeDashoffset: 0, duration: 1 }, 0);
+                0,
+              )
+              .to(maskPathEl, { strokeDashoffset: 0, duration: 1 }, 0);
 
-          scrollProgress.value = prevProgress;
-          rocketTl.progress(prevProgress);
+            scrollProgress.value = prevProgress;
+            rocketTl.progress(prevProgress);
 
-          pathScrollTrigger = ScrollTrigger.create({
-            trigger: root,
-            // Longer travel distance → slower rocket along the path.
-            start: "top 75%",
-            end: "bottom 15%",
-            scrub: 1.4,
-            onUpdate: (self) => {
-              if (clickDriving || Date.now() < clickLockUntil.current) {
-                return;
-              }
-              if (self.direction !== 0) {
-                faceRocket(self.direction > 0);
-              }
-              smoothScrollTween?.kill();
-              smoothScrollTween = gsap.to(scrollProgress, {
-                value: self.progress,
-                duration: 0.9,
-                ease: "power3.out",
-                overwrite: true,
-                onUpdate: () => {
-                  rocketTl?.progress(scrollProgress.value);
-                },
-              });
-
-              let idx = 0;
-              let best = Infinity;
-              for (let i = 0; i < chipProgress.length; i += 1) {
-                const dist = Math.abs(chipProgress[i] - self.progress);
-                if (dist < best) {
-                  best = dist;
-                  idx = i;
+            pathScrollTrigger = ScrollTrigger.create({
+              trigger: root,
+              // Longer travel distance → slower rocket along the path.
+              start: "top 75%",
+              end: "bottom 15%",
+              scrub: 1.4,
+              onUpdate: (self) => {
+                if (clickDriving || Date.now() < clickLockUntil.current) {
+                  return;
                 }
-              }
-              if (idx !== indexRef.current) {
-                applyGoal(idx);
-              }
-            },
-          });
-        }, stage);
+                if (self.direction !== 0) {
+                  faceRocket(self.direction > 0);
+                }
+                smoothScrollTween?.kill();
+                smoothScrollTween = gsap.to(scrollProgress, {
+                  value: self.progress,
+                  duration: 0.9,
+                  ease: "power3.out",
+                  overwrite: true,
+                  onUpdate: () => {
+                    rocketTl?.progress(scrollProgress.value);
+                  },
+                });
+
+                let idx = 0;
+                let best = Infinity;
+                for (let i = 0; i < chipProgress.length; i += 1) {
+                  const dist = Math.abs(chipProgress[i] - self.progress);
+                  if (dist < best) {
+                    best = dist;
+                    idx = i;
+                  }
+                }
+                if (idx !== indexRef.current) {
+                  applyGoal(idx);
+                }
+              },
+            });
+          }, stage);
+        };
+        if (sectionCtx) {
+          sectionCtx.ignore(buildPath);
+        } else {
+          buildPath();
+        }
       } finally {
         // Do not ScrollTrigger.refresh() here — pin/spacer updates can re-enter
         // resize → initPath and blow the call stack.
@@ -526,7 +536,8 @@ export function OnboardSection() {
 
     goToChipRef.current = goToChip;
 
-    const ctx = gsap.context(() => {
+    const ctx = gsap.context((self) => {
+      sectionCtx = self;
       // Chips start in place (no fall-from-top entrance).
       gsap.set(goals, {
         opacity: 1,

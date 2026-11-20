@@ -4,10 +4,26 @@
  */
 
 .section {
+  position: relative;
   padding-block: clamp(72px, 10vw, 140px);
   color: var(--fg);
   background: var(--bg);
   overflow: hidden;
+}
+
+.shine {
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 38%,
+    rgba(242, 184, 74, 0.18) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+  opacity: 0;
 }
 
 .eyebrow {
@@ -46,17 +62,7 @@
   font-weight: 400;
   text-transform: none;
   letter-spacing: -0.01em;
-  color: var(--ait);
-}
-
-:root[data-theme="dark"] .accent {
-  color: var(--gold);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .accent {
-    color: var(--gold);
-  }
+  color: inherit;
 }
 
 .lead {
@@ -68,7 +74,15 @@
   color: var(--muted);
 }
 
+.copy,
+.links {
+  position: relative;
+  z-index: 1;
+}
+
 .viewport {
+  position: relative;
+  z-index: 1;
   overflow: hidden;
   margin-top: 40px;
   padding-block: 14px;

@@ -13,3 +13,5 @@ export { TrainersSection } from "@/features/home/components/trainers-section";
 export { WhySection } from "@/features/home/components/why-section";
 export { TrustSection } from "@/features/home/components/trust-section";
 export { ReviewsSection } from "@/features/home/components/reviews-section";
+export { GallerySection } from "@/features/home/components/gallery-section";
+export { AreasSection } from "@/features/home/components/areas-section";
