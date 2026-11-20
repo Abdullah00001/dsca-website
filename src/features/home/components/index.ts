@@ -17,3 +17,4 @@ export { GallerySection } from "@/features/home/components/gallery-section";
 export { AreasSection } from "@/features/home/components/areas-section";
 export { MapSection } from "@/features/home/components/map-section";
 export { VideoSection } from "@/features/home/components/video-section";
+export { BlogSection } from "@/features/home/components/blog-section";
