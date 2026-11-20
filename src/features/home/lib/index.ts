@@ -17,3 +17,4 @@ export * from "./areas-content";
 export * from "./map-content";
 export * from "./video-content";
 export * from "./blog-content";
+export * from "./enrol-content";
