@@ -4,6 +4,7 @@
 
 .section {
   padding-block: clamp(72px, 10vw, 140px);
+  padding-top: clamp(36px, 4vw, 56px);
   color: var(--fg);
   background: var(--bg);
 }
