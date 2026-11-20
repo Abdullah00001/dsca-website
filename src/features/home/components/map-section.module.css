@@ -1,0 +1,136 @@
+/**
+ * @fileoverview Home map band — live embed + visit copy + Get Direction.
+ */
+
+.section {
+  padding-block: clamp(72px, 10vw, 140px);
+  color: var(--fg);
+  background: var(--bg);
+}
+
+.title {
+  margin: 0 0 clamp(28px, 4vw, 40px);
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 8.2vw, 80px);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.mapFrame {
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  border-radius: 32px;
+  background: var(--card);
+}
+
+.iframe {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--card);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+  padding: clamp(28px, 3.4vw, 48px);
+  border-radius: 32px;
+  color: #fff;
+  background: #066b44;
+}
+
+.eyebrow {
+  margin: 0;
+  font: 700 12px / 1.3 var(--font-body);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffe08a;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.details {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.75;
+  font-weight: 500;
+  color: #eefaf3;
+}
+
+.phone {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.phone:hover {
+  color: #ffe08a;
+}
+
+.cta {
+  align-self: flex-start;
+  width: max-content;
+  max-width: 100%;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: clamp(34px, 5.4vw, 80px);
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: clamp(26px, 9.5vw, 40px);
+    line-height: 0.95;
+    max-width: none;
+  }
+
+  .mapFrame {
+    min-height: 360px;
+  }
+
+  .details {
+    font-size: 15px;
+  }
+}

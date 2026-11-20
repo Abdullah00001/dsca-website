@@ -12,6 +12,7 @@ import { GallerySection } from "@/features/home/components/gallery-section";
 import { HeroSection } from "@/features/home/components/hero-section";
 import { HomeMarquee } from "@/features/home/components/home-marquee";
 import { IsoSection } from "@/features/home/components/iso-section";
+import { MapSection } from "@/features/home/components/map-section";
 import { OnboardSection } from "@/features/home/components/onboard-section";
 import { ReviewsSection } from "@/features/home/components/reviews-section";
 import { TrainersSection } from "@/features/home/components/trainers-section";
@@ -40,6 +41,7 @@ export function HomeView() {
       <ReviewsSection />
       <GallerySection />
       <AreasSection />
+      <MapSection />
       <PageCta content={PAGE_CTA_VISIT} />
     </div>
   );

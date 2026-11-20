@@ -15,3 +15,4 @@ export { TrustSection } from "@/features/home/components/trust-section";
 export { ReviewsSection } from "@/features/home/components/reviews-section";
 export { GallerySection } from "@/features/home/components/gallery-section";
 export { AreasSection } from "@/features/home/components/areas-section";
+export { MapSection } from "@/features/home/components/map-section";
