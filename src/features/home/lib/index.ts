@@ -15,3 +15,4 @@ export * from "./reviews-content";
 export * from "./gallery-content";
 export * from "./areas-content";
 export * from "./map-content";
+export * from "./video-content";
