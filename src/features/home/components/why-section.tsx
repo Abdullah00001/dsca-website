@@ -12,6 +12,10 @@ import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
 
 import { WHY_CONTENT } from "@/features/home/lib/why-content";
+import {
+  isHomeCompactViewport,
+  onHomeViewportWidthChange,
+} from "@/features/home/lib/home-utils";
 
 import styles from "./why-section.module.css";
 
@@ -143,7 +147,6 @@ export function WhySection() {
     let deltas: Delta[] = copyEls.map(() => ({ x: 0, y: 0, s: 1 }));
     let copyRight = 300;
     let st: ScrollTrigger | null = null;
-    let resizeTimer = 0;
     let introSealed = false;
     let copySealed = false;
 
@@ -308,8 +311,13 @@ export function WhySection() {
 
       M = getMetrics();
 
-      if (reduce) {
+      // Phone/tablet: static final layout — no pin. Pin+scrub + mobile
+      // chrome resize was yanking scroll back up while the user scrolled down.
+      const compact = isHomeCompactViewport();
+      if (reduce || compact) {
         copyEl.classList.add(styles.copyFinal);
+        copyEl.style.top = "";
+        copyEl.style.transform = "";
         const base = stageEl.getBoundingClientRect();
         copyRight = copyEl.getBoundingClientRect().right - base.left;
         sizeStage();
@@ -341,11 +349,10 @@ export function WhySection() {
       });
 
       applyTime(st.progress * dur);
-      ScrollTrigger.refresh();
     }
 
     const onCardClick = (i: number) => () => {
-      if (reduce || !st) {
+      if (reduce || isHomeCompactViewport() || !st) {
         layout(1, 1, i);
         applyCopy(1);
         return;
@@ -361,13 +368,10 @@ export function WhySection() {
       return handler;
     });
 
-    const onResize = () => {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(() => {
-        if (alive) build();
-      }, 200);
-    };
-    window.addEventListener("resize", onResize);
+    // Width-only: ignore URL-bar height changes that fire `resize` on scroll.
+    const stopWidthWatch = onHomeViewportWidthChange(() => {
+      if (alive) build();
+    });
 
     const boot = () => {
       if (!alive) return;
@@ -383,8 +387,7 @@ export function WhySection() {
 
     return () => {
       alive = false;
-      window.clearTimeout(resizeTimer);
-      window.removeEventListener("resize", onResize);
+      stopWidthWatch();
       window.removeEventListener("load", boot);
       cards.forEach((c, i) => {
         c.removeEventListener("click", clickHandlers[i]);

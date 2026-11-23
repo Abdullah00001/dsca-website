@@ -14,6 +14,7 @@ import {
   ONBOARD_CONTENT,
   type OnboardGoal,
 } from "@/features/home/lib/onboard-content";
+import { onHomeViewportWidthChange } from "@/features/home/lib/home-utils";
 import layout from "@/styles/layout.module.css";
 import styles from "@/features/home/components/onboard-section.module.css";
 
@@ -604,26 +605,18 @@ export function OnboardSection() {
       initPath();
     }, root);
 
-    /**
-     * Debounced path rebuild on resize.
-     */
-    function onResize(): void {
-      if (pathBusy) {
-        return;
+    // Width-only — mobile URL-bar height changes must not rebuild the path.
+    const stopWidthWatch = onHomeViewportWidthChange(() => {
+      if (!pathBusy) {
+        initPath();
       }
-      if (resizeTimer) {
-        clearTimeout(resizeTimer);
-      }
-      resizeTimer = setTimeout(initPath, 200);
-    }
-
-    window.addEventListener("resize", onResize);
+    });
 
     return () => {
       if (resizeTimer) {
         clearTimeout(resizeTimer);
       }
-      window.removeEventListener("resize", onResize);
+      stopWidthWatch();
       pathCtx?.revert();
       smoothScrollTween?.kill();
       gsap.killTweensOf(counter);

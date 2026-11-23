@@ -1,0 +1,32 @@
+---
+description: DSCA project rules for all AI agents — architecture, home porting, Next 16, no invented copy
+alwaysApply: true
+---
+
+# DSCA agent rules
+
+Before editing this codebase:
+
+1. Read root `AGENTS.md` (includes Next.js 16 docs warning).
+2. Follow `docs/agent-guide.md` for mission, layout, and coding standards.
+3. For home page work, also read `docs/home.md`.
+
+## Must follow
+
+- Next.js **16** App Router — check `node_modules/next/dist/docs/` when unsure; do not assume older Next APIs.
+- Home sections are a **reference port** — do not invent marketing copy, course prices, or new home sections.
+- Feature UI uses **CSS Modules** and design tokens; shared gutters via `@/styles/layout.module.css`.
+- Motion: GSAP + IO entrances by default; pin/scrub only where existing journeys need it; honor `prefers-reduced-motion`.
+- Enrol captcha is **Cloudflare Turnstile** (`EnrolSection` + `POST /api/enrol`). Local unset env → Cloudflare test keys.
+- Shared `Button` is Link-oriented; form submit = `<button>` + `button.module.css`.
+- Do **not** commit unless the user explicitly asks.
+- Do **not** re-add the post-enrol “values / commitments” band unless the user asks.
+- Do **not** remove or rewrite the `<!-- BEGIN:nextjs-agent-rules -->` block in `AGENTS.md`.
+
+## Home section change checklist
+
+1. Update `src/features/home/lib/*-content.ts` for copy.
+2. Update or add `*-section.tsx` + `*.module.css`.
+3. Wire `home-view.tsx` in the documented order.
+4. Export from feature `index.ts` files if needed.
+5. Verify in browser (and mobile if spacing/layout changed).

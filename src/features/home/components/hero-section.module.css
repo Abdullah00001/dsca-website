@@ -644,6 +644,24 @@
   }
 }
 
+/*
+ * Phone + tablet: no pin/scrub logo flight (see hero-section.tsx).
+ * Show the in-slot mark; hide the fixed flyer shell.
+ */
+@media (max-width: 1023px) {
+  .flyer {
+    display: none;
+  }
+
+  .startLogo {
+    display: flex;
+  }
+
+  .journey {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .video {
     display: none;
