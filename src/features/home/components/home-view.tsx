@@ -21,8 +21,14 @@ import { ReviewsSection } from "@/features/home/components/reviews-section";
 import { TrainersSection } from "@/features/home/components/trainers-section";
 import { TrustSection } from "@/features/home/components/trust-section";
 import { WhySection } from "@/features/home/components/why-section";
+import { enableHomeScrollTriggerStability } from "@/features/home/lib/home-utils";
 import { PAGE_CTA_VISIT } from "@/libs/page-cta";
 import styles from "@/features/home/styles/home-view.module.css";
+
+// Before child ScrollTriggers mount — skip pin refresh on URL-bar height changes.
+if (typeof window !== "undefined") {
+  enableHomeScrollTriggerStability();
+}
 
 /**
  * Home landing composition. Additional sections mount beneath the hero

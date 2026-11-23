@@ -3,6 +3,8 @@
  * @module features/home/lib
  */
 
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 /** Matches hero / why compact layout (phone + tablet). */
 export const HOME_COMPACT_MQ = "(max-width: 1023px)";
 
@@ -14,7 +16,7 @@ export function formatHomeName(name: string): string {
 }
 
 /**
- * True on phone/tablet widths where pin+scrub fights touch scroll.
+ * True on phone/tablet widths (layout breakpoints).
  */
 export function isHomeCompactViewport(): boolean {
   if (typeof window === "undefined") {
@@ -24,9 +26,20 @@ export function isHomeCompactViewport(): boolean {
 }
 
 /**
+ * Keep pin+scrub animations on touch devices without URL-bar resize yanks.
+ * Call once from the home page mount.
+ *
+ * GSAP skips refresh when only height changes (address bar show/hide)
+ * unless width changes or height jumps by >25%.
+ */
+export function enableHomeScrollTriggerStability(): void {
+  ScrollTrigger.config({ ignoreMobileResize: true });
+}
+
+/**
  * Subscribes to viewport **width** changes only.
  * Ignores mobile browser chrome show/hide (height-only `resize`),
- * which otherwise rebuilds ScrollTrigger pins and yanks scroll up.
+ * which otherwise rebuilds custom home layouts and yanks scroll up.
  *
  * @param onWidthChange - Called when CSS width changes by ≥1px.
  * @returns Unsubscribe.

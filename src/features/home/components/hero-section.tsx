@@ -18,7 +18,6 @@ import {
   HERO_LOGO_SRC,
   HERO_VIDEO_SRC,
 } from "@/features/home/lib/hero-content";
-import { isHomeCompactViewport } from "@/features/home/lib/home-utils";
 import layout from "@/styles/layout.module.css";
 import styles from "@/features/home/components/hero-section.module.css";
 
@@ -149,11 +148,11 @@ export function HeroSection() {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    // Pin + scrub fights touch scroll on phone/tablet (URL-bar resize
-    // refreshes pin spacers and yanks the page back up).
-    const compact = isHomeCompactViewport();
 
-    if (reduceMotion || compact) {
+    // Pin+scrub stays on for phone/tablet; HomeView enables
+    // ScrollTrigger ignoreMobileResize so URL-bar height changes
+    // do not rebuild pins and yank scroll up.
+    if (reduceMotion) {
       html.dataset.heroLogo = "docked";
       return () => {
         delete html.dataset.heroLogo;

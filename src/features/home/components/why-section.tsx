@@ -12,10 +12,7 @@ import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
 
 import { WHY_CONTENT } from "@/features/home/lib/why-content";
-import {
-  isHomeCompactViewport,
-  onHomeViewportWidthChange,
-} from "@/features/home/lib/home-utils";
+import { onHomeViewportWidthChange } from "@/features/home/lib/home-utils";
 
 import styles from "./why-section.module.css";
 
@@ -311,10 +308,7 @@ export function WhySection() {
 
       M = getMetrics();
 
-      // Phone/tablet: static final layout — no pin. Pin+scrub + mobile
-      // chrome resize was yanking scroll back up while the user scrolled down.
-      const compact = isHomeCompactViewport();
-      if (reduce || compact) {
+      if (reduce) {
         copyEl.classList.add(styles.copyFinal);
         copyEl.style.top = "";
         copyEl.style.transform = "";
@@ -352,7 +346,7 @@ export function WhySection() {
     }
 
     const onCardClick = (i: number) => () => {
-      if (reduce || isHomeCompactViewport() || !st) {
+      if (reduce || !st) {
         layout(1, 1, i);
         applyCopy(1);
         return;
