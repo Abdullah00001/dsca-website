@@ -394,12 +394,12 @@
     width: 100%;
     max-width: 100%;
     transform: none;
-    align-self: center;
+    align-self: start;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 0;
   }
 
@@ -465,20 +465,23 @@
 @media (max-width: 767px) {
   .inner {
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
       "logo"
       "copy"
       "ctas"
       "loc";
-    gap: 0.65rem;
-    align-items: stretch;
+    gap: 16px;
+    align-items: start;
+    align-content: safe center;
   }
 
   .startSlot {
     --logo-w: 100%;
     width: 100%;
     height: auto;
+    /* Logo SVG foot is empty (~57/1000 of width). Cancel it; row-gap is the visible gap. */
+    margin-bottom: -5.7%;
   }
 
   .eyebrow {
@@ -520,15 +523,16 @@
 @media (min-width: 768px) and (max-width: 1023px) {
   .inner {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
       "logo logo"
       "copy copy"
       "ctas ctas"
       "loc  loc";
     column-gap: 0.75rem;
-    row-gap: 0.7rem;
-    align-items: stretch;
+    row-gap: 16px;
+    align-items: start;
+    align-content: safe center;
   }
 
   .startSlot {
@@ -536,6 +540,7 @@
     width: 100%;
     height: auto;
     margin-inline: 0;
+    margin-bottom: -5.7%;
   }
 
   .eyebrow {
@@ -584,14 +589,15 @@
 @media (min-width: 1024px) and (max-width: 1279px) {
   .inner {
     grid-template-columns: minmax(0, 1.4fr) minmax(13.5rem, 0.95fr);
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
       "logo logo"
       "copy copy"
       "loc  ctas";
     column-gap: 0.85rem;
-    row-gap: 0.65rem;
-    align-items: end;
+    row-gap: 16px;
+    align-items: start;
+    align-content: safe center;
   }
 
   .startSlot {
@@ -601,6 +607,8 @@
     width: var(--logo-w);
     height: var(--logo-h);
     margin-inline: auto;
+    /* Cancel the empty SVG foot (57/440 of the slot). Row-gap stays the visible gap. */
+    margin-bottom: calc(var(--logo-h) * -57 / 440);
   }
 
   .eyebrow {
@@ -625,7 +633,6 @@
 
   .locationCard {
     align-self: stretch;
-    height: 100%;
     width: 100%;
   }
 
@@ -633,7 +640,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     align-self: stretch;
-    justify-content: space-between;
+    justify-content: center;
     gap: 0.5rem;
     max-width: none;
   }

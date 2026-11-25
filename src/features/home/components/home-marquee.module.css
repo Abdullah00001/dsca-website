@@ -14,8 +14,8 @@
    * whatever sat behind it (hero locally vs page canvas on Vercel) and
    * looked like two different colors. Lock the resolved dark strip.
    */
-  background-color: #0a140e;
-  color: #fff;
+  background-color: #073b2b;
+  color: #f2b84a;
   width: 100%;
   /* Kill theme/canvas bleed under the strip */
   box-shadow: none;
@@ -31,7 +31,7 @@
   letter-spacing: -0.02em;
   will-change: transform;
   width: max-content;
-  color: #fff;
+  color: #f2b84a;
 }
 
 .item {
@@ -39,7 +39,7 @@
   align-items: center;
   gap: 44px;
   flex: none;
-  color: #fff;
+  color: #f2b84a;
 }
 
 .star {
