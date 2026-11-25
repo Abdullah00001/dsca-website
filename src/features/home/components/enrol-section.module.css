@@ -291,8 +291,22 @@
 }
 
 .submit {
+  box-sizing: border-box;
   width: 100%;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 3.75rem;
+  padding: 0 0.55rem 0 1.35rem;
+}
+
+.submitLabel {
+  min-width: 0;
+  flex: 1 1 auto;
+  text-align: left;
+  line-height: 1.25;
 }
 
 .submit:disabled {
@@ -344,5 +358,39 @@
 
   .card {
     border-radius: 28px;
+  }
+
+  /* Form CTA: fit narrow cards without clipping label / arrow */
+  .submit {
+    min-height: 3.35rem;
+    padding: 0 0.35rem 0 1rem;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    gap: 0.4rem;
+  }
+
+  .submitLabel {
+    overflow-wrap: anywhere;
+  }
+
+  .submit :global(i) {
+    width: 2.4rem;
+    height: 2.4rem;
+    flex: 0 0 auto;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .submit {
+    min-height: 4.75rem;
+    padding: 0 0.65rem 0 2.5rem;
+    font-size: 15px;
+  }
+
+  .submit :global(i) {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.35rem;
   }
 }

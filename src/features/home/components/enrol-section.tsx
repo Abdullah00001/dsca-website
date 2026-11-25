@@ -411,11 +411,13 @@ export function EnrolSection() {
 
               <button
                 type="submit"
-                className={`${buttonStyles.btn} ${buttonStyles.big} ${styles.submit}`}
+                className={`${buttonStyles.btn} ${styles.submit}`}
                 data-magnetic="btn"
                 disabled={status === "submitting"}
               >
-                <span>{ENROL_CONTENT.submitLabel}</span>
+                <span className={styles.submitLabel}>
+                  {ENROL_CONTENT.submitLabel}
+                </span>
                 <i className={buttonStyles.icon}>→</i>
               </button>
             </form>
