@@ -46,7 +46,12 @@ const COPY_DUR = 1.4;
 const STRIP_AT = 1.7;
 const STRIP_DUR = 0.9;
 const STRIP_END = STRIP_AT + STRIP_DUR;
+/** After the last image is in the frame, side cards leave to the left. */
+const EXIT_DUR = 0.75;
+/** Last framed image scales up until the next section. */
+const ZOOM_DUR = 1.45;
 
+/** Same frame geometry as the Oryzo layout. The box never scales. */
 function getMetrics(): Metrics {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
@@ -74,7 +79,7 @@ function carouselDur(n: number) {
 }
 
 function totalDuration(n: number) {
-  return STRIP_END + carouselDur(n) + 0.25;
+  return STRIP_END + carouselDur(n) + EXIT_DUR + ZOOM_DUR;
 }
 
 /** Linear filmstrip — no per-card pause, so the frame tracks the finger. */
@@ -99,6 +104,7 @@ export function WhySection() {
   const reelRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const slideImgRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cardRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const mediaRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dimRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -148,11 +154,10 @@ export function WhySection() {
     let copySealed = false;
 
     function anchorX() {
-      if (M.vw < 768 || copyRight <= 0) return M.vw / 2;
-      const row = 2 * (M.smW + M.gap);
-      const minCenter = copyRight + 18 + row + M.bigW / 2;
-      const maxCenter = M.vw - 20 - M.bigW / 2;
-      return clamp(Math.max(M.vw / 2, minCenter), M.bigW / 2 + 16, maxCenter);
+      if (M.vw >= 1024 || M.vw < 768 || copyRight <= 0) return M.vw / 2;
+      const rightReserve = M.smW + M.gap + 12;
+      const maxCenter = M.vw - rightReserve - M.bigW / 2;
+      return clamp(M.vw / 2, M.bigW / 2 + 16, maxCenter);
     }
 
     function sizeStage() {
@@ -181,46 +186,69 @@ export function WhySection() {
       trackEl.style.transformOrigin = `${focusX}px ${cy}px`;
     }
 
-    function layout(intro: number, strip: number, t: number) {
+    function layout(
+      intro: number,
+      strip: number,
+      t: number,
+      exit = 0,
+      zoom = 0,
+    ) {
       const { smW, bigW, gap, cy } = M;
       const frameLeft = anchorX() - bigW / 2;
       const step = smW + gap;
 
       reelEl.style.transform = `translate3d(${(-t * bigW).toFixed(1)}px,0,0)`;
+      frameEl.style.transform = "none";
+      dashEl.style.transform = "none";
+      trackEl.style.transform = "none";
+      reelEl.style.clipPath = "none";
+
+      slideImgRefs.current.forEach((img, i) => {
+        if (!img) return;
+        const scale = i === n - 1 ? lerp(1, 1.45, zoom) : 1;
+        img.style.transform = `scale(${scale})`;
+        if (i === 0) {
+          const blur = (1 - intro) * 16;
+          img.style.filter = blur > 0.35 ? `blur(${blur.toFixed(2)}px)` : "none";
+        }
+      });
 
       if (intro < 1) {
         introSealed = false;
-        frameEl.style.opacity = String(clamp(intro * 2));
-        dashEl.style.opacity = String(clamp(intro * 2));
-        const inset = (1 - intro) * 18;
-        reelEl.style.clipPath = `inset(${inset}% ${inset * 0.75}%)`;
-        trackEl.style.transform = `scale(${lerp(0.6, 1, intro)})`;
+        frameEl.style.opacity = String(clamp(0.45 + intro * 0.55));
+        dashEl.style.opacity = String(clamp(intro * 1.6));
       } else if (!introSealed) {
         introSealed = true;
         frameEl.style.opacity = "1";
         dashEl.style.opacity = "1";
-        reelEl.style.clipPath = "none";
-        trackEl.style.transform = "none";
       }
 
       const y = cy - M.smH / 2;
       const frameRight = frameLeft + bigW;
+      // Enter from the right edge; once the last image is framed, leave to the left.
+      const enterShift = (1 - strip) * M.vw * 0.48;
+      const leave = exit * (M.vw + smW + gap);
       for (let i = 0; i < n; i++) {
         const d = i - t;
-        const x =
+        const baseX =
           d < 0
             ? frameLeft - gap - smW + (d + 1) * step
             : frameRight + gap + (d - 1) * step;
+        const x = baseX + enterShift - leave;
         const right = x + smW;
         const visible = Math.min(right, M.vw) - Math.max(x, 0);
-        const edgeSliver = visible < smW * 0.62;
+        const edgeSliver = visible < smW * 0.22;
+        const offLeft = right < 4;
+        const underText = copyRight > 0 ? Math.min(right, copyRight) - x : 0;
+        // Desktop copy sits above the row, so side images may pass under its x.
         const overText =
-          copyRight > 0 && x < copyRight + 12 && right > 36 && x < frameLeft;
-        const show = strip > 0.02 && !edgeSliver && !overText;
+          M.vw < 1024 && x < frameLeft && underText > smW * 0.72;
+        const show = strip > 0.02 && !edgeSliver && !overText && !offLeft;
         const card = cards[i];
         card.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
-        card.style.opacity = show ? strip.toFixed(3) : "0";
-        card.style.pointerEvents = show && strip > 0.6 ? "auto" : "none";
+        card.style.opacity = show ? (strip * (1 - exit)).toFixed(3) : "0";
+        card.style.pointerEvents =
+          show && strip > 0.6 && exit < 0.2 ? "auto" : "none";
       }
     }
 
@@ -245,13 +273,50 @@ export function WhySection() {
         time >= COPY_AT + COPY_DUR
           ? 1
           : clamp((time - COPY_AT) / COPY_DUR);
-      layout(intro, strip, focusAtTime(time, n));
+      const carouselEnd = STRIP_END + travel;
+      const afterCarousel = time - carouselEnd;
+      const exit =
+        afterCarousel <= 0
+          ? 0
+          : easeInOut(clamp(afterCarousel / EXIT_DUR));
+      const zoom =
+        afterCarousel <= EXIT_DUR
+          ? 0
+          : easeInOut(clamp((afterCarousel - EXIT_DUR) / ZOOM_DUR));
+      const focus = focusAtTime(Math.min(time, carouselEnd), n);
+      layout(intro, strip, focus, exit, zoom);
       if (copyT < 1) {
+        if (copySealed) {
+          copyEl.classList.remove(styles.copyFinal);
+          copyEl.style.top = "";
+          copyEl.style.left = "";
+          copyEl.style.maxWidth = "";
+          copyEl.style.transform = "";
+        }
         copySealed = false;
         applyCopy(copyT);
       } else if (!copySealed) {
         applyCopy(1);
         copySealed = true;
+        // Keep settled CSS so eyebrow/title/sub/cta/frame gaps stay real.
+        copyEl.classList.add(styles.copyFinal);
+        if (M.vw >= 1024) {
+          placeSettledCopy();
+        } else if (M.vw < 1024 && M.vw >= 768) {
+          const base = stageEl.getBoundingClientRect();
+          const copyLeft = copyEl.getBoundingClientRect().left - base.left;
+          const centeredLeft = (M.vw - M.bigW) / 2;
+          const col = Math.max(150, centeredLeft - copyLeft - 18);
+          copyEl.style.maxWidth = `${col}px`;
+          copyEl.style.transform = "";
+        } else {
+          copyEl.style.top = "";
+          copyEl.style.left = "";
+          copyEl.style.transform = "";
+        }
+        copyEls.forEach((el) => {
+          el.style.transform = "";
+        });
       }
       if (time > STRIP_END) {
         hintEl.style.opacity = String(1 - clamp((time - STRIP_END) / 0.35));
@@ -260,11 +325,25 @@ export function WhySection() {
       }
     }
 
+    /** Oryzo settled type: upper-left, just above the thumbnail row. */
+    function placeSettledCopy() {
+      if (M.vw < 1024) return;
+      copyEl.style.transform = "none";
+      const thumbTop = M.cy - M.smH / 2;
+      const copyH = copyEl.getBoundingClientRect().height;
+      const top = Math.max(76, thumbTop - copyH - 14);
+      copyEl.style.top = `${top}px`;
+    }
+
     function measureCopy() {
       copyEls.forEach((el) => {
         el.style.transform = "";
       });
       copyEl.classList.remove(styles.copyFinal);
+      copyEl.style.top = "";
+      copyEl.style.left = "";
+      copyEl.style.maxWidth = "";
+      copyEl.style.transform = "";
       const base = stageEl.getBoundingClientRect();
       const r = (el: HTMLElement) => {
         const b = el.getBoundingClientRect();
@@ -275,24 +354,34 @@ export function WhySection() {
         };
       };
       const a = copyEls.map(r);
+      M = getMetrics();
       copyEl.classList.add(styles.copyFinal);
-      copyEl.style.transform = "none";
-      const heroLeft = (M.vw - M.bigW) / 2;
-      const naturalRight = copyEl.getBoundingClientRect().right - base.left;
-      const room = heroLeft - naturalRight - 18;
-      const need = 2 * (M.smW + M.gap);
-      if (M.vw >= 768 && room < need) {
-        const thumbTop = M.cy - M.smH / 2;
-        const top = Math.max(96, thumbTop - copyEl.offsetHeight - 36);
-        copyEl.style.top = `${top}px`;
-        copyRight = 0;
+      copyEl.style.top = "";
+      copyEl.style.left = "";
+      copyEl.style.maxWidth = "";
+      copyEl.style.transform = "";
+
+      if (M.vw < 768) {
+        const copyBottom = copyEl.getBoundingClientRect().bottom - base.top;
+        const frameTop = Math.min(copyBottom + 20, M.vh - M.bigH - 36);
+        M = { ...M, cy: frameTop + M.bigH / 2 };
+        copyRight = copyEl.getBoundingClientRect().right - base.left;
+      } else if (M.vw < 1024) {
+        const copyLeft = copyEl.getBoundingClientRect().left - base.left;
+        const centeredLeft = (M.vw - M.bigW) / 2;
+        const col = Math.max(150, centeredLeft - copyLeft - 18);
+        copyEl.style.maxWidth = `${col}px`;
+        copyRight = copyEl.getBoundingClientRect().right - base.left;
       } else {
-        copyEl.style.top = "";
+        placeSettledCopy();
         copyRight = copyEl.getBoundingClientRect().right - base.left;
       }
+
       const b = copyEls.map(r);
       copyEl.classList.remove(styles.copyFinal);
       copyEl.style.top = "";
+      copyEl.style.left = "";
+      copyEl.style.maxWidth = "";
       copyEl.style.transform = "";
       return copyEls.map((_, i) => ({
         x: b[i].x - a[i].x,
@@ -306,12 +395,14 @@ export function WhySection() {
       st?.kill();
       st = null;
 
-      M = getMetrics();
-
       if (reduce) {
+        M = getMetrics();
         copyEl.classList.add(styles.copyFinal);
         copyEl.style.top = "";
+        copyEl.style.left = "";
+        copyEl.style.maxWidth = "";
         copyEl.style.transform = "";
+        placeSettledCopy();
         const base = stageEl.getBoundingClientRect();
         copyRight = copyEl.getBoundingClientRect().right - base.left;
         sizeStage();
@@ -329,7 +420,7 @@ export function WhySection() {
       st = ScrollTrigger.create({
         trigger: stageEl,
         start: "top top",
-        end: () => `+=${window.innerHeight * 6}`,
+        end: () => `+=${window.innerHeight * 7.5}`,
         pin: true,
         scrub: true,
         invalidateOnRefresh: true,
@@ -457,8 +548,15 @@ export function WhySection() {
                 ref={(el) => {
                   slideRefs.current[i] = el;
                 }}
-                style={{ backgroundImage: `url('${slide.image}')` }}
-              />
+              >
+                <div
+                  className={styles.slideImg}
+                  ref={(el) => {
+                    slideImgRefs.current[i] = el;
+                  }}
+                  style={{ backgroundImage: `url('${slide.image}')` }}
+                />
+              </div>
             ))}
           </div>
         </div>
