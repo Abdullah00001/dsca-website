@@ -12,11 +12,16 @@
 .inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(32px, 6vw, 100px);
+  grid-template-areas:
+    "copy stage"
+    "reco stage";
+  column-gap: clamp(32px, 6vw, 100px);
+  row-gap: 36px;
   align-items: center;
 }
 
 .copy {
+  grid-area: copy;
   min-width: 0;
 }
 
@@ -97,9 +102,9 @@
 }
 
 .reco {
+  grid-area: reco;
   position: relative;
   overflow: hidden;
-  margin-top: 36px;
   padding: 28px 30px;
   border-radius: 28px;
   background: var(--forest);
@@ -188,6 +193,7 @@
 }
 
 .stage {
+  grid-area: stage;
   position: relative;
   min-width: 0;
   overflow: visible;
@@ -254,12 +260,19 @@
 }
 
 @media (max-width: 900px) {
+  /* DOM order = Title → Rocket → Recommendation */
   .inner {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "stage"
+      "reco";
+    column-gap: 0;
+    row-gap: clamp(24px, 5vw, 40px);
+    align-items: stretch;
   }
 
   .stage {
-    order: -1;
     width: 100%;
   }
 

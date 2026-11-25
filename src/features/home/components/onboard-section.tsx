@@ -657,36 +657,6 @@ export function OnboardSection() {
           <p className={styles.lead} data-onboard-intro>
             {ONBOARD_CONTENT.lead}
           </p>
-
-          <div ref={recoRef} className={styles.reco} aria-live="polite">
-            <span
-              ref={shineRef}
-              className={styles.recoShine}
-              aria-hidden="true"
-            />
-            <div className={styles.recoCopy}>
-              <small className={styles.recoLabel}>
-                {ONBOARD_CONTENT.recoLabel}
-              </small>
-              <strong ref={courseRef} className={styles.recoCourse}>
-                {active.course}
-              </strong>
-              <span ref={detailRef} className={styles.recoDetail}>
-                <span ref={daysRef} className={styles.recoStat}>
-                  {active.days}
-                </span>{" "}
-                days · ৳
-                <span ref={amountRef} className={styles.recoStat}>
-                  {formatAmount(active.amount)}
-                </span>
-                {" · "}
-                <span ref={blurbRef}>{active.blurb}</span>
-              </span>
-            </div>
-            <Button href={ONBOARD_CONTENT.cta.href}>
-              {ONBOARD_CONTENT.cta.label}
-            </Button>
-          </div>
         </div>
 
         <div ref={stageRef} className={styles.stage}>
@@ -759,6 +729,36 @@ export function OnboardSection() {
               );
             })}
           </div>
+        </div>
+
+        <div ref={recoRef} className={styles.reco} aria-live="polite">
+          <span
+            ref={shineRef}
+            className={styles.recoShine}
+            aria-hidden="true"
+          />
+          <div className={styles.recoCopy}>
+            <small className={styles.recoLabel}>
+              {ONBOARD_CONTENT.recoLabel}
+            </small>
+            <strong ref={courseRef} className={styles.recoCourse}>
+              {active.course}
+            </strong>
+            <span ref={detailRef} className={styles.recoDetail}>
+              <span ref={daysRef} className={styles.recoStat}>
+                {active.days}
+              </span>{" "}
+              days · ৳
+              <span ref={amountRef} className={styles.recoStat}>
+                {formatAmount(active.amount)}
+              </span>
+              {" · "}
+              <span ref={blurbRef}>{active.blurb}</span>
+            </span>
+          </div>
+          <Button href={ONBOARD_CONTENT.cta.href}>
+            {ONBOARD_CONTENT.cta.label}
+          </Button>
         </div>
       </div>
     </section>
