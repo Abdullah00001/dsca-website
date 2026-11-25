@@ -99,25 +99,37 @@ export function PageCta({
     const action = root.querySelector<HTMLElement>(`[data-page-cta="action"]`);
     const shine = root.querySelector<HTMLElement>(`[data-page-cta="shine"]`);
 
-    const ctx = gsap.context(() => {
-      if (title) {
-        gsap.set(title, { transformOrigin: "50% 50%" });
-        gsap.fromTo(
-          title,
-          { scale: 0.85 },
-          {
-            scale: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: title,
-              start: "top bottom",
-              end: "center center",
-              scrub: true,
-            },
-          },
-        );
-      }
+    const ZOOM_IN = 0.78;
+    const ZOOM_PEAK = 1.12;
+    const ZOOM_OUT = 0.78;
 
+    /**
+     * Title travel through the viewport: enter small, peak at mid, leave small.
+     * Direct scroll math — a GSAP scrub on the same element was sticking at the start scale.
+     */
+    const applyZoom = (): void => {
+      if (!title) {
+        return;
+      }
+      const rect = root.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const progress = (vh - rect.top) / (vh + rect.height);
+      const p = Math.min(1, Math.max(0, progress));
+      const scale =
+        p < 0.5
+          ? ZOOM_IN + (ZOOM_PEAK - ZOOM_IN) * (p / 0.5)
+          : ZOOM_PEAK + (ZOOM_OUT - ZOOM_PEAK) * ((p - 0.5) / 0.5);
+      title.style.transform = `scale(${scale})`;
+    };
+
+    if (title) {
+      title.style.transformOrigin = "50% 50%";
+      applyZoom();
+      window.addEventListener("scroll", applyZoom, { passive: true });
+      window.addEventListener("resize", applyZoom);
+    }
+
+    const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         defaults: { ease: "power3.out" },
         scrollTrigger: {
@@ -141,12 +153,11 @@ export function PageCta({
       }
 
       if (title) {
+        // Opacity only — transform is owned by the scroll zoom scrub.
         tl.from(
           title,
           {
             opacity: 0,
-            y: 36,
-            filter: "blur(10px)",
             duration: 0.85,
           },
           0.08,
@@ -208,7 +219,14 @@ export function PageCta({
       }
     }, root);
 
-    return () => ctx.revert();
+    return () => {
+      window.removeEventListener("scroll", applyZoom);
+      window.removeEventListener("resize", applyZoom);
+      if (title) {
+        title.style.transform = "";
+      }
+      ctx.revert();
+    };
   }, []);
 
   useEffect(() => {

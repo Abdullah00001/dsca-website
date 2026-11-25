@@ -56,6 +56,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  container-type: inline-size;
+  container-name: page-cta;
 }
 
 .eyebrow {
@@ -68,13 +71,18 @@
 
 .title {
   margin: 24px 0 0;
-  max-width: 18ch;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(58px, 16vw, 280px);
+  /*
+   * Reference `.last h2` uses clamp(58px, 16vw, 280px). On wide viewports 280px
+   * forces a 3-line wrap inside `.in` (1360px) and clips the CTA button — cap with
+   * cqi so “MEET THEM” / “IN person” stays a 2-line balance like the reference.
+   */
+  font-size: clamp(58px, min(16vw, 17.5cqi), 280px);
   line-height: 0.8;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.035em;
   text-transform: uppercase;
+  text-wrap: balance;
   color: #fff;
   will-change: transform;
 }
@@ -104,7 +112,6 @@
 @media (max-width: 767px) {
   .title {
     font-size: clamp(44px, 14vw, 72px);
-    max-width: none;
   }
 
   .body {
@@ -115,6 +122,20 @@
   .action {
     margin-top: 28px;
     width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .action :global(a) {
+    width: 100%;
+    max-width: 22rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title {
+    will-change: auto;
   }
 }
 
