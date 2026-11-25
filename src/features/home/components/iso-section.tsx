@@ -43,9 +43,6 @@ export function IsoSection() {
     );
     const paper = root.querySelector<HTMLElement>(`[data-iso-animate="paper"]`);
     const shine = root.querySelector<HTMLElement>(`[data-iso-animate="shine"]`);
-    const caption = root.querySelector<HTMLElement>(
-      `[data-iso-animate="caption"]`,
-    );
     const cta = root.querySelector<HTMLElement>(`[data-iso-animate="cta"]`);
 
     const ctx = gsap.context(() => {
@@ -118,14 +115,6 @@ export function IsoSection() {
           0.42,
         );
       }
-
-      if (caption) {
-        tl.from(
-          caption,
-          { opacity: 0, y: 12, duration: 0.45, ease: "power2.out" },
-          0.55,
-        );
-      }
     }, root);
 
     return () => {
@@ -174,26 +163,21 @@ export function IsoSection() {
         </div>
 
         <div className={styles.mediaCol}>
-          <figure className={styles.figure}>
-            <div className={styles.paper} data-iso-animate="paper">
-              <span
-                className={styles.paperShine}
-                data-iso-animate="shine"
-                aria-hidden="true"
-              />
-              <Image
-                src={ISO_CONTENT.certImage.src}
-                alt={ISO_CONTENT.certImage.alt}
-                width={800}
-                height={1100}
-                className={styles.certImg}
-                sizes="(max-width: 900px) 90vw, 440px"
-              />
-            </div>
-            <figcaption className={styles.caption} data-iso-animate="caption">
-              {ISO_CONTENT.certImage.caption}
-            </figcaption>
-          </figure>
+          <div className={styles.paper} data-iso-animate="paper">
+            <span
+              className={styles.paperShine}
+              data-iso-animate="shine"
+              aria-hidden="true"
+            />
+            <Image
+              src={ISO_CONTENT.certImage.src}
+              alt={ISO_CONTENT.certImage.alt}
+              width={500}
+              height={647}
+              className={styles.certImg}
+              sizes="(max-width: 900px) 90vw, 360px"
+            />
+          </div>
         </div>
       </div>
     </section>

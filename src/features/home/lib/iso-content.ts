@@ -22,7 +22,5 @@ export const ISO_CONTENT = {
   certImage: {
     src: "/assets/cert.jpg",
     alt: "DSCA ISO 9001:2015 quality management certificate",
-    caption:
-      "ISO 9001:2015 certificate issued to Dhaka Specialty Coffee Academy.",
   },
 } as const;
