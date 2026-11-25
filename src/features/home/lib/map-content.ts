@@ -16,6 +16,8 @@ export const MAP_CONTENT = {
   directionsHref:
     "https://www.google.com/maps/dir/?api=1&destination=Dhaka+Specialty+Coffee+Academy",
   directionsLabel: "Get Direction",
+  callLabel: "Call Now",
+  callHref: "tel:+8801810545545",
   panel: {
     eyebrow: "Visit the academy",
     name: "Dhaka Specialty Coffee Academy (DSCA)",

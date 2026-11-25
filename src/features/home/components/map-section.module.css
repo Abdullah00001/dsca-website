@@ -1,5 +1,5 @@
 /**
- * @fileoverview Home map band — live embed + visit copy + Get Direction.
+ * @fileoverview Home map band — live embed + visit copy + direction/call CTAs.
  */
 
 .section {
@@ -101,8 +101,15 @@
   color: #ffe08a;
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
 .cta {
-  align-self: flex-start;
   width: max-content;
   max-width: 100%;
 }

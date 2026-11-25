@@ -1,5 +1,5 @@
 /**
- * @fileoverview Home map band — live embed + visit copy + Get Direction.
+ * @fileoverview Home map band — live embed + visit copy + direction/call CTAs.
  * @module features/home/components/map-section
  */
 
@@ -13,7 +13,7 @@ import layout from "@/styles/layout.module.css";
 import styles from "@/features/home/components/map-section.module.css";
 
 /**
- * Live Google Map with visit copy and a single directions CTA.
+ * Live Google Map with visit copy, directions, and call CTAs.
  *
  * @returns Map section for the home page.
  */
@@ -162,9 +162,18 @@ export function MapSection() {
                 <br />
                 Open: {MAP_CONTENT.panel.hours}
               </p>
-              <Button href={MAP_CONTENT.directionsHref} className={styles.cta}>
-                {MAP_CONTENT.directionsLabel}
-              </Button>
+              <div className={styles.actions}>
+                <Button href={MAP_CONTENT.directionsHref} className={styles.cta}>
+                  {MAP_CONTENT.directionsLabel}
+                </Button>
+                <Button
+                  href={MAP_CONTENT.callHref}
+                  variant="ghost"
+                  className={styles.cta}
+                >
+                  {MAP_CONTENT.callLabel}
+                </Button>
+              </div>
             </aside>
           </div>
         </div>
