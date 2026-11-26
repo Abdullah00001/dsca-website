@@ -314,9 +314,16 @@ export function WhySection() {
       }
     }
 
+    /** Desktop keeps the 5vw inset from the first measured frame through the scroll. */
+    function lockDesktopCopyPad() {
+      if (window.innerWidth < 1280) return;
+      copyEl.style.padding = "0 5vw";
+    }
+
     /** Oryzo settled type: upper-left, just above the thumbnail row. */
     function placeSettledCopy() {
       if (M.vw < 1024) return;
+      lockDesktopCopyPad();
       copyEl.style.transform = "none";
       const thumbTop = M.cy - M.smH / 2;
       const copyH = copyEl.getBoundingClientRect().height;
@@ -325,6 +332,7 @@ export function WhySection() {
     }
 
     function measureCopy() {
+      lockDesktopCopyPad();
       copyEls.forEach((el) => {
         el.style.transform = "";
       });

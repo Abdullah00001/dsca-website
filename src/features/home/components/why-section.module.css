@@ -196,18 +196,48 @@
   }
 }
 
-@media (min-width: 1024px) {
+/* Laptop only. Desktop copy is restored separately below. */
+@media (min-width: 1024px) and (max-width: 1279px) {
   .copyFinal {
     top: 16vh;
     transform: none;
     max-width: none;
-    /* Drop the hero side padding so the one-line sub clears the frame at 1024. */
     padding: 0;
   }
 
   .copyFinal .sub {
     max-width: none;
     white-space: nowrap;
+  }
+}
+
+/* Desktop copy styles from 4ea8ae4. Stacking matches the other sizes:
+   text stays under the frame (base z-index), so the blurry frame covers it. */
+@media (min-width: 1280px) {
+  .copyFinal {
+    top: 16vh;
+    /* Logo / 1360px column, not 4.2vw — that sits outside the container on wide screens. */
+    left: max(var(--space-gutter), calc((100% - var(--space-container)) / 2));
+    right: auto;
+    width: max-content;
+    max-width: none;
+    padding: 0 5vw;
+    transform: none;
+  }
+
+  .copyFinal .sub {
+    font-size: 14px;
+    line-height: 1.35;
+    margin-top: 10px;
+    margin-bottom: 0;
+    max-width: none;
+    white-space: nowrap;
+  }
+
+  .copyFinal .cta {
+    margin-top: 16px;
+    padding: 8px 10px 8px 16px;
+    font-size: 11px;
   }
 }
 
