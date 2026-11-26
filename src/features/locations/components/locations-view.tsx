@@ -4,6 +4,8 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { PageCta } from "@/components/ui/page-cta";
+import { PAGE_CTA_DIRECTIONS } from "@/libs/page-cta";
 import { AreaBlocks } from "./area-blocks";
 import { PageHero } from "@/components/page/page-hero";
 import { PagesShell } from "@/components/page/pages-shell";
@@ -171,7 +173,7 @@ export function LocationsView({ page, name }: LocationsViewProps) {
       {close ? (
         <CloseBand title={String(close[1])} body={String(close[2])} />
       ) : null}
-    
+      <PageCta content={PAGE_CTA_DIRECTIONS} />
     </PagesShell>
   );
 }

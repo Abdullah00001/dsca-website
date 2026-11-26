@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PageCta } from "@/components/ui/page-cta";
+import { PAGE_CTA_CAREER } from "@/libs/page-cta";
 import { FaqList } from "@/components/page/faq-list";
 import { PageHero } from "@/components/page/page-hero";
 import { PagesShell } from "@/components/page/pages-shell";
@@ -239,15 +240,7 @@ export function AboutView() {
           <FaqList items={FAQ} />
         </div>
       </section>
-      <PageCta
-        content={{
-          eyebrow: "Next batch · 12 seats",
-          titleBefore: "Ready to start your",
-          titleAccent: "barista career?",
-          body: "Come and see the academy, meet the trainers and pick the course that fits. Our team will walk you through the options and answer your questions.",
-          cta: { label: "Enroll Now", href: "/contact" },
-        }}
-      />
+      <PageCta content={PAGE_CTA_CAREER} />
     
     </PagesShell>
   );

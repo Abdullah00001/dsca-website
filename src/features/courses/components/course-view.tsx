@@ -3,11 +3,13 @@
  */
 
 import { Button } from "@/components/ui/button";
+import { PageCta } from "@/components/ui/page-cta";
 import { CourseCard } from "@/components/page/course-card";
 import { FaqList } from "@/components/page/faq-list";
 import { PageHero } from "@/components/page/page-hero";
 import { PagesShell } from "@/components/page/pages-shell";
 import styles from "@/components/page/pages.module.css";
+import { PAGE_CTA_POUR } from "@/libs/page-cta";
 import {
   COURSE_IMAGE,
   COURSES,
@@ -143,7 +145,7 @@ export function CourseView({ course }: CourseViewProps) {
           </div>
         </div>
       </section>
-    
+      <PageCta content={PAGE_CTA_POUR} />
     </PagesShell>
   );
 }

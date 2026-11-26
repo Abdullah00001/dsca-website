@@ -6,6 +6,7 @@
 
 import Image from "next/image";
 import { PageCta } from "@/components/ui/page-cta";
+import { PAGE_CTA_GALLERY } from "@/libs/page-cta";
 import { FilterBar, FilterItem } from "@/components/page/filter-bar";
 import { PageHero } from "@/components/page/page-hero";
 import { PagesShell } from "@/components/page/pages-shell";
@@ -55,15 +56,7 @@ export function GalleryView() {
           </FilterBar>
         </div>
       </section>
-      <PageCta
-        content={{
-          eyebrow: "Next batch · 12 seats",
-          titleBefore: "Want to be in the",
-          titleAccent: "next photo?",
-          body: "Join the next batch and train on the same bar.",
-          cta: { label: "Join a batch", href: "/contact" },
-        }}
-      />
+      <PageCta content={PAGE_CTA_GALLERY} />
     
     </PagesShell>
   );

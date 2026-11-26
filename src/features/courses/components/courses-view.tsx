@@ -10,6 +10,7 @@ import { FaqList } from "@/components/page/faq-list";
 import { FilterBar, FilterItem } from "@/components/page/filter-bar";
 import { PageHero } from "@/components/page/page-hero";
 import { PagesShell } from "@/components/page/pages-shell";
+import { PAGE_CTA_POUR } from "@/libs/page-cta";
 import { COURSES, PHOTO } from "../lib";
 
 const FILTERS = ["All", "Beginner", "Professional", "Best value", "Flagship", "Add-on"] as const;
@@ -96,15 +97,7 @@ export function CoursesView() {
           <FaqList items={FAQ} />
         </div>
       </section>
-      <PageCta
-        content={{
-          eyebrow: "Next batch · 12 seats",
-          titleBefore: "Ready to",
-          titleAccent: "pour?",
-          body: "Compare, pick your batch and reserve your seat. Batches are capped at 12 students.",
-          cta: { label: "Enroll now", href: "/contact" },
-        }}
-      />
+      <PageCta content={PAGE_CTA_POUR} />
     </PagesShell>
   );
 }

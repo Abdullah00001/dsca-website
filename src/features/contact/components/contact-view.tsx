@@ -7,6 +7,8 @@
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { PageCta } from "@/components/ui/page-cta";
+import { PAGE_CTA_ENROLL } from "@/libs/page-cta";
 import btn from "@/components/ui/button/button.module.css";
 import { CourseCard } from "@/components/page/course-card";
 import { FaqList } from "@/components/page/faq-list";
@@ -156,7 +158,7 @@ export function ContactView() {
           <FaqList items={FAQ} />
         </div>
       </section>
-    
+      <PageCta content={PAGE_CTA_ENROLL} />
     </PagesShell>
   );
 }

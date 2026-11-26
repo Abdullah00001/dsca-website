@@ -8,6 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { PageCta } from "@/components/ui/page-cta";
+import { PAGE_CTA_ENROLL } from "@/libs/page-cta";
 import btn from "@/components/ui/button/button.module.css";
 import { FilterBar, FilterItem } from "@/components/page/filter-bar";
 import { PageHero } from "@/components/page/page-hero";
@@ -98,7 +100,7 @@ export function BlogView() {
           )}
         </div>
       </section>
-    
+      <PageCta content={PAGE_CTA_ENROLL} />
     </PagesShell>
   );
 }
@@ -245,7 +247,7 @@ export function PostView({ post }: PostViewProps) {
           </div>
         </div>
       </section>
-    
+      <PageCta content={PAGE_CTA_ENROLL} />
     </PagesShell>
   );
 }

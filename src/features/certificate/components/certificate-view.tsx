@@ -10,6 +10,8 @@ import { useState, type FormEvent } from "react";
 import btn from "@/components/ui/button/button.module.css";
 import styles from "@/components/page/pages.module.css";
 import { PagesShell } from "@/components/page/pages-shell";
+import { PageCta } from "@/components/ui/page-cta";
+import { PAGE_CTA_ENROLL } from "@/libs/page-cta";
 import { PHOTO } from "../lib";
 import layout from "@/styles/layout.module.css";
 
@@ -106,7 +108,7 @@ export function CertificateView() {
           ))}
         </div>
       </section>
-    
+      <PageCta content={PAGE_CTA_ENROLL} />
     </PagesShell>
   );
 }

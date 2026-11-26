@@ -5,6 +5,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PageCta } from "@/components/ui/page-cta";
+import { PAGE_CTA_VISIT } from "@/libs/page-cta";
 import { PageHero } from "@/components/page/page-hero";
 import { PagesShell } from "@/components/page/pages-shell";
 import styles from "@/components/page/pages.module.css";
@@ -120,7 +122,7 @@ export function TrainerView({ trainer }: TrainerViewProps) {
           </div>
         </div>
       </section>
-    
+      <PageCta content={PAGE_CTA_VISIT} />
     </PagesShell>
   );
 }

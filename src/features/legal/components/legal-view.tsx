@@ -5,6 +5,8 @@
 import type { ReactNode } from "react";
 import { PageHero } from "@/components/page/page-hero";
 import { PagesShell } from "@/components/page/pages-shell";
+import { PageCta } from "@/components/ui/page-cta";
+import { PAGE_CTA_ENROLL } from "@/libs/page-cta";
 import styles from "@/components/page/pages.module.css";
 import { PHOTO } from "../lib";
 import layout from "@/styles/layout.module.css";
@@ -52,7 +54,7 @@ export function LegalView({ crumb, title, sections }: LegalViewProps) {
           </div>
         </div>
       </section>
-    
+      <PageCta content={PAGE_CTA_ENROLL} />
     </PagesShell>
   );
 }

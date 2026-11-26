@@ -22,7 +22,7 @@ import { TrainersSection } from "@/features/home/components/trainers-section";
 import { TrustSection } from "@/features/home/components/trust-section";
 import { WhySection } from "@/features/home/components/why-section";
 import { enableHomeScrollTriggerStability } from "@/features/home/lib/home-utils";
-import { PAGE_CTA_VISIT } from "@/libs/page-cta";
+import { PAGE_CTA_ENROLL } from "@/libs/page-cta";
 import styles from "@/features/home/styles/home-view.module.css";
 
 // Before child ScrollTriggers mount — skip pin refresh on URL-bar height changes.
@@ -54,7 +54,7 @@ export function HomeView() {
       <VideoSection />
       <BlogSection />
       <EnrolSection />
-      <PageCta content={PAGE_CTA_VISIT} />
+      <PageCta content={PAGE_CTA_ENROLL} />
     </div>
   );
 }
