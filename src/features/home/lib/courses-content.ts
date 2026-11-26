@@ -39,7 +39,7 @@ export const COURSES_CONTENT = {
       level: "Beginner",
       bestFor: "Coffee lovers taking their first step behind the bar",
       image: "/assets/courses/int1.jpg",
-      href: "/courses",
+      href: "/courses/intermediate",
     },
     {
       id: "professional",
@@ -49,7 +49,7 @@ export const COURSES_CONTENT = {
       level: "Professional",
       bestFor: "Job seekers who want café-ready skills",
       image: "/assets/courses/bar.jpg",
-      href: "/courses",
+      href: "/courses/professional",
     },
     {
       id: "starter",
@@ -59,7 +59,7 @@ export const COURSES_CONTENT = {
       level: "Best value",
       bestFor: "Learners who want Intermediate + Professional without a gap",
       image: "/assets/courses/staff.jpg",
-      href: "/courses",
+      href: "/courses/starter",
     },
     {
       id: "advance",
@@ -69,7 +69,7 @@ export const COURSES_CONTENT = {
       level: "Flagship",
       bestFor: "Future head baristas and café operators",
       image: "/assets/courses/lounge.jpg",
-      href: "/courses",
+      href: "/courses/advance",
     },
     {
       id: "food",
@@ -79,7 +79,7 @@ export const COURSES_CONTENT = {
       level: "Add-on",
       bestFor: "Anyone who handles food and drink in a café",
       image: "/assets/courses/hall.jpg",
-      href: "/courses",
+      href: "/courses/food",
     },
   ] as const satisfies readonly HomeCourse[],
 } as const;

@@ -1,0 +1,8 @@
+/**
+ * @fileoverview Locations view styles
+ * @module features/locations/styles/locations-view.module.css
+ *
+ * Page chrome/cards use shared `@/components/page/pages.module.css`
+ * and reference `dsca-pages.css` via PagesShell. Add feature-only
+ * overrides here when needed.
+ */
