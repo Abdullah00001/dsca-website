@@ -144,7 +144,6 @@ export function WhySection() {
 
     let M = getMetrics();
     let deltas: Delta[] = copyEls.map(() => ({ x: 0, y: 0, s: 1 }));
-    let copyRight = 300;
     let st: ScrollTrigger | null = null;
     let introSealed = false;
     let copySealed = false;
@@ -212,9 +211,15 @@ export function WhySection() {
 
       if (intro < 1) {
         introSealed = false;
-        // Start fully hidden — only copy shows; blurry frame fades in on scroll.
-        frameEl.style.opacity = String(intro);
-        dashEl.style.opacity = String(clamp(intro * 1.25));
+        if (M.vw >= 1024) {
+          // Laptop + desktop: same intro as 4ea8ae4 — frame is already present, then clears.
+          frameEl.style.opacity = String(clamp(0.45 + intro * 0.55));
+          dashEl.style.opacity = String(clamp(intro * 1.6));
+        } else {
+          // Phone + tablet: unchanged — copy first, blurry frame fades in.
+          frameEl.style.opacity = String(intro);
+          dashEl.style.opacity = String(clamp(intro * 1.25));
+        }
       } else if (!introSealed) {
         introSealed = true;
         frameEl.style.opacity = "1";
@@ -237,11 +242,9 @@ export function WhySection() {
         const visible = Math.min(right, M.vw) - Math.max(x, 0);
         const edgeSliver = visible < smW * 0.22;
         const offLeft = right < 4;
-        // Compact (phone/tablet): copy sits above the frame, so no card-under-text hide.
-        const underText = copyRight > 0 ? Math.min(right, copyRight) - x : 0;
-        const overText =
-          M.vw >= 1024 && x < frameLeft && underText > smW * 0.72;
-        const show = strip > 0.02 && !edgeSliver && !overText && !offLeft;
+        // Laptop + desktop match commit 4ea8ae4: left peeks stay on screen.
+        // Phone + tablet were already not hiding cards under the stacked copy.
+        const show = strip > 0.02 && !edgeSliver && !offLeft;
         const card = cards[i];
         card.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
         card.style.opacity = show ? (strip * (1 - exit)).toFixed(3) : "0";
@@ -372,10 +375,8 @@ export function WhySection() {
           smH,
           cy: frameTop + bigH / 2,
         };
-        copyRight = copyEl.getBoundingClientRect().right - base.left;
       } else {
         placeSettledCopy();
-        copyRight = copyEl.getBoundingClientRect().right - base.left;
       }
 
       const b = copyEls.map(r);
@@ -404,8 +405,6 @@ export function WhySection() {
         copyEl.style.maxWidth = "";
         copyEl.style.transform = "";
         placeSettledCopy();
-        const base = stageEl.getBoundingClientRect();
-        copyRight = copyEl.getBoundingClientRect().right - base.left;
         sizeStage();
         layout(1, 1, 0);
         applyCopy(1);

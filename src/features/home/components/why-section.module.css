@@ -197,6 +197,11 @@
 }
 
 @media (min-width: 1024px) {
+  /* Commit 4ea8ae4: settled copy stays above the filmstrip. */
+  .copy {
+    z-index: 25;
+  }
+
   .copyFinal {
     top: 16vh;
     transform: none;
