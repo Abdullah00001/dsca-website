@@ -55,17 +55,13 @@ const ZOOM_DUR = 1.45;
 function getMetrics(): Metrics {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  if (vw < 768) {
-    return {
-      vw,
-      vh,
-      bigW: vw * 0.74,
-      bigH: vh * 0.5,
-      smW: vw * 0.27,
-      smH: vh * 0.2,
-      gap: 10,
-      cy: vh * 0.64,
-    };
+  // Phone + tablet: stacked layout. Phone = container-wide frame; tablet = smaller centered.
+  if (vw < 1024) {
+    const bigW = vw < 768 ? vw * 0.88 : Math.min(vw * 0.52, 400);
+    const bigH = Math.min(vh * 0.48, vw < 768 ? 560 : bigW / 0.72);
+    const smH = bigH * 0.28;
+    const smW = smH * 0.76;
+    return { vw, vh, bigW, bigH, smW, smH, gap: 10, cy: vh * 0.62 };
   }
   const bigH = Math.min(vh * 0.78, 760);
   const bigW = Math.min(bigH * 0.68, vw * 0.32);
@@ -154,10 +150,7 @@ export function WhySection() {
     let copySealed = false;
 
     function anchorX() {
-      if (M.vw >= 1024 || M.vw < 768 || copyRight <= 0) return M.vw / 2;
-      const rightReserve = M.smW + M.gap + 12;
-      const maxCenter = M.vw - rightReserve - M.bigW / 2;
-      return clamp(M.vw / 2, M.bigW / 2 + 16, maxCenter);
+      return M.vw / 2;
     }
 
     function sizeStage() {
@@ -166,6 +159,10 @@ export function WhySection() {
       const pad = 6;
       const left = focusX - bigW / 2;
       const top = cy - bigH / 2;
+      // Keep the pinned stage flush with the viewport so the next section
+      // never peeks under the bottom edge.
+      stageEl.style.height = `${window.innerHeight}px`;
+      stageEl.style.minHeight = `${window.innerHeight}px`;
       frameEl.style.width = `${bigW}px`;
       frameEl.style.height = `${bigH}px`;
       frameEl.style.left = `${left}px`;
@@ -215,8 +212,9 @@ export function WhySection() {
 
       if (intro < 1) {
         introSealed = false;
-        frameEl.style.opacity = String(clamp(0.45 + intro * 0.55));
-        dashEl.style.opacity = String(clamp(intro * 1.6));
+        // Start fully hidden — only copy shows; blurry frame fades in on scroll.
+        frameEl.style.opacity = String(intro);
+        dashEl.style.opacity = String(clamp(intro * 1.25));
       } else if (!introSealed) {
         introSealed = true;
         frameEl.style.opacity = "1";
@@ -239,10 +237,10 @@ export function WhySection() {
         const visible = Math.min(right, M.vw) - Math.max(x, 0);
         const edgeSliver = visible < smW * 0.22;
         const offLeft = right < 4;
+        // Compact (phone/tablet): copy sits above the frame, so no card-under-text hide.
         const underText = copyRight > 0 ? Math.min(right, copyRight) - x : 0;
-        // Desktop copy sits above the row, so side images may pass under its x.
         const overText =
-          M.vw < 1024 && x < frameLeft && underText > smW * 0.72;
+          M.vw >= 1024 && x < frameLeft && underText > smW * 0.72;
         const show = strip > 0.02 && !edgeSliver && !overText && !offLeft;
         const card = cards[i];
         card.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
@@ -302,16 +300,10 @@ export function WhySection() {
         copyEl.classList.add(styles.copyFinal);
         if (M.vw >= 1024) {
           placeSettledCopy();
-        } else if (M.vw < 1024 && M.vw >= 768) {
-          const base = stageEl.getBoundingClientRect();
-          const copyLeft = copyEl.getBoundingClientRect().left - base.left;
-          const centeredLeft = (M.vw - M.bigW) / 2;
-          const col = Math.max(150, centeredLeft - copyLeft - 18);
-          copyEl.style.maxWidth = `${col}px`;
-          copyEl.style.transform = "";
         } else {
           copyEl.style.top = "";
           copyEl.style.left = "";
+          copyEl.style.maxWidth = "";
           copyEl.style.transform = "";
         }
         copyEls.forEach((el) => {
@@ -361,16 +353,25 @@ export function WhySection() {
       copyEl.style.maxWidth = "";
       copyEl.style.transform = "";
 
-      if (M.vw < 768) {
+      if (M.vw < 1024) {
         const copyBottom = copyEl.getBoundingClientRect().bottom - base.top;
-        const frameTop = Math.min(copyBottom + 20, M.vh - M.bigH - 36);
-        M = { ...M, cy: frameTop + M.bigH / 2 };
-        copyRight = copyEl.getBoundingClientRect().right - base.left;
-      } else if (M.vw < 1024) {
-        const copyLeft = copyEl.getBoundingClientRect().left - base.left;
-        const centeredLeft = (M.vw - M.bigW) / 2;
-        const col = Math.max(150, centeredLeft - copyLeft - 18);
-        copyEl.style.maxWidth = `${col}px`;
+        const gap = 20;
+        const hintRoom = 36;
+        const avail = M.vh - copyBottom - gap - hintRoom;
+        const bigW =
+          M.vw < 768 ? M.vw * 0.88 : Math.min(M.vw * 0.52, 400);
+        let bigH = M.bigH;
+        if (avail > 120 && bigH > avail) bigH = avail;
+        const frameTop = Math.min(copyBottom + gap, M.vh - bigH - hintRoom);
+        const smH = bigH * 0.28;
+        M = {
+          ...M,
+          bigW,
+          bigH,
+          smW: smH * 0.76,
+          smH,
+          cy: frameTop + bigH / 2,
+        };
         copyRight = copyEl.getBoundingClientRect().right - base.left;
       } else {
         placeSettledCopy();

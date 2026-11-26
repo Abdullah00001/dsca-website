@@ -5,7 +5,12 @@
 .stage {
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   height: 100vh;
+  height: 100dvh;
   height: 100svh;
   font-family: var(--font-body);
   color: #eef5ef;
@@ -22,7 +27,8 @@
   left: 0;
   right: 0;
   top: 33%;
-  z-index: 25;
+  /* Behind the frame so intro type reads through/under the focus box. */
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,17 +126,19 @@
   font-size: 14px;
   line-height: 1.35;
   margin-top: 10px;
+  margin-bottom: 0;
   max-width: 260px;
   white-space: normal;
 }
 
 .copyFinal .cta {
-  margin-top: 16px;
+  margin-top: 6px;
   padding: 8px 10px 8px 16px;
   font-size: 11px;
 }
 
-@media (max-width: 767px) {
+/* Phone + tablet: same stacked settled layout (copy above frame). */
+@media (max-width: 1023px) {
   .headline {
     font-size: 15vw;
   }
@@ -150,32 +158,39 @@
 
   .copyFinal {
     top: 8rem;
-    left: 5vw;
+    /* Same horizontal container as the compact frame (88vw centered → 6vw inset). */
+    left: 6vw;
+    right: auto;
+    width: 88vw;
     max-width: 88vw;
+    padding: 0;
     transform: none;
   }
 
   .copyFinal .headline {
-    font-size: 8vw;
+    font-size: clamp(28px, 8vw, 52px);
     margin-top: 8px;
     line-height: 1;
     white-space: nowrap;
   }
 
   .copyFinal .eyebrow {
-    font-size: 3vw;
+    font-size: clamp(12px, 3vw, 18px);
     line-height: 1.15;
     margin-bottom: 0;
   }
 
   .copyFinal .sub {
-    font-size: 3vw;
-    line-height: 1.35;
-    margin-top: 12px;
+    font-size: clamp(12px, 3vw, 16px);
+    line-height: 1.25;
+    margin-top: 2px;
+    margin-bottom: 0;
+    max-width: none;
+    white-space: nowrap;
   }
 
   .copyFinal .cta {
-    margin-top: 16px;
+    margin-top: 14px;
     padding: 8px 10px 8px 18px;
     font-size: 11px;
   }
@@ -185,14 +200,6 @@
   .copyFinal {
     top: 16vh;
     transform: none;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .copyFinal .headline {
-    white-space: normal;
-    font-size: clamp(28px, 3.5vw, 40px);
-    line-height: 0.95;
   }
 }
 
