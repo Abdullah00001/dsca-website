@@ -201,6 +201,8 @@
     top: 16vh;
     transform: none;
     max-width: none;
+    /* Drop the hero side padding so the one-line sub clears the frame at 1024. */
+    padding: 0;
   }
 
   .copyFinal .sub {
