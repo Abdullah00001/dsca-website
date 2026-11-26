@@ -268,11 +268,12 @@
 
 .journeyLine {
   margin: 0;
-  max-width: 18ch;
+  max-width: 100%;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(2.4rem, 7vw, 5.5rem);
-  line-height: 0.95;
+  /* Longest line stays one row. Cap matches the old poster size. */
+  font-size: clamp(2.4rem, 6.5vw, 5.5rem);
+  line-height: 1.05;
   letter-spacing: -0.035em;
   text-transform: uppercase;
   color: #fff;
@@ -283,11 +284,13 @@
 }
 
 .journeyAccent {
+  display: inline-block;
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
   text-transform: none;
   letter-spacing: -0.02em;
+  white-space: nowrap;
   color: #ffe08a;
 }
 
@@ -453,8 +456,8 @@
   }
 
   .journeyLine {
-    font-size: clamp(1.85rem, 7vw, 3.25rem);
-    max-width: 14ch;
+    max-width: 100%;
+    font-size: clamp(1.45rem, 6.2vw, 4rem);
   }
 }
 

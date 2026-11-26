@@ -1,5 +1,5 @@
 /**
- * @fileoverview ISO certification band (reference `.dkband` + `.chk` + `.paper`).
+ * @fileoverview ISO certification band (reference `.dkband` + `.paper`).
  */
 
 .section {
@@ -76,68 +76,11 @@
 
 /* Same body as footer `.ftp` */
 .lead {
-  margin: 0;
+  margin: 0 0 28px;
   max-width: 560px;
   font-size: 17px;
   line-height: 1.7;
   font-weight: 500;
-  color: #eefaf3;
-}
-
-.listTitle {
-  margin: 28px 0 14px;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(0.95rem, 1.4vw, 1.125rem);
-  line-height: 1.15;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  color: #fff;
-}
-
-.chk {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px;
-  display: grid;
-  gap: 12px;
-}
-
-.chk li {
-  position: relative;
-  padding-left: 36px;
-  font-size: 17px;
-  line-height: 1.55;
-  font-weight: 500;
-  color: #fff;
-}
-
-@media (min-width: 900px) {
-  .chk li {
-    white-space: nowrap;
-  }
-}
-
-.chk li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 1px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--gold, #f2b84a);
-  color: #073b2b;
-  display: grid;
-  place-items: center;
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.closing {
-  margin: 0 0 28px;
-  font-size: 17px;
-  line-height: 1.7;
   color: #eefaf3;
 }
 
@@ -202,9 +145,7 @@
     line-height: 0.95;
   }
 
-  .lead,
-  .chk li,
-  .closing {
+  .lead {
     font-size: 15px;
   }
 }
@@ -238,20 +179,7 @@
     margin: 12px 0 14px;
   }
 
-  .listTitle {
-    margin: 18px 0 12px;
-  }
-
-  .chk {
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-
-  .chk li {
-    line-height: 1.45;
-  }
-
-  .closing {
+  .lead {
     margin-bottom: 18px;
   }
 
@@ -270,15 +198,6 @@
     min-height: auto;
     padding-block: 48px;
     padding-top: max(48px, 5.75rem);
-  }
-
-  .listTitle {
-    margin: 14px 0 10px;
-  }
-
-  .chk {
-    gap: 6px;
-    margin-bottom: 10px;
   }
 
   .paper {

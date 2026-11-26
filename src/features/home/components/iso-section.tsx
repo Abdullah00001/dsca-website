@@ -17,7 +17,7 @@ import styles from "@/features/home/components/iso-section.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Dark forest “Certification & Quality” band with checklist and certificate art.
+ * Dark forest “Certification & Quality” band with one paragraph and certificate art.
  * Scroll-triggered GSAP reveals keep the layout intact.
  *
  * @returns ISO section for the home page.
@@ -37,9 +37,6 @@ export function IsoSection() {
 
     const copyItems = root.querySelectorAll<HTMLElement>(
       `[data-iso-animate="copy"]`,
-    );
-    const chkItems = root.querySelectorAll<HTMLElement>(
-      `[data-iso-animate="chk"]`,
     );
     const paper = root.querySelector<HTMLElement>(`[data-iso-animate="paper"]`);
     const shine = root.querySelector<HTMLElement>(`[data-iso-animate="shine"]`);
@@ -66,20 +63,6 @@ export function IsoSection() {
             stagger: 0.1,
           },
           0,
-        );
-      }
-
-      if (chkItems.length > 0) {
-        tl.from(
-          chkItems,
-          {
-            opacity: 0,
-            x: -18,
-            duration: 0.45,
-            stagger: 0.08,
-            ease: "power2.out",
-          },
-          0.28,
         );
       }
 
@@ -143,19 +126,6 @@ export function IsoSection() {
           </h2>
           <p className={styles.lead} data-iso-animate="copy">
             {ISO_CONTENT.lead}
-          </p>
-          <h3 className={styles.listTitle} data-iso-animate="copy">
-            {ISO_CONTENT.listTitle}
-          </h3>
-          <ul className={styles.chk}>
-            {ISO_CONTENT.bullets.map((item) => (
-              <li key={item} data-iso-animate="chk">
-                {item}
-              </li>
-            ))}
-          </ul>
-          <p className={styles.closing} data-iso-animate="copy">
-            {ISO_CONTENT.closing}
           </p>
           <div data-iso-animate="cta">
             <Button href={ISO_CONTENT.cta.href}>{ISO_CONTENT.cta.label}</Button>

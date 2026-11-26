@@ -33,9 +33,9 @@ export const HERO_CONTENT = {
    */
   journey: {
     lines: [
-      { text: "Pour", accent: "your craft." },
-      { text: "Learn on", accent: "real machines." },
-      { text: "Leave ready for", accent: "the bar." },
+      { text: "Hands-on", accent: "training." },
+      { text: "World-class", accent: "trainers." },
+      { text: "Careers", accent: "in Bangladesh & abroad." },
     ],
   },
 } as const;

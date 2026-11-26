@@ -8,17 +8,8 @@ export const ISO_CONTENT = {
   eyebrow: "Certification & Quality",
   titleBefore: "ISO-Certified Barista Training",
   titleAccent: "You Can Verify",
-  lead: "DSCA is ISO 9001:2015 certified, the international standard for quality management. For you, that means a written curriculum, trained instructors, consistent delivery, and results we track batch after batch. A DSCA course in Dhaka is taught to the same standard every time.",
-  listTitle: "What ISO 9001:2015 means for your training",
-  bullets: [
-    "A defined curriculum for every level — Intermediate to Advance Professional",
-    "The same teaching standard in every batch, whoever sits next to you",
-    "Records of your progress and feedback, so nothing is left to chance",
-    "A built-in process for improving the course after every batch",
-  ] as const,
-  closing:
-    "At the end of your course you receive a DSCA completion certificate, issued under our ISO-certified training system.",
-  cta: { label: "See Our Courses", href: "/courses" },
+  lead: "Being ISO 9001:2015 certified is not a badge we hang on the wall. It is a promise about how we teach. It means every DSCA course follows a structured curriculum, a consistent training method, and outcomes you can measure in your own cups. When you finish, your certificate carries weight with coffee businesses across South Asia, because it is backed by an internationally benchmarked quality standard, not just our word.",
+  cta: { label: "Verify Your Certificate", href: "/certificate" },
   certImage: {
     src: "/assets/cert.jpg",
     alt: "DSCA ISO 9001:2015 quality management certificate",

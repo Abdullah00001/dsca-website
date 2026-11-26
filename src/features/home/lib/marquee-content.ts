@@ -6,7 +6,7 @@
 /** Words shown in the home page marquee strip. */
 export const HOME_MARQUEE_ITEMS = [
   "ISO 9001:2015 Certified",
-  "4.9 ★ from 99 Google Reviews",
-  "Commercial Espresso Machines",
+  "4.9 stars on Google (38+ reviews)",
+  "International-Standard Coffee Equipment",
   "Job Placement Support",
 ] as const;
