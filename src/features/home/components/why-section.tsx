@@ -211,15 +211,9 @@ export function WhySection() {
 
       if (intro < 1) {
         introSealed = false;
-        if (M.vw >= 1024) {
-          // Laptop + desktop: same intro as 4ea8ae4 — frame is already present, then clears.
-          frameEl.style.opacity = String(clamp(0.45 + intro * 0.55));
-          dashEl.style.opacity = String(clamp(intro * 1.6));
-        } else {
-          // Phone + tablet: unchanged — copy first, blurry frame fades in.
-          frameEl.style.opacity = String(intro);
-          dashEl.style.opacity = String(clamp(intro * 1.25));
-        }
+        // All sizes: copy first. Blurry frame fades in over the type on scroll.
+        frameEl.style.opacity = String(intro);
+        dashEl.style.opacity = String(clamp(intro * 1.25));
       } else if (!introSealed) {
         introSealed = true;
         frameEl.style.opacity = "1";
