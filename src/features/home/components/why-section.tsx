@@ -63,11 +63,26 @@ function getMetrics(): Metrics {
     const smW = smH * 0.76;
     return { vw, vh, bigW, bigH, smW, smH, gap: 10, cy: vh * 0.62 };
   }
-  const bigH = Math.min(vh * 0.78, 760);
-  const bigW = Math.min(bigH * 0.68, vw * 0.32);
+
+  // Laptop / short desktop (typical 14" ~1366×768): keep the focus box under the
+  // floating nav and leave room for settled copy above the thumbnail row.
+  const laptopOrShort = vw < 1280 || vh < 900;
+  const navClear = laptopOrShort ? 112 : 96;
+  const bottomClear = laptopOrShort ? 56 : 48;
+  const maxH = Math.max(260, vh - navClear - bottomClear);
+  const bigH = Math.min(
+    vh * (laptopOrShort ? 0.58 : 0.78),
+    laptopOrShort ? 480 : 760,
+    maxH,
+  );
+  const bigW = Math.min(bigH * 0.68, vw * (laptopOrShort ? 0.28 : 0.32));
   const smH = bigH * 0.3;
   const smW = smH * 0.76;
-  return { vw, vh, bigW, bigH, smW, smH, gap: 10, cy: vh * 0.5 };
+  const cy = Math.min(
+    Math.max(vh * (laptopOrShort ? 0.56 : 0.5), navClear + bigH / 2),
+    vh - bottomClear - bigH / 2,
+  );
+  return { vw, vh, bigW, bigH, smW, smH, gap: 10, cy };
 }
 
 function carouselDur(n: number) {
@@ -327,8 +342,14 @@ export function WhySection() {
       copyEl.style.transform = "none";
       const thumbTop = M.cy - M.smH / 2;
       const copyH = copyEl.getBoundingClientRect().height;
-      const top = Math.max(76, thumbTop - copyH - 14);
-      copyEl.style.top = `${top}px`;
+      const tight = M.vw < 1280 || M.vh < 900;
+      const gap = tight ? 20 : 14;
+      const minTop = tight ? 96 : 76;
+      // Sit above the peeks without climbing into the floating nav.
+      copyEl.style.top = `${Math.max(minTop, thumbTop - copyH - gap)}px`;
+      copyEl.style.maxWidth = tight
+        ? `${Math.min(M.vw * 0.4, 340)}px`
+        : "";
     }
 
     function measureCopy() {
