@@ -85,7 +85,7 @@
 
 .lead {
   margin: 0 0 48px;
-  max-width: 560px;
+  max-width: min(820px, 100%);
   font-size: 17px;
   line-height: 1.7;
   font-weight: 500;

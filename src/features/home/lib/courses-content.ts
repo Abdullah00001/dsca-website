@@ -28,7 +28,7 @@ export const COURSES_CONTENT = {
   eyebrow: "Popular Courses",
   titleBefore: "Barista Courses in Dhaka for",
   titleAccent: "Every Skill Level",
-  lead: "Pick the barista program that fits your experience and your career goal. Every course includes hands-on practice, instruction from working coffee professionals, and a DSCA completion certificate.",
+  lead: "From your first cup to advanced espresso mastery, pick the barista training that matches where you are today. Every course includes hands-on practice on professional equipment, certified instruction, and a DSCA completion certificate.",
   cta: { label: "See all courses", href: "/courses" },
   courses: [
     {
