@@ -24,7 +24,7 @@ export const HERO_CONTENT = {
   subhead: "— ISO-Certified Training at DSCA",
   description:
     "Learn Espresso, Latte Art and Café Operations — From First Cup to Advanced Barista",
-  primary: { label: "Explore barista courses", href: "/courses" },
+  primary: { label: "Explore our courses", href: "/courses" },
   secondary: { label: "Get a free callback", href: "/contact" },
   scrollHint: "Scroll to continue",
   /**

@@ -109,6 +109,15 @@
   margin-top: 36px;
 }
 
+/* Keep default gold CTA readable on the teal band (ink on gold). */
+.action :global(a[data-magnetic="btn"]) {
+  color: #073b2b;
+}
+
+.action :global(a[data-magnetic="btn"]:hover) {
+  color: #fff;
+}
+
 @media (max-width: 767px) {
   .title {
     font-size: clamp(44px, 14vw, 72px);
