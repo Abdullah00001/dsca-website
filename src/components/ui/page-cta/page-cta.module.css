@@ -109,13 +109,13 @@
   margin-top: 36px;
 }
 
-/* Keep default gold CTA readable on the teal band (ink on gold). */
+/* Primary CTA inherits token colors; keep ink readable on the teal band. */
 .action :global(a[data-magnetic="btn"]) {
-  color: #073b2b;
+  color: var(--component-button-primary-text);
 }
 
 .action :global(a[data-magnetic="btn"]:hover) {
-  color: #fff;
+  color: var(--semantic-color-on-dark-text);
 }
 
 @media (max-width: 767px) {

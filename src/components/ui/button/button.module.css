@@ -1,5 +1,6 @@
 /**
  * @fileoverview DSCA liquid-fill button styles (reference `.btn`).
+ * Colors come from `--component-button-*` tokens so every variant stays consistent.
  */
 
 @property --r {
@@ -9,33 +10,38 @@
 }
 
 .btn {
-  --c: var(--gold);
-  --f: #073b2b;
-  --t: #073b2b;
-  --th: #fff;
+  /* Primary = gold surface, ink type, ink liquid fill → white type on hover */
+  --c: var(--component-button-primary-bg);
+  --f: var(--component-button-primary-icon-bg);
+  --t: var(--component-button-primary-text);
+  --th: var(--semantic-color-on-dark-text);
+  --icon-bg: var(--component-button-primary-icon-bg);
+  --icon-fg: var(--component-button-primary-icon-text);
   position: relative;
   overflow: hidden;
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  min-height: 56px;
+  min-height: var(--component-button-min-height);
   padding: 0 10px 0 30px;
-  border-radius: 99px;
+  border-radius: var(--component-button-radius);
   border: 0;
   cursor: pointer;
   text-decoration: none;
-  font: 700 13px var(--font-body);
-  letter-spacing: 0.14em;
+  font-family: var(--font-body);
+  font-size: var(--component-button-font-size);
+  font-weight: var(--component-button-font-weight);
+  letter-spacing: var(--component-button-letter-spacing);
   text-transform: uppercase;
   color: var(--t);
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at calc(100% - 30px) 50%,
       var(--f) var(--r),
       transparent calc(var(--r) + 0.5px)
     ),
     var(--c);
-  /* Reference `.btn` glow — tight gold halo, not a heavy blur. */
-  box-shadow: 0 14px 28px -12px rgba(242, 184, 74, 0.55);
+  box-shadow: var(--component-button-primary-shadow);
   transition:
     --r 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
     color 0.12s 0.15s,
@@ -53,7 +59,8 @@
     rgba(255, 255, 255, 0)
   );
   pointer-events: none;
-  border-radius: 99px 99px 0 0;
+  border-radius: var(--component-button-radius) var(--component-button-radius) 0
+    0;
 }
 
 .btn:hover {
@@ -89,8 +96,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--ink);
-  color: var(--gold);
+  background: var(--icon-bg);
+  color: var(--icon-fg);
   display: grid;
   place-items: center;
   font-style: normal;
@@ -108,11 +115,14 @@
   transition-delay: 0.08s, 0.08s, 0.08s, 0s;
 }
 
+/* Ghost — outline on dark bands (hero / footer / map). */
 .ghost {
-  --c: transparent;
-  --f: #fff;
-  --t: #fff;
-  --th: #073b2b;
+  --c: var(--component-button-ghost-bg);
+  --f: var(--semantic-color-on-dark-text);
+  --t: var(--component-button-ghost-text);
+  --th: var(--semantic-color-ink);
+  --icon-bg: var(--component-button-ghost-icon-bg);
+  --icon-fg: var(--component-button-ghost-icon-text);
   box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.4);
 }
 
@@ -120,62 +130,30 @@
   display: none;
 }
 
-.ghost .icon {
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
-}
-
-.ghost:hover {
-  color: #073b2b;
-}
-
-.ghost:hover .icon {
-  background: #073b2b;
-  color: #fff;
-}
-
+/* Line — outline on light bands (blog / trainers). */
 .line {
-  --c: transparent;
-  --f: var(--fg);
-  --t: var(--fg);
-  --th: var(--bg);
-  box-shadow: inset 0 0 0 1.5px var(--fg);
+  --c: var(--component-button-line-bg);
+  --f: var(--component-button-line-icon-bg);
+  --t: var(--component-button-line-text);
+  --th: var(--component-button-line-icon-text);
+  --icon-bg: var(--component-button-line-icon-bg);
+  --icon-fg: var(--component-button-line-icon-text);
+  box-shadow: inset 0 0 0 1.5px var(--component-button-line-border);
 }
 
 .line::before {
   display: none;
 }
 
-.line .icon {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.line:hover {
-  color: var(--bg);
-}
-
-.line:hover .icon {
-  background: var(--bg);
-  color: var(--fg);
-}
-
+/* Dark — ink surface, gold icon (forms / light-band emphasis). */
 .dark {
-  --c: #073b2b;
-  --f: var(--gold);
-  --t: #fff;
-  --th: #073b2b;
-  box-shadow: 0 22px 44px -18px #000;
-}
-
-.dark .icon {
-  background: var(--gold);
-  color: var(--ink);
-}
-
-.dark:hover .icon {
-  background: #073b2b;
-  color: var(--gold);
+  --c: var(--component-button-dark-bg);
+  --f: var(--component-button-dark-icon-bg);
+  --t: var(--component-button-dark-text);
+  --th: var(--semantic-color-ink);
+  --icon-bg: var(--component-button-dark-icon-bg);
+  --icon-fg: var(--component-button-dark-icon-text);
+  box-shadow: var(--component-button-dark-shadow);
 }
 
 @media (max-width: 767px) {
@@ -191,9 +169,9 @@
    * (hero / map / enrol) on phones.
    */
   .big {
-    min-height: 56px;
+    min-height: var(--component-button-min-height);
     padding-left: 30px;
-    font-size: 13px;
+    font-size: var(--component-button-font-size);
   }
 
   .big .icon {

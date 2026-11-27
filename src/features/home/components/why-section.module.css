@@ -63,6 +63,7 @@
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.95;
+  text-transform: uppercase;
   white-space: nowrap;
   font-size: clamp(56px, 11.5vw, 230px);
   color: #fff;
