@@ -52,13 +52,12 @@
   margin: 0;
   font-weight: 800;
   text-transform: uppercase;
-  color: rgba(238, 245, 239, 0.55);
+  color: #ffe08a;
   font-size: clamp(14px, 2.2vw, 40px);
   will-change: transform;
 }
 
 .headline {
-  --glow: 1;
   margin: 0;
   font-family: var(--font-display);
   font-weight: 800;
@@ -66,59 +65,36 @@
   line-height: 0.95;
   white-space: nowrap;
   font-size: clamp(56px, 11.5vw, 230px);
-  text-shadow: 0 0 calc(40px * var(--glow, 1))
-    rgba(255, 224, 138, calc(0.55 * var(--glow, 1)));
+  color: #fff;
+  text-shadow: none;
   will-change: transform;
 }
 
 .sub {
   margin: 1.2vw 0 0;
   font-weight: 600;
-  color: rgba(238, 245, 239, 0.75);
+  color: #eefaf3;
   font-size: clamp(14px, 1.4vw, 24px);
   will-change: transform;
 }
 
-.cta {
+.ctaWrap {
   pointer-events: auto;
   margin-top: 1.6vw;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  border-radius: 999px;
-  padding: 12px 14px 12px 26px;
-  font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #0f3b2c;
-  background: linear-gradient(#f9c95a, #efa93a);
-  box-shadow: 0 10px 30px rgba(246, 183, 60, 0.3);
   will-change: transform;
-}
-
-.ctaIcon {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: #0f3b2c;
-  color: #f6b73c;
-  font-style: normal;
 }
 
 .copyFinal .eyebrow {
   font-size: 13px;
   letter-spacing: 0.08em;
   font-weight: 700;
-  color: rgba(238, 245, 239, 0.72);
+  color: #ffe08a;
 }
 
 .copyFinal .headline {
   font-size: clamp(36px, 2.6vw, 52px);
   letter-spacing: -0.035em;
+  color: #fff;
   text-shadow: none;
 }
 
@@ -129,13 +105,11 @@
   margin-bottom: 0;
   max-width: 260px;
   white-space: normal;
+  color: #eefaf3;
 }
 
-.copyFinal .cta {
-  margin-top: 6px;
-  padding: 8px 10px 8px 16px;
-  font-size: 11px;
-  white-space: nowrap;
+.copyFinal .ctaWrap {
+  margin-top: 16px;
 }
 
 /* Phone + tablet: same stacked settled layout (copy above frame). */
@@ -153,7 +127,7 @@
     margin-top: 3vw;
   }
 
-  .cta {
+  .ctaWrap {
     margin-top: 5vw;
   }
 
@@ -190,10 +164,8 @@
     white-space: nowrap;
   }
 
-  .copyFinal .cta {
+  .copyFinal .ctaWrap {
     margin-top: 14px;
-    padding: 8px 10px 8px 18px;
-    font-size: 11px;
   }
 }
 
@@ -210,20 +182,12 @@
     max-width: none;
     white-space: nowrap;
   }
-
-  .copyFinal .cta {
-    white-space: nowrap;
-  }
 }
 
 /* Short desktop viewports (common 14" 1366×768 / 1440×900). */
 @media (min-width: 1280px) and (max-height: 899px) {
   .copyFinal .headline {
     font-size: clamp(32px, 2.4vw, 46px);
-  }
-
-  .copyFinal .cta {
-    white-space: nowrap;
   }
 }
 
@@ -250,10 +214,8 @@
     white-space: nowrap;
   }
 
-  .copyFinal .cta {
+  .copyFinal .ctaWrap {
     margin-top: 16px;
-    padding: 8px 10px 8px 16px;
-    font-size: 11px;
   }
 }
 

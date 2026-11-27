@@ -8,9 +8,9 @@
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
 
+import { Button } from "@/components/ui/button";
 import { WHY_CONTENT } from "@/features/home/lib/why-content";
 import { onHomeViewportWidthChange } from "@/features/home/lib/home-utils";
 
@@ -111,7 +111,7 @@ export function WhySection() {
   const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLAnchorElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const dashRef = useRef<HTMLDivElement>(null);
@@ -272,9 +272,6 @@ export function WhySection() {
         el.style.transform = `translate(${d.x * e}px, ${d.y * e}px) scale(${lerp(1, d.s, e)})`;
         el.style.transformOrigin = "0 0";
       });
-      if (headlineRef.current) {
-        headlineRef.current.style.setProperty("--glow", String(lerp(1, 0, e)));
-      }
     }
 
     function applyTime(time: number) {
@@ -522,16 +519,9 @@ export function WhySection() {
         <p ref={subRef} className={styles.sub}>
           {WHY_CONTENT.support}
         </p>
-        <Link
-          ref={ctaRef}
-          href={WHY_CONTENT.cta.href}
-          className={styles.cta}
-        >
-          {WHY_CONTENT.cta.label}{" "}
-          <span className={styles.ctaIcon} aria-hidden>
-            →
-          </span>
-        </Link>
+        <div ref={ctaRef} className={styles.ctaWrap}>
+          <Button href={WHY_CONTENT.cta.href}>{WHY_CONTENT.cta.label}</Button>
+        </div>
       </div>
 
       <div ref={trackRef} className={styles.track}>
