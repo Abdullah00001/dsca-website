@@ -13,7 +13,7 @@ export const HERO_CONTENT = {
     ] as const,
     href: "/locations/farmgate",
   },
-  eyebrow: "Dhaka Specialty Coffee Academy (DSCA)",
+  eyebrow: "ISO 9001:2015 Certified · Farmgate, Dhaka",
   title: {
     line1: "Professional",
     line2Lead: "Barista",

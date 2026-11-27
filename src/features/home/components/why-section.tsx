@@ -64,18 +64,21 @@ function getMetrics(): Metrics {
     return { vw, vh, bigW, bigH, smW, smH, gap: 10, cy: vh * 0.62 };
   }
 
-  // Laptop / short desktop (typical 14" ~1366×768): keep the focus box under the
-  // floating nav and leave room for settled copy above the thumbnail row.
+  // Laptop / short desktop (typical 14" ~1366×768): clear the floating nav,
+  // keep peeks below settled copy, and use a wider focus box than the skinny default.
   const laptopOrShort = vw < 1280 || vh < 900;
   const navClear = laptopOrShort ? 112 : 96;
   const bottomClear = laptopOrShort ? 56 : 48;
   const maxH = Math.max(260, vh - navClear - bottomClear);
   const bigH = Math.min(
-    vh * (laptopOrShort ? 0.58 : 0.78),
-    laptopOrShort ? 480 : 760,
+    vh * (laptopOrShort ? 0.62 : 0.78),
+    laptopOrShort ? 520 : 760,
     maxH,
   );
-  const bigW = Math.min(bigH * 0.68, vw * (laptopOrShort ? 0.28 : 0.32));
+  const bigW = Math.min(
+    bigH * (laptopOrShort ? 0.84 : 0.68),
+    vw * (laptopOrShort ? 0.4 : 0.32),
+  );
   const smH = bigH * 0.3;
   const smW = smH * 0.76;
   const cy = Math.min(
@@ -340,6 +343,7 @@ export function WhySection() {
       if (M.vw < 1024) return;
       lockDesktopCopyPad();
       copyEl.style.transform = "none";
+      copyEl.style.maxWidth = "";
       const thumbTop = M.cy - M.smH / 2;
       const copyH = copyEl.getBoundingClientRect().height;
       const tight = M.vw < 1280 || M.vh < 900;
@@ -347,9 +351,6 @@ export function WhySection() {
       const minTop = tight ? 96 : 76;
       // Sit above the peeks without climbing into the floating nav.
       copyEl.style.top = `${Math.max(minTop, thumbTop - copyH - gap)}px`;
-      copyEl.style.maxWidth = tight
-        ? `${Math.min(M.vw * 0.4, 340)}px`
-        : "";
     }
 
     function measureCopy() {
