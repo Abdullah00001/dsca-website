@@ -23,8 +23,8 @@ export const HERO_CONTENT = {
   },
   subhead: "— ISO-Certified Training at DSCA",
   description:
-    "Learn Espresso, Latte Art and Café Operations — From First Cup to Advanced Barista",
-  primary: { label: "Explore our courses", href: "/courses" },
+    "Learn espresso, latte art and cafe craft by hand, from your first shot to advanced brewing, inside a real working cafe in Farmgate.",
+  primary: { label: "Explore All Courses", href: "/courses" },
   secondary: { label: "Get a free callback", href: "/contact" },
   scrollHint: "Scroll to continue",
   /**
